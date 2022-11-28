@@ -119,6 +119,9 @@ return packer.startup(function(use)
 		},
 	})
 
+    -- Which key : Don't forget your mappings again
+    use "folke/which-key.nvim"
+
 	-- Git signs
 	use("lewis6991/gitsigns.nvim")
 
