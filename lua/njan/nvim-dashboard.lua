@@ -24,7 +24,7 @@ db.custom_center = {
   { icon = '  ', desc = 'New file', action = 'enew' },
   { icon = '  ', desc = 'Recent files', action = 'Telescope oldfiles' },
   { icon = '  ', desc = 'File browser', action = 'Telescope file_browser' },
-  { icon = '  ', desc = 'Open config', action = 'e ~/.config/nvim/' },
+  { icon = '  ', desc = 'Open config', action = 'e ~/.config/nvim/' },
   { icon = '  ', desc = 'Quit', action = 'q' },
 
 }
