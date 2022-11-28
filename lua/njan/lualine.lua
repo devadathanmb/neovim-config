@@ -9,5 +9,8 @@ local colorscheme = "tokyonight"
 lualine.setup {
     options = {
         theme = colorscheme,
+        disabled_filetypes = {
+            "NvimTree"
+        }
     }
 }
