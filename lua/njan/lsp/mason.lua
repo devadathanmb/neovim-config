@@ -4,7 +4,8 @@ local servers = {
 	"pyright",
 	"jsonls",
     "jdtls",
-    "clangd"
+    "clangd",
+    "tsserver"
 }
 
 local settings = {
