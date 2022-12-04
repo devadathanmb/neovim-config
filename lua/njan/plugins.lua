@@ -54,6 +54,7 @@ return packer.startup(function(use)
 
 	-- Colorscheme plugin
 	use("folke/tokyonight.nvim") -- Automatically set up your configuration after cloning packer.nvim
+    use { "ellisonleao/gruvbox.nvim" }
 
 	-- Lua line plugin
 	use({
