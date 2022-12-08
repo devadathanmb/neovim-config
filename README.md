@@ -1,4 +1,4 @@
-# Neovim config
+# Neovim config (i3-rice-gruvbox branch)
 
 This repository contains my personal neovim configs.  
 Heavily inspired from [Neovim from scratch series](https://www.youtube.com/playlist?list=PLhoH5vyxr6Qq41NFL4GvhFp-WLd5xzIzZ) by [Christian Chiarulli](https://github.com/ChristianChiarulli) and [Lunar Vim](https://github.com/LunarVim).
@@ -34,7 +34,7 @@ npm install -g neovim # For node
 ```
 4. Clone the repository and run neovim
 ```bash
-git clone https://www.github.com/devadathanmb/entevim ~/.config/nvim
+git clone https://github.com/devadathanmb/entevim/tree/i3-rice-gruvbox ~/.config/nvim
 ```
 
 ## Uninstallation and cleanup
