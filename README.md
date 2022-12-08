@@ -6,21 +6,13 @@ Heavily inspired from [Neovim from scratch series](https://www.youtube.com/playl
 ---
 
 ## Preview
+![Screenshot_2022-12-08-14-54-32_1920x1080](https://user-images.githubusercontent.com/84301852/206449394-ebcb42c7-42b3-4fc4-88d0-d5050f46f4e4.png)
 
 
-![Screenshot from 2022-11-28 22-13-40](https://user-images.githubusercontent.com/84301852/204336076-d4e8294a-617f-49af-be04-38ed86309d64.png)  
+![Screenshot_2022-12-08-14-56-45_1920x1080](https://user-images.githubusercontent.com/84301852/206449401-10aaf2f3-55e5-4a12-b1c9-4ef6761f5566.png)
 
-![Screenshot from 2022-11-28 12-16-50](https://user-images.githubusercontent.com/84301852/204218394-71cb4a04-fef0-4f01-82c0-9da22880530a.png)  
 
-![Screenshot from 2022-11-28 12-19-29](https://user-images.githubusercontent.com/84301852/204218404-7e7c7b70-bb0e-4b81-a090-6a36b84d880d.png)  
-
-![Screenshot from 2022-11-28 22-16-13](https://user-images.githubusercontent.com/84301852/204336176-e478000e-0654-4d17-a389-631ea5806a9c.png)  
-
-![Screenshot from 2022-11-28 22-22-58](https://user-images.githubusercontent.com/84301852/204336187-efd721b1-6726-4d10-9887-f1aea02cc88f.png)  
-
-![Screenshot from 2022-11-28 22-23-51](https://user-images.githubusercontent.com/84301852/204336198-fdeb7687-1a58-4a94-b5ed-c97304aefa95.png)
-
-![Screenshot from 2022-11-28 12-21-23](https://user-images.githubusercontent.com/84301852/204218411-2ea440de-1610-4abb-9652-7c2858d193ca.png)  
+![Screenshot_2022-12-08-14-57-14_1920x1080](https://user-images.githubusercontent.com/84301852/206449411-2f2a1d0a-0288-45a0-80a4-447c24e64d51.png)
 
 ---
 
