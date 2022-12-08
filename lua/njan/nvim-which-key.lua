@@ -82,6 +82,7 @@ which_key.setup({
 local declared_mappings = {
 	["<leader>ff"] = { "Fuzzy finder" },
 	["<leader>fr"] = { "Format code" },
+	["<leader>fb"] = { "File browser" },
 	["<leader>e"] = { "Open Nvim Tree" },
 	["<leader>d"] = { "Cut text" },
 	["<leader>p"] = { "Pin current buffer" },
