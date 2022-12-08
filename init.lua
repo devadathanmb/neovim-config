@@ -1,3 +1,4 @@
+require "impatient"
 require "njan.options"
 require "njan.keymaps"
 require "njan.plugins"
