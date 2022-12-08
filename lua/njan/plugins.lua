@@ -54,6 +54,10 @@ return packer.startup(function(use)
 
 	-- Colorscheme plugin
 	use("folke/tokyonight.nvim") -- Automatically set up your configuration after cloning packer.nvim
+<<<<<<< HEAD
+=======
+	use({ "ellisonleao/gruvbox.nvim" })
+>>>>>>> 9cde54a (Add impatient plugin)
 
 	-- Lua line plugin
 	use({
@@ -109,7 +113,7 @@ return packer.startup(function(use)
 		"SmiteshP/nvim-navic",
 		requires = "neovim/nvim-lspconfig",
 	})
-    -- Barbecue.vim provides vscode like winbar using nvim-navic
+	-- Barbecue.vim provides vscode like winbar using nvim-navic
 	use({
 		"utilyre/barbecue.nvim",
 		requires = {
@@ -119,8 +123,11 @@ return packer.startup(function(use)
 		},
 	})
 
-    -- Which key : Don't forget your mappings again
-    use "folke/which-key.nvim"
+	-- Impatient : Load stuff faster
+	use("lewis6991/impatient.nvim")
+
+	-- Which key : Don't forget your mappings again
+	use("folke/which-key.nvim")
 
 	-- Git signs
 	use("lewis6991/gitsigns.nvim")
