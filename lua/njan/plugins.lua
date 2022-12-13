@@ -54,7 +54,7 @@ return packer.startup(function(use)
 
 	-- Colorscheme plugin
 	use("folke/tokyonight.nvim") -- Automatically set up your configuration after cloning packer.nvim
-	use({ "ellisonleao/gruvbox.nvim" })
+	use("Mofiqul/vscode.nvim")
 
 	-- Lua line plugin
 	use({
@@ -101,6 +101,9 @@ return packer.startup(function(use)
 	})
 	use("p00f/nvim-ts-rainbow")
 	use("JoosepAlviste/nvim-ts-context-commentstring")
+
+	-- Neoscroll : For smooth scrolling
+	use("karb94/neoscroll.nvim")
 
 	-- Indeent-blankline : Adds lines for indentation like in vscode
 	use("lukas-reineke/indent-blankline.nvim")
