@@ -5,7 +5,7 @@ if not status_ok then
 end
 
 -- Lualine colorscheme
-local colorscheme = "gruvbox"
+local colorscheme = "vscode"
 lualine.setup {
     options = {
         theme = colorscheme,
