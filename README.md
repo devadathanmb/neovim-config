@@ -1,18 +1,19 @@
-# Neovim config (i3-rice-gruvbox branch)
+# My neovim configs
 
 This repository contains my personal neovim configs.  
+  
 Heavily inspired from [Neovim from scratch series](https://www.youtube.com/playlist?list=PLhoH5vyxr6Qq41NFL4GvhFp-WLd5xzIzZ) by [Christian Chiarulli](https://github.com/ChristianChiarulli) and [Lunar Vim](https://github.com/LunarVim).
 
 ---
 
 ## Preview
-![Screenshot_2022-12-08-14-54-32_1920x1080](https://user-images.githubusercontent.com/84301852/206449394-ebcb42c7-42b3-4fc4-88d0-d5050f46f4e4.png)
+![2023-01-03_17-47](https://user-images.githubusercontent.com/84301852/210356013-16e12f92-42b3-4c3a-bbbd-ac57c0126dcc.png)
 
 
-![Screenshot_2022-12-08-14-56-45_1920x1080](https://user-images.githubusercontent.com/84301852/206449401-10aaf2f3-55e5-4a12-b1c9-4ef6761f5566.png)
+![2023-01-03_17-48](https://user-images.githubusercontent.com/84301852/210356032-26b1d20a-c469-44c8-9e03-39565ac281de.png)
 
 
-![Screenshot_2022-12-08-14-57-14_1920x1080](https://user-images.githubusercontent.com/84301852/206449411-2f2a1d0a-0288-45a0-80a4-447c24e64d51.png)
+![2023-01-03_17-48_1](https://user-images.githubusercontent.com/84301852/210356037-502f58ff-e894-449b-a16e-15dc0da1bcfb.png)
 
 ---
 
