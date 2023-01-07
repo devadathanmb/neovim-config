@@ -130,6 +130,17 @@ return packer.startup(function(use)
 	-- Dashboard
 	use("glepnir/dashboard-nvim")
 
+	-- Markdown preview
+	use({
+		"iamcco/markdown-preview.nvim",
+		run = "cd app && npm install",
+		setup = function()
+			vim.g.mkdp_filetypes = { "markdown" }
+		end,
+		ft = { "markdown" },
+	})
+
+
 	-- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
