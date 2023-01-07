@@ -116,12 +116,6 @@ return packer.startup(function(use)
 	-- Barbecue.vim provides vscode like winbar using nvim-navic
 	use({
 		"utilyre/barbecue.nvim",
-        branch = "feature/theme-generation",
-		requires = {
-			"neovim/nvim-lspconfig",
-			"smiteshp/nvim-navic",
-			"kyazdani42/nvim-web-devicons", -- optional
-		},
 	})
 
 	-- Impatient : Load stuff faster
