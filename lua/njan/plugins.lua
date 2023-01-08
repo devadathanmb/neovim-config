@@ -55,6 +55,7 @@ return packer.startup(function(use)
 	-- Colorscheme plugin
 	use("folke/tokyonight.nvim") -- Automatically set up your configuration after cloning packer.nvim
 	use("Mofiqul/vscode.nvim")
+	use("lunarvim/darkplus.nvim")
 
 	-- Lua line plugin
 	use({
@@ -139,7 +140,6 @@ return packer.startup(function(use)
 		end,
 		ft = { "markdown" },
 	})
-
 
 	-- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then
