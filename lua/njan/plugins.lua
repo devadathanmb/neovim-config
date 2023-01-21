@@ -3,16 +3,16 @@ local fn = vim.fn
 -- Automatically install packer
 local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
-	PACKER_BOOTSTRAP = fn.system({
-		"git",
-		"clone",
-		"--depth",
-		"1",
-		"https://github.com/wbthomason/packer.nvim",
-		install_path,
-	})
-	print("Installing packer close and reopen Neovim...")
-	vim.cmd([[packadd packer.nvim]])
+    PACKER_BOOTSTRAP = fn.system({
+        "git",
+        "clone",
+        "--depth",
+        "1",
+        "https://github.com/wbthomason/packer.nvim",
+        install_path,
+    })
+    print("Installing packer close and reopen Neovim...")
+    vim.cmd([[packadd packer.nvim]])
 end
 
 -- Autocommand that reloads neovim whenever you save the plugins.lua file
@@ -26,113 +26,123 @@ vim.cmd([[
 -- Use a protected call so we don't error out on first use
 local status_ok, packer = pcall(require, "packer")
 if not status_ok then
-	return
+    return
 end
 
 -- Have packer use a popup window
 packer.init({
-	display = {
-		open_fn = function()
-			return require("packer.util").float({ border = "rounded" })
-		end,
-	},
+    display = {
+        open_fn = function()
+            return require("packer.util").float({ border = "rounded" })
+        end,
+    },
 })
 
 -- Install your plugins here
 return packer.startup(function(use)
-	-- My plugins here
-	use("wbthomason/packer.nvim") -- Have packer manage itself
-	use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
-	use("nvim-lua/plenary.nvim") -- Useful lua functions used ny lots of plugins
-	use("windwp/nvim-autopairs") -- Autopairs, integrates with both cmp and treesitter
-	use("numToStr/Comment.nvim") -- Easily comment stuff
-	use("kyazdani42/nvim-web-devicons")
-	use("kyazdani42/nvim-tree.lua")
-	use("akinsho/bufferline.nvim")
-	use("moll/vim-bbye")
-	use("akinsho/toggleterm.nvim")
+    -- My plugins here
+    use("wbthomason/packer.nvim") -- Have packer manage itself
+    use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
+    use("nvim-lua/plenary.nvim") -- Useful lua functions used ny lots of plugins
+    use("windwp/nvim-autopairs") -- Autopairs, integrates with both cmp and treesitter
+    use("numToStr/Comment.nvim") -- Easily comment stuff
+    use("kyazdani42/nvim-web-devicons")
+    use("kyazdani42/nvim-tree.lua")
+    use("akinsho/bufferline.nvim")
+    use("moll/vim-bbye")
+    use("akinsho/toggleterm.nvim")
 
-	-- Colorscheme plugin
-	use("folke/tokyonight.nvim") -- Automatically set up your configuration after cloning packer.nvim
-    
-	-- Lua line plugin
-	use({
-		"nvim-lualine/lualine.nvim",
-		requires = { "kyazdani42/nvim-web-devicons", opt = true },
-	})
-	-- cmp plugins
-	use("hrsh7th/nvim-cmp") -- The completion plugin
-	use("hrsh7th/cmp-buffer") -- buffer completions
-	use("hrsh7th/cmp-path") -- path completions
-	use("hrsh7th/cmp-cmdline") -- cmdline completions
-	use("saadparwaiz1/cmp_luasnip") -- snippet completions
-	use("hrsh7th/cmp-nvim-lsp")
-	use("hrsh7th/cmp-nvim-lua")
+    -- Colorscheme plugin
+    use("folke/tokyonight.nvim") -- Automatically set up your configuration after cloning packer.nvim
+    use("Mofiqul/vscode.nvim")
+    use("lunarvim/darkplus.nvim")
 
-	-- snippets
-	use("L3MON4D3/LuaSnip") --snippet engine
-	use("rafamadriz/friendly-snippets") -- a bunch of snippets to use
+    -- Lua line plugin
+    use({
+        "nvim-lualine/lualine.nvim",
+        requires = { "kyazdani42/nvim-web-devicons", opt = true },
+    })
+    -- cmp plugins
+    use("hrsh7th/nvim-cmp") -- The completion plugin
+    use("hrsh7th/cmp-buffer") -- buffer completions
+    use("hrsh7th/cmp-path") -- path completions
+    use("hrsh7th/cmp-cmdline") -- cmdline completions
+    use("saadparwaiz1/cmp_luasnip") -- snippet completions
+    use("hrsh7th/cmp-nvim-lsp")
+    use("hrsh7th/cmp-nvim-lua")
 
-	-- LSP
-	use("neovim/nvim-lspconfig") -- enable LSP
-	use("williamboman/mason.nvim") -- simple to use language server installer
-	use("williamboman/mason-lspconfig.nvim") -- simple to use language server installer
-	use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
+    -- snippets
+    use("L3MON4D3/LuaSnip") --snippet engine
+    use("rafamadriz/friendly-snippets") -- a bunch of snippets to use
 
-	-- Java
-	use("mfussenegger/nvim-jdtls") -- jdtls for java development
+    -- LSP
+    use("neovim/nvim-lspconfig") -- enable LSP
+    use("williamboman/mason.nvim") -- simple to use language server installer
+    use("williamboman/mason-lspconfig.nvim") -- simple to use language server installer
+    use("jose-elias-alvarez/null-ls.nvim") -- for formatters and linters
 
-	-- Flutter development stuff
-	use({ "akinsho/flutter-tools.nvim", requires = "nvim-lua/plenary.nvim" })
+    -- Java
+    use("mfussenegger/nvim-jdtls") -- jdtls for java development
 
-	-- Telescope
-	use("nvim-telescope/telescope.nvim")
-	use("nvim-telescope/telescope-media-files.nvim")
-	use("nvim-telescope/telescope-file-browser.nvim") -- Telescope file browser plugin
+    -- Flutter development stuff
+    use({ "akinsho/flutter-tools.nvim", requires = "nvim-lua/plenary.nvim" })
 
-	-- Colorizer
-	use("norcalli/nvim-colorizer.lua")
+    -- Telescope
+    use("nvim-telescope/telescope.nvim")
+    use("nvim-telescope/telescope-media-files.nvim")
+    use("nvim-telescope/telescope-file-browser.nvim") -- Telescope file browser plugin
 
-	-- Treesitter
-	use({
-		"nvim-treesitter/nvim-treesitter",
-		run = ":TSUpdate",
-	})
-	use("p00f/nvim-ts-rainbow")
-	use("JoosepAlviste/nvim-ts-context-commentstring")
+    -- Colorizer
+    use("norcalli/nvim-colorizer.lua")
 
-	-- Indeent-blankline : Adds lines for indentation like in vscode
-	use("lukas-reineke/indent-blankline.nvim")
+    -- Treesitter
+    use({
+        "nvim-treesitter/nvim-treesitter",
+        run = ":TSUpdate",
+    })
+    use("p00f/nvim-ts-rainbow")
+    use("JoosepAlviste/nvim-ts-context-commentstring")
 
-	-- nvim-navic : To customize winbar
-	use({
-		"SmiteshP/nvim-navic",
-		requires = "neovim/nvim-lspconfig",
-	})
-	-- Barbecue.vim provides vscode like winbar using nvim-navic
-	use({
-		"utilyre/barbecue.nvim",
-		requires = {
-			"neovim/nvim-lspconfig",
-			"smiteshp/nvim-navic",
-			"kyazdani42/nvim-web-devicons", -- optional
-		},
-	})
+    -- Neoscroll : For smooth scrolling
+    use("karb94/neoscroll.nvim")
 
-	-- Impatient : Load stuff faster
-	use("lewis6991/impatient.nvim")
+    -- Indeent-blankline : Adds lines for indentation like in vscode
+    use("lukas-reineke/indent-blankline.nvim")
 
-	-- Which key : Don't forget your mappings again
-	use("folke/which-key.nvim")
+    -- nvim-navic : To customize winbar
+    use({
+        "SmiteshP/nvim-navic",
+        requires = "neovim/nvim-lspconfig",
+    })
+    -- Barbecue.vim provides vscode like winbar using nvim-navic
+    use({
+        "utilyre/barbecue.nvim",
+    })
 
-	-- Git signs
-	use("lewis6991/gitsigns.nvim")
+    -- Impatient : Load stuff faster
+    use("lewis6991/impatient.nvim")
 
-	-- Dashboard
-	use("glepnir/dashboard-nvim")
+    -- Which key : Don't forget your mappings again
+    use("folke/which-key.nvim")
 
-	-- Put this at the end after all plugins
-	if PACKER_BOOTSTRAP then
-		require("packer").sync()
-	end
+    -- Git signs
+    use("lewis6991/gitsigns.nvim")
+
+    -- Dashboard
+    use("glepnir/dashboard-nvim")
+
+    -- Markdown preview
+    use({
+        "iamcco/markdown-preview.nvim",
+        run = "cd app && npm install",
+        setup = function()
+            vim.g.mkdp_filetypes = { "markdown" }
+        end,
+        ft = { "markdown" },
+    })
+
+    -- Put this at the end after all plugins
+    if PACKER_BOOTSTRAP then
+        require("packer").sync()
+    end
 end)

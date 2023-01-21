@@ -5,12 +5,13 @@ if not status_ok then
 end
 
 -- Lualine colorscheme
-local colorscheme = "tokyonight"
-lualine.setup {
+local colorscheme = require("njan.darkplus-lualine")
+lualine.setup({
     options = {
         theme = colorscheme,
+        section_separators = ' ', component_separators = ' ',
         disabled_filetypes = {
-            "NvimTree"
-        }
-    }
-}
+            "NvimTree",
+        },
+    },
+})
