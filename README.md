@@ -1,26 +1,19 @@
-# Neovim config
+# My neovim configs
 
 This repository contains my personal neovim configs.  
+  
 Heavily inspired from [Neovim from scratch series](https://www.youtube.com/playlist?list=PLhoH5vyxr6Qq41NFL4GvhFp-WLd5xzIzZ) by [Christian Chiarulli](https://github.com/ChristianChiarulli) and [Lunar Vim](https://github.com/LunarVim).
 
 ---
 
 ## Preview
+![2023-01-03_17-47](https://user-images.githubusercontent.com/84301852/210356013-16e12f92-42b3-4c3a-bbbd-ac57c0126dcc.png)
 
 
-![Screenshot from 2022-11-28 22-13-40](https://user-images.githubusercontent.com/84301852/204336076-d4e8294a-617f-49af-be04-38ed86309d64.png)  
+![2023-01-03_17-48](https://user-images.githubusercontent.com/84301852/210356032-26b1d20a-c469-44c8-9e03-39565ac281de.png)
 
-![Screenshot from 2022-11-28 12-16-50](https://user-images.githubusercontent.com/84301852/204218394-71cb4a04-fef0-4f01-82c0-9da22880530a.png)  
 
-![Screenshot from 2022-11-28 12-19-29](https://user-images.githubusercontent.com/84301852/204218404-7e7c7b70-bb0e-4b81-a090-6a36b84d880d.png)  
-
-![Screenshot from 2022-11-28 22-16-13](https://user-images.githubusercontent.com/84301852/204336176-e478000e-0654-4d17-a389-631ea5806a9c.png)  
-
-![Screenshot from 2022-11-28 22-22-58](https://user-images.githubusercontent.com/84301852/204336187-efd721b1-6726-4d10-9887-f1aea02cc88f.png)  
-
-![Screenshot from 2022-11-28 22-23-51](https://user-images.githubusercontent.com/84301852/204336198-fdeb7687-1a58-4a94-b5ed-c97304aefa95.png)
-
-![Screenshot from 2022-11-28 12-21-23](https://user-images.githubusercontent.com/84301852/204218411-2ea440de-1610-4abb-9652-7c2858d193ca.png)  
+![2023-01-03_17-48_1](https://user-images.githubusercontent.com/84301852/210356037-502f58ff-e894-449b-a16e-15dc0da1bcfb.png)
 
 ---
 
@@ -42,7 +35,7 @@ npm install -g neovim # For node
 ```
 4. Clone the repository and run neovim
 ```bash
-git clone https://www.github.com/devadathanmb/entevim ~/.config/nvim
+git clone https://github.com/devadathanmb/entevim/tree/i3-rice-gruvbox ~/.config/nvim
 ```
 
 ## Uninstallation and cleanup
