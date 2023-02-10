@@ -5,7 +5,7 @@ if not status_ok then
 end
 
 -- Lualine colorscheme
-local colorscheme = require("njan.darkplus-lualine")
+local colorscheme = "catppuccin"
 lualine.setup({
     options = {
         theme = colorscheme,
