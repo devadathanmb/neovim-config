@@ -11,13 +11,13 @@ vim.opt.smartindent = true 	-- Make indentation smarter
 vim.opt.wrap = false		-- No line wrapping
 vim.opt.expandtab = true	-- Expand tab to spaces
 vim.opt.tabstop = 4 		-- 4 spaces for a tab
-vim.opt.shiftwidth = 2		-- 4 spaces for each indentation
+vim.opt.shiftwidth = 4		-- 4 spaces for each indentation
 
 
 -- Line numbering : Hybrid numbering
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.numberwidth = 2 	-- Sets number col width to 2
+vim.opt.numberwidth = 4 	-- Sets number col width to 2
 
 
 -- Cursor line

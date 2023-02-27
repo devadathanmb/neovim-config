@@ -1,9 +1,15 @@
 -- This is the colorscheme name
-local colorscheme = "catppuccin"
-
-require(colorscheme).setup({
-	transparent_background = false,
-})
+local colorscheme = "darkplus"
+--[[]]
+--[[ require(colorscheme).setup({ ]]
+--[[ 	transparent_background = false, ]]
+--[[ 	color_overrides = { ]]
+--[[ 		mocha = { ]]
+--[[ 			base = "#11111B", ]]
+--[[ 			mantle = "#1E1E2E", ]]
+--[[ 		}, ]]
+--[[ 	}, ]]
+--[[ }) ]]
 
 -- Protected call to load colorscheme
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)

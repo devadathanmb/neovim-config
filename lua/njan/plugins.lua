@@ -47,7 +47,7 @@ return packer.startup(function(use)
 	use("windwp/nvim-autopairs") -- Autopairs, integrates with both cmp and treesitter
 	use("numToStr/Comment.nvim") -- Easily comment stuff
 	use("kyazdani42/nvim-web-devicons")
-	use{"kyazdani42/nvim-tree.lua", commit="e14989c0eaa6f9c299d48f7e45ce1ed04b21180f"}
+	use({ "kyazdani42/nvim-tree.lua", commit = "e14989c0eaa6f9c299d48f7e45ce1ed04b21180f" })
 	use("akinsho/bufferline.nvim")
 	use("moll/vim-bbye")
 	use("akinsho/toggleterm.nvim")
@@ -130,7 +130,11 @@ return packer.startup(function(use)
 	use("lewis6991/gitsigns.nvim")
 
 	-- Dashboard
-	use("glepnir/dashboard-nvim")
+	use({
+		"glepnir/dashboard-nvim",
+		event = "VimEnter",
+		requires = { "nvim-tree/nvim-web-devicons" },
+	})
 
 	-- Markdown preview
 	use({
@@ -138,10 +142,21 @@ return packer.startup(function(use)
 		run = "cd app && npm install",
 		setup = function()
 			vim.g.mkdp_filetypes = { "markdown" }
-            vim.g.mkdp_browser = "/usr/bin/firefox"
 		end,
 		ft = { "markdown" },
 	})
+
+	-- Vim calendar
+	use("itchyny/calendar.vim")
+
+	-- Nvim-surround
+	use({
+		"kylechui/nvim-surround",
+		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
+	})
+
+    -- Copilot
+    use {"github/copilot.vim"}
 
 	-- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then

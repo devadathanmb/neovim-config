@@ -20,4 +20,6 @@ require "njan.nvim-which-key"
 require "njan.flutter-tools"
 require "njan.barbecue"
 require "njan.nvim-neoscroll"
+require "njan.surround"
 require "njan.nvim-dashboard"
+--[[ require "njan.copilot" ]]
