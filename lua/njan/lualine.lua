@@ -5,10 +5,9 @@ if not status_ok then
 end
 
 -- Lualine colorscheme
-local colorscheme = "catppuccin"
 lualine.setup({
     options = {
-        theme = colorscheme,
+        theme = "vscode",
         section_separators = ' ', component_separators = ' ',
         disabled_filetypes = {
             "NvimTree",
