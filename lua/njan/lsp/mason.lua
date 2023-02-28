@@ -6,7 +6,9 @@ local servers = {
     "bashls",
     "jdtls",
     "clangd",
-    "tsserver"
+    "tsserver",
+    "gopls",
+    "html",
 }
 
 local settings = {
