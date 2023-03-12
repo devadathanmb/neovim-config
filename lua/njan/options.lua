@@ -10,8 +10,8 @@ vim.opt.smartcase = true	-- Smart case searching
 vim.opt.smartindent = true 	-- Make indentation smarter
 vim.opt.wrap = false		-- No line wrapping
 vim.opt.expandtab = true	-- Expand tab to spaces
-vim.opt.tabstop = 4 		-- 4 spaces for a tab
-vim.opt.shiftwidth = 4		-- 4 spaces for each indentation
+vim.opt.tabstop = 2 		-- 4 spaces for a tab
+vim.opt.shiftwidth = 2		-- 4 spaces for each indentation
 
 
 -- Line numbering : Hybrid numbering
