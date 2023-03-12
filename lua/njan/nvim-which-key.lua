@@ -150,16 +150,17 @@ local which_key_mappings = {
 				"<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
 				"Undo Stage Hunk",
 			},
-			o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
-			b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-			c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
+
+			o = { "<cmd>Telescope git_status<cr>", "See status" },
+			b = { "<cmd>Telescope git_branches<cr>", "See branches" },
+			c = { "<cmd>Telescope git_commits<cr>", "See commits" },
 			d = {
 				"<cmd>Gitsigns diffthis HEAD<cr>",
 				"Diff",
 			},
 		},
 
-        -- Searching
+		-- Searching
 		s = {
 			name = "Search",
 			l = { "<cmd>Telescope live_grep<cr>", "Live grep" },
