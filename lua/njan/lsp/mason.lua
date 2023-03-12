@@ -9,6 +9,12 @@ local servers = {
     "tsserver",
     "gopls",
     "html",
+    "cssls",
+    "emmet_ls",
+    "lua_ls",
+    --[[ "marksman", ]]
+    "tailwindcss",
+    --[[ "ltex" ]]
 }
 
 local settings = {
