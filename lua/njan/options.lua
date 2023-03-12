@@ -37,7 +37,9 @@ vim.opt.iskeyword:append("-")
 -- Disbale showing messages below
 vim.opt.showmode = false
 
+-- Please don't hide hidden files
+vim.g.nvim_tree_hide_dotfiles = 0
+
 -- Disable autocommenting
 vim.cmd("autocmd BufEnter * set formatoptions-=cro")
 vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
-
