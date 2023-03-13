@@ -155,13 +155,6 @@ return packer.startup(function(use)
 		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
 	})
 
-	-- Copilot
-	--[[ use({ "github/copilot.vim" }) ]]
-	-- Nvim dap
-	use("mfussenegger/nvim-dap")
-
-	use("uga-rosa/ccc.nvim")
-
 	-- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
