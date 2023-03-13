@@ -43,3 +43,10 @@ vim.g.nvim_tree_hide_dotfiles = 0
 -- Disable autocommenting
 vim.cmd("autocmd BufEnter * set formatoptions-=cro")
 vim.cmd("autocmd BufEnter * setlocal formatoptions-=cro")
+
+
+-- Markdown conceal level
+vim.cmd('augroup Markdown')
+vim.cmd('autocmd!')
+vim.cmd('autocmd FileType markdown setlocal conceallevel=2')
+vim.cmd('augroup END')
