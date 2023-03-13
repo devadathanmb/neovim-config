@@ -167,6 +167,13 @@ local which_key_mappings = {
 			f = { "<cmd>Telescope find_files<cr>", "Find files" },
 			b = { "<cmd>Telescope buffers<cr>", "Find buffers" },
 		},
+
+		-- Markdown
+		m = {
+			name = "Markdown",
+			p = { "<cmd>MarkdownPreviewToggle<cr>", "Toggle markdown preview" },
+			s = { "<cmd>MarkdownPreviewStop<cr>", "Stop markdown preview" },
+		},
 	},
 }
 
