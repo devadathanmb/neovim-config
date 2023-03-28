@@ -21,5 +21,5 @@ require "njan.flutter-tools"
 require "njan.barbecue"
 require "njan.nvim-neoscroll"
 require "njan.surround"
-require "njan.nvim-dashboard"
---[[ require "njan.copilot" ]]
+require "njan.dashboard"
+require "njan.copilot"
