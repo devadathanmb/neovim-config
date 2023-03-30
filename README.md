@@ -35,7 +35,7 @@ npm install -g neovim # For node
 ```
 4. Clone the repository and run neovim
 ```bash
-git clone https://github.com/devadathanmb/entevim/tree/i3-rice-gruvbox ~/.config/nvim
+git clone https://github.com/devadathanmb/entevim.git ~/.config/nvim
 ```
 
 ## Uninstallation and cleanup
