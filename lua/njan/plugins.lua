@@ -155,8 +155,11 @@ return packer.startup(function(use)
 		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
 	})
 
-  -- Tex stuff
+	-- Tex stuff
 	use("lervag/vimtex")
+
+	-- Illuminate : Highlight word under cursor
+	use("RRethy/vim-illuminate")
 
 	-- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then
