@@ -19,8 +19,8 @@ neoscroll.setup({
 
 local t = {}
 -- Syntax: t[keys] = {function, {function arguments}}
-t["<C-k>"] = { "scroll", { "-vim.wo.scroll", "true", "250" } }
-t["<C-j>"] = { "scroll", { "vim.wo.scroll", "true", "250" } }
+t["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", "250" } }
+t["<C-d>"] = { "scroll", { "vim.wo.scroll", "true", "250" } }
 t["<C-b>"] = { "scroll", { "-vim.api.nvim_win_get_height(0)", "true", "450" } }
 t["<C-f>"] = { "scroll", { "vim.api.nvim_win_get_height(0)", "true", "450" } }
 t["<C-y>"] = { "scroll", { "-0.10", "false", "100" } }
