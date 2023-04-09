@@ -50,3 +50,6 @@ vim.cmd('augroup Markdown')
 vim.cmd('autocmd!')
 vim.cmd('autocmd FileType markdown setlocal conceallevel=2')
 vim.cmd('augroup END')
+
+-- Get rid of that goddman ~
+vim.wo.fillchars='eob: '
