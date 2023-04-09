@@ -4,4 +4,4 @@ if not status_ok then
     return
 end
 
-  barbecue.setup()
+barbecue.setup()

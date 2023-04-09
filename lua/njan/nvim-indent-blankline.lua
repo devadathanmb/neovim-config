@@ -26,3 +26,4 @@ indent_blankline.setup ({
         "IndentBlanklineIndent6",
     },
 })
+vim.notify("Indent blankline loaded")
