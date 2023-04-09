@@ -110,3 +110,4 @@ telescope.setup({
 		file_browser = {},
 	},
 })
+

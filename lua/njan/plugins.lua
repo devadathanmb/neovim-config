@@ -161,6 +161,9 @@ return packer.startup(function(use)
 	-- Illuminate : Highlight word under cursor
 	use("RRethy/vim-illuminate")
 
+  -- Tranpsparent nvim
+  use("xiyaowong/transparent.nvim")
+
 	-- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
