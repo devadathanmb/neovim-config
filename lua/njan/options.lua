@@ -1,6 +1,8 @@
 -- Allows neovim to access systemclipboard
 vim.opt.clipboard = "unnamedplus"
 
+-- No more annoying swap files
+vim.opt.swapfile = false
 
 -- Search options
 vim.opt.ignorecase = true	-- Ignore case while searching
