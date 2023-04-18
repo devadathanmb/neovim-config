@@ -1,5 +1,5 @@
 -- This is the colorscheme name
-local colorscheme = "darkplus"
+local colorscheme = "vscode"
 --[[]]
 --[[ require(colorscheme).setup({ ]]
 --[[ 	transparent_background = false, ]]
