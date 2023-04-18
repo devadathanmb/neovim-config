@@ -73,3 +73,7 @@ keymap("n", "<C-m>", ":MarkdownPreviewToggle<cr>", opts)
 
 -- Colorizer activate
 keymap("n", "<C-c>", ":ColorizerAttachToBuffer<cr>", opts)
+
+-- Cycle through completions in command mode using ctrl + j, k
+keymap("c", "<C-j>", "<C-n>", opts)
+keymap("c", "<C-k>", "<C-p>", opts)
