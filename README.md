@@ -18,12 +18,13 @@ Heavily inspired from [Neovim from scratch series](https://www.youtube.com/playl
 ---
 
 ## Quick setup
-1. Make sure `neovim` version `0.7` or greater is installed by using `nvim --version`.  
+1. Make sure `neovim` version `0.8` or greater is installed by using `nvim --version`.  
 
 2. Backup your current `neovim` configurations using  
 ```bash
 mkdir ~/.config/nvimbackup
 mv ~/.config/nvim ~/.config/nvimbackup
+rm -rf ~/.local/share/nvim ~/.cache/nvim # This gets rid of all your before installed plugins
 ```
 3. Check the health status of neovim using  
 - Open `neovim` and enter the command `:checkhealth`.  
