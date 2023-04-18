@@ -55,3 +55,8 @@ vim.cmd('augroup END')
 
 -- Get rid of that goddman ~
 vim.wo.fillchars='eob: '
+
+-- No more semantic highlighting
+for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
+  vim.api.nvim_set_hl(0, group, {})
+end
