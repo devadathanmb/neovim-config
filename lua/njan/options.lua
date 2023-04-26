@@ -54,9 +54,9 @@ vim.cmd('autocmd FileType markdown setlocal conceallevel=2')
 vim.cmd('augroup END')
 
 -- Get rid of that goddman ~
-vim.wo.fillchars='eob: '
+vim.opt.fillchars = { eob = " " }
 
 -- No more semantic highlighting
-for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do
-  vim.api.nvim_set_hl(0, group, {})
-end
+--[[ for _, group in ipairs(vim.fn.getcompletion("@lsp", "highlight")) do ]]
+--[[   vim.api.nvim_set_hl(0, group, {}) ]]
+--[[ end ]]
