@@ -69,7 +69,7 @@ keymap("n", "<leader>fb", "<cmd>Telescope file_browser<cr>", opts)
 keymap("n", "<leader>fr", "<cmd>lua vim.lsp.buf.format()<cr>", opts)
 
 -- Markdown preview keymap
-keymap("n", "<C-m>", ":MarkdownPreviewToggle<cr>", opts)
+--[[ keymap("n", "<C-m>", ":MarkdownPreviewToggle<cr>", opts) ]]
 
 -- Colorizer activate
 keymap("n", "<C-c>", ":ColorizerAttachToBuffer<cr>", opts)
