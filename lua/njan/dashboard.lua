@@ -1,4 +1,8 @@
-local dashboard = require("dashboard")
+local status_ok, dashboard = pcall(require, "dashboard")
+if not status_ok then
+  vim.notify("Error loading dashboard")
+  return
+end
 
 dashboard.setup({
 	theme = "doom",
