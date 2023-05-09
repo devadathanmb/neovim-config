@@ -153,6 +153,9 @@ return packer.startup(function(use)
 		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
 	})
 
+  -- Harpoon nvim
+  use("ThePrimeagen/harpoon")
+
 	-- Tex stuff
 	use("lervag/vimtex")
 
