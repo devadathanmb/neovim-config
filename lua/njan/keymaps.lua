@@ -16,13 +16,11 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 
 -- Remap cutting using d
 --[[ keymap("n", "<leader>d", "d", opts) ]]
-
 -- Put deleting using c and d to blackhole register
 --[[ keymap("n", "d", "\"_d", opts) ]]
 --[[ keymap("v", "d", "\"_d", opts) ]]
 --[[ keymap("n", "c", "\"_c", opts) ]]
 --[[ keymap("v", "c", "\"_c", opts) ]]
-
 -- Manage buffers
 keymap("n", "<C-x>", ":Bdelete<CR>", opts)
 keymap("n", "<C-n>", ":enew<CR>", opts)
@@ -70,10 +68,15 @@ keymap("n", "<leader>fr", "<cmd>lua vim.lsp.buf.format()<cr>", opts)
 
 -- Markdown preview keymap
 --[[ keymap("n", "<C-m>", ":MarkdownPreviewToggle<cr>", opts) ]]
-
 -- Colorizer activate
 keymap("n", "<C-c>", ":ColorizerAttachToBuffer<cr>", opts)
 
 -- Cycle through completions in command mode using ctrl + j, k
 keymap("c", "<C-j>", "<C-n>", opts)
 keymap("c", "<C-k>", "<C-p>", opts)
+
+-- Harpoon keymaps
+keymap("n", "<C-h>", ":lua require('harpoon.ui').toggle_quick_menu()<cr>", opts)
+keymap("n", "<leader>a", ":lua require('harpoon.mark').add_file()<cr>", opts)
+keymap("n", "<leader>n", ":lua require('harpoon.mark').nav_next()<cr>", opts)
+keymap("n", "<leader>p", ":lua require('harpoon.mark').nav_prev()<cr>", opts)
