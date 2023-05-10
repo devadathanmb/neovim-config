@@ -129,7 +129,7 @@ return packer.startup(function(use)
 	-- Git signs
 	use("lewis6991/gitsigns.nvim")
 
-  -- Alpha : Startup dashboar
+	-- Alpha : Startup dashboar
 	use({
 		"goolord/alpha-nvim",
 	})
@@ -153,17 +153,20 @@ return packer.startup(function(use)
 		tag = "*", -- Use for stability; omit to use `main` branch for the latest features
 	})
 
-  -- Autotag
-  use("windwp/nvim-ts-autotag")
+	-- Autotag
+	use("windwp/nvim-ts-autotag")
 
-  -- Harpoon nvim
-  use("ThePrimeagen/harpoon")
+	-- Harpoon nvim
+	use("ThePrimeagen/harpoon")
 
 	-- Tex stuff
 	use("lervag/vimtex")
 
 	-- Illuminate : Highlight word under cursor
 	use("RRethy/vim-illuminate")
+
+	-- Vim tmux navigator
+	use("christoomey/vim-tmux-navigator")
 
 	-- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then
