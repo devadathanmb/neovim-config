@@ -7,13 +7,12 @@ Heavily inspired from [Neovim from scratch series](https://www.youtube.com/playl
 ---
 
 ## Preview
-![2023-04-18T17:33:23,361288256+05:30](https://user-images.githubusercontent.com/84301852/232771466-a1c2ed18-6b19-4fb1-be58-23aec7099450.png)
+![2023-05-10-T-22-19-01](https://github.com/devadathanmb/entevim/assets/84301852/f77e1006-d46a-4350-9532-203ceeef8108)
 
-![2023-04-18T17:27:57,554177303+05:30](https://user-images.githubusercontent.com/84301852/232771527-b4f15aeb-1abc-414d-b7ec-0cce3c64556b.png)
 
-![2023-04-18T17:28:26,947123597+05:30](https://user-images.githubusercontent.com/84301852/232771565-10780815-ff7c-45c9-bfdb-e2654b1431ca.png)
+![2023-05-10-T-22-23-23](https://github.com/devadathanmb/entevim/assets/84301852/c94fba6d-6608-4fef-8b92-cf514eb2ddd7)
 
-![2023-04-18T17:28:48,451955406+05:30](https://user-images.githubusercontent.com/84301852/232771573-9a0ca623-734b-4ed6-8366-b5493e9a99d7.png)
+![2023-05-10-T-22-24-21](https://github.com/devadathanmb/entevim/assets/84301852/5979e00e-9069-4302-9c8d-10d432312e1f)
 
 ---
 
