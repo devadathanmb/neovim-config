@@ -76,7 +76,7 @@ keymap("c", "<C-j>", "<C-n>", opts)
 keymap("c", "<C-k>", "<C-p>", opts)
 
 -- Harpoon keymaps
-keymap("n", "<C-h>", ":lua require('harpoon.ui').toggle_quick_menu()<cr>", opts)
+keymap("n", "<leader>h", ":lua require('harpoon.ui').toggle_quick_menu()<cr>", opts)
 keymap("n", "<leader>a", ":lua require('harpoon.mark').add_file()<cr>", opts)
 keymap("n", "<leader>n", ":lua require('harpoon.mark').nav_next()<cr>", opts)
 keymap("n", "<leader>p", ":lua require('harpoon.mark').nav_prev()<cr>", opts)
