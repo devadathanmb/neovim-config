@@ -9,7 +9,7 @@ require("vscode").setup({
 	-- style = 'light'
 
 	-- Enable transparent background
-	transparent = true,
+	transparent = false,
 	-- Enable italic comment
 	italic_comments = true,
 	-- Disable nvim-tree background color
