@@ -25,13 +25,6 @@ local diff = {
 	cond = hide_in_width,
 }
 
-local mode = {
-	"mode",
-	fmt = function(str)
-		return "-" .. str .. "-"
-	end,
-}
-
 local filetype = {
 	"filetype",
 	icons_enabled = false,
@@ -65,7 +58,7 @@ lualine.setup({
 		lualine_a = { branch, diagnostics },
 		lualine_b = {},
 		lualine_c = {
-			{ "filename", file_status = true, path = 3 },
+			{ "filename", file_status = true, path = 0 },
 		},
 		lualine_x = { diff, filetype },
 		lualine_y = { "require'lsp-status'.status()" },
