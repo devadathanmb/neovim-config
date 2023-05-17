@@ -60,7 +60,6 @@ keymap(
 	"<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
 	opts
 )
-keymap("n", "<c-t>", "<cmd>Telescope live_grep<cr>", opts)
 keymap("n", "<leader>fb", "<cmd>Telescope file_browser<cr>", opts)
 
 -- Formatting keymap
@@ -76,7 +75,10 @@ keymap("c", "<C-j>", "<C-n>", opts)
 keymap("c", "<C-k>", "<C-p>", opts)
 
 -- Harpoon keymaps
-keymap("n", "<leader>h", ":lua require('harpoon.ui').toggle_quick_menu()<cr>", opts)
 keymap("n", "<leader>a", ":lua require('harpoon.mark').add_file()<cr>", opts)
+keymap("n", "<C-e>", ":lua require('harpoon.ui').toggle_quick_menu()<cr>", opts)
+keymap("n", "<C-t>", ":lua require('harpoon.ui').nav_file(1)<cr>", opts)
+keymap("n", "<C-n>", ":lua require('harpoon.ui').nav_file(2)<cr>", opts)
+keymap("n", "<C-s>", ":lua require('harpoon.ui').nav_file(3)<cr>", opts)
 keymap("n", "<leader>n", ":lua require('harpoon.mark').nav_next()<cr>", opts)
 keymap("n", "<leader>p", ":lua require('harpoon.mark').nav_prev()<cr>", opts)
