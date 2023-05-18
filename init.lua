@@ -4,6 +4,7 @@ require "njan.keymaps"
 require "njan.plugins"
 require "njan.nvim-colorizer"
 --[[ require "njan.vscode" ]]
+--[[ require "njan.tokyonight" ]]
 require "njan.colorscheme"
 require "njan.lualine"
 require "njan.illuminate"
