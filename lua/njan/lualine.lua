@@ -45,7 +45,7 @@ local location = {
 lualine.setup({
 	options = {
 		icons_enabled = true,
-		theme = "vscode",
+		theme = "darkplus",
 		--[[ theme = "tokyonight", ]]
 		component_separators = { left = "", right = "" },
 		section_separators = { left = "", right = "" },
@@ -56,7 +56,7 @@ lualine.setup({
 		globalstatus = true,
 	},
 	sections = {
-		lualine_a = { branch, diagnostics },
+		lualine_a = { branch },
 		lualine_b = {},
 		lualine_c = {
 			{ "filename", file_status = true, path = 0 },
