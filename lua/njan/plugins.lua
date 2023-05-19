@@ -166,8 +166,18 @@ return packer.startup(function(use)
 	use("RRethy/vim-illuminate")
 
 	-- Vim tmux navigator
-	use("christoomey/vim-tmux-navigator")
+	--[[ use("christoomey/vim-tmux-navigator") ]]
+	use("tiagovla/tokyodark.nvim")
 
+	use({
+		"jinh0/eyeliner.nvim",
+		config = function()
+			require("eyeliner").setup({
+				highlight_on_key = true,
+        dim = true
+			})
+		end,
+	})
 	-- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
