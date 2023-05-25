@@ -174,10 +174,29 @@ return packer.startup(function(use)
 		config = function()
 			require("eyeliner").setup({
 				highlight_on_key = true,
-        dim = true
+				dim = true,
 			})
 		end,
 	})
+
+	use({
+		"rockyzhang24/arctic.nvim",
+		branch = "v2",
+		requires = { "rktjmp/lush.nvim" },
+	})
+
+		-- Or with configuration
+	use({
+		"projekt0n/github-nvim-theme",
+		config = function()
+			require("github-theme").setup({
+				-- ...
+			})
+
+			vim.cmd("colorscheme github_dark")
+		end,
+	})
+
 	-- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()

@@ -45,7 +45,7 @@ local location = {
 lualine.setup({
 	options = {
 		icons_enabled = true,
-		theme = "darkplus",
+		theme = "vscode",
 		--[[ theme = "tokyonight", ]]
 		component_separators = { left = "", right = "" },
 		section_separators = { left = "", right = "" },
