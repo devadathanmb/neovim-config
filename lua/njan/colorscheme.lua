@@ -1,5 +1,6 @@
 -- This is the colorscheme name
-local colorscheme = "darkplus"
+--[[ local colorscheme = "darkplus" ]]
+local colorscheme = "arctic"
 --[[]]
 --[[ require(colorscheme).setup({ ]]
 --[[ 	transparent_background = false, ]]
