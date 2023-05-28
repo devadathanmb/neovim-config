@@ -1,20 +1,19 @@
-
 local servers = {
 	--[[ "lua_ls", ]]
 	"pyright",
 	"jsonls",
-    "bashls",
-    "jdtls",
-    "clangd",
-    "tsserver",
-    "gopls",
-    "html",
-    "cssls",
-    "emmet_ls",
-    "lua_ls",
-    --[[ "marksman", ]]
-    "tailwindcss",
-    --[[ "ltex" ]]
+	"bashls",
+	"jdtls",
+	"clangd",
+	"tsserver",
+	"gopls",
+	"html",
+	"cssls",
+	"emmet_ls",
+	"lua_ls",
+	"marksman",
+	"tailwindcss",
+	--[[ "ltex" ]]
 }
 
 local settings = {
@@ -51,9 +50,9 @@ for _, server in pairs(servers) do
 
 	server = vim.split(server, "@")[1]
 
-    if server == "jdtls" then
-        goto continue
-    end
+	if server == "jdtls" then
+		goto continue
+	end
 
 	local require_ok, conf_opts = pcall(require, "njan.lsp.settings." .. server)
 	if require_ok then
@@ -61,5 +60,5 @@ for _, server in pairs(servers) do
 	end
 
 	lspconfig[server].setup(opts)
-    ::continue::
+	::continue::
 end
