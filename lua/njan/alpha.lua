@@ -20,11 +20,11 @@ dashboard.section.header.val = {
 -- Set menu
 dashboard.section.buttons.val = {
 	dashboard.button("e", "  > New file", ":ene <BAR> startinsert <CR>"),
-	dashboard.button("f", "  > Find file", ":cd $HOME | Telescope find_files<CR>"),
+	dashboard.button("f", "󰩉  > Find file", ":cd $HOME | Telescope find_files<CR>"),
 	dashboard.button("r", "  > Recent", ":Telescope oldfiles<CR>"),
 	dashboard.button("c", "  > Open NVIM config", ":e ~/.config/nvim <CR>"),
 	dashboard.button("d", "  > Open dotfiles", ":e ~/.config/ <CR>"),
-	dashboard.button("q", "  > Quit NVIM", ":qa<CR>"),
+	dashboard.button("q", "󰗼  > Quit NVIM", ":qa<CR>"),
 }
 
 -- Set footer
