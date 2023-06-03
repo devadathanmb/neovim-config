@@ -180,7 +180,7 @@ return packer.startup(function(use)
 	})
 
 	use({
-		"rockyzhang24/arctic.nvim",
+		"devadathanmb/arctic.nvim",
 		branch = "v2",
 		requires = { "rktjmp/lush.nvim" },
 	})
