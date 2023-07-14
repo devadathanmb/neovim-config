@@ -1,6 +1,9 @@
 -- This is the colorscheme name
 --[[ local colorscheme = "darkplus" ]]
 local colorscheme = "arctic"
+vim.g.arctic_config = {
+	transparent = true,
+}
 --[[]]
 --[[ require(colorscheme).setup({ ]]
 --[[ 	transparent_background = false, ]]
