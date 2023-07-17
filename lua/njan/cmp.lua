@@ -17,6 +17,7 @@ end
 
 --   פּ ﯟ   some other good icons
 local kind_icons = {
+  Copilot = "",
 	Array = "",
 	Boolean = "",
 	Class = "",
@@ -118,6 +119,7 @@ cmp.setup({
 		end,
 	},
 	sources = {
+		{ name = "copilot" },
 		{ name = "nvim_lsp" },
 		{ name = "nvim_lua" },
 		{ name = "luasnip" },
@@ -133,7 +135,7 @@ cmp.setup({
 		documentation = cmp.config.window.bordered(),
 	},
 	experimental = {
-		ghost_text = false,
+		ghost_text = true,
 		native_menu = false,
 	},
 })
