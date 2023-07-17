@@ -53,16 +53,19 @@ return packer.startup(function(use)
 	use("akinsho/toggleterm.nvim")
 
 	-- Colorscheme plugin
-	use("folke/tokyonight.nvim") -- Automatically set up your configuration after cloning packer.nvim
 	use("Mofiqul/vscode.nvim")
-	use("lunarvim/darkplus.nvim")
-	use({ "catppuccin/nvim", as = "catppuccin" })
+	use({
+		"devadathanmb/arctic.nvim",
+		branch = "v2",
+		requires = { "rktjmp/lush.nvim" },
+	})
 
 	-- Lua line plugin
 	use({
 		"nvim-lualine/lualine.nvim",
 		requires = { "kyazdani42/nvim-web-devicons", opt = true },
 	})
+
 	-- cmp plugins
 	use("hrsh7th/nvim-cmp") -- The completion plugin
 	use("hrsh7th/cmp-buffer") -- buffer completions
@@ -86,7 +89,7 @@ return packer.startup(function(use)
 	use("mfussenegger/nvim-jdtls") -- jdtls for java development
 
 	-- Flutter development stuff
-	use({ "akinsho/flutter-tools.nvim", requires = "nvim-lua/plenary.nvim" })
+	--[[ use({ "akinsho/flutter-tools.nvim", requires = "nvim-lua/plenary.nvim" }) ]]
 
 	-- Telescope
 	use("nvim-telescope/telescope.nvim")
@@ -101,6 +104,7 @@ return packer.startup(function(use)
 		"nvim-treesitter/nvim-treesitter",
 		run = ":TSUpdate",
 	})
+	use("nvim-treesitter/playground")
 	use("p00f/nvim-ts-rainbow")
 	use("JoosepAlviste/nvim-ts-context-commentstring")
 
@@ -134,6 +138,24 @@ return packer.startup(function(use)
 		"goolord/alpha-nvim",
 	})
 
+  -- Copilot stuff
+	use({
+		"zbirenbaum/copilot-cmp",
+		after = { "copilot.lua" },
+		config = function()
+			require("copilot_cmp").setup()
+		end,
+	})
+
+	use({
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		config = function()
+			require("copilot").setup({})
+		end,
+	})
+
 	-- Markdown preview
 	use({
 		"iamcco/markdown-preview.nvim",
@@ -165,10 +187,7 @@ return packer.startup(function(use)
 	-- Illuminate : Highlight word under cursor
 	use("RRethy/vim-illuminate")
 
-	-- Vim tmux navigator
-	--[[ use("christoomey/vim-tmux-navigator") ]]
-	use("tiagovla/tokyodark.nvim")
-
+  -- Eyeliner
 	use({
 		"jinh0/eyeliner.nvim",
 		config = function()
@@ -177,12 +196,6 @@ return packer.startup(function(use)
 				dim = true,
 			})
 		end,
-	})
-
-	use({
-		"devadathanmb/arctic.nvim",
-		branch = "v2",
-		requires = { "rktjmp/lush.nvim" },
 	})
 
 	-- Put this at the end after all plugins
