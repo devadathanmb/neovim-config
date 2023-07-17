@@ -19,7 +19,7 @@ require "njan.nvim-tree"
 --[[ require "njan.bufferline" ]]
 require "njan.toggleterm"
 require "njan.nvim-which-key"
-require "njan.flutter-tools"
+--[[ require "njan.flutter-tools" ]]
 require "njan.barbecue"
 require "njan.nvim-neoscroll"
 require "njan.surround"
