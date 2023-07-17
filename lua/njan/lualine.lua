@@ -31,6 +31,33 @@ local filetype = {
 	icon = nil,
 }
 
+local copilot = function()
+	local buf_clients = vim.lsp.get_active_clients({ bufnr = 0 })
+	if #buf_clients == 0 then
+		return "LSP Inactive"
+	end
+
+	local buf_ft = vim.bo.filetype
+	local buf_client_names = {}
+	local copilot_active = false
+
+	-- add client
+	for _, client in pairs(buf_clients) do
+		if client.name ~= "null-ls" and client.name ~= "copilot" then
+			table.insert(buf_client_names, client.name)
+		end
+
+		if client.name == "copilot" then
+			copilot_active = true
+		end
+	end
+
+	if copilot_active then
+		return " "
+	end
+	return ""
+end
+
 local branch = {
 	"branch",
 	icons_enabled = true,
@@ -60,6 +87,7 @@ lualine.setup({
 		lualine_b = {},
 		lualine_c = {
 			{ "filename", file_status = true, path = 0 },
+			{ copilot },
 		},
 		lualine_x = { diff, filetype },
 		lualine_y = { "require'lsp-status'.status()" },
