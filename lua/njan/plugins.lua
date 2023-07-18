@@ -138,21 +138,35 @@ return packer.startup(function(use)
 		"goolord/alpha-nvim",
 	})
 
-  -- Copilot stuff
-	use({
-		"zbirenbaum/copilot-cmp",
-		after = { "copilot.lua" },
-		config = function()
-			require("copilot_cmp").setup()
-		end,
-	})
+	-- Copilot stuff
+	--[[ use({ ]]
+	--[[ 	"zbirenbaum/copilot-cmp", ]]
+	--[[ 	after = { "copilot.lua" }, ]]
+	--[[ 	config = function() ]]
+	--[[ 		require("copilot_cmp").setup() ]]
+	--[[ 	end, ]]
+	--[[ }) ]]
 
 	use({
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
 		event = "InsertEnter",
 		config = function()
-			require("copilot").setup({})
+			require("copilot").setup({
+				suggestion = {
+					enabled = true,
+					auto_trigger = true,
+					debounce = 75,
+					keymap = {
+						accept = "<M-l>",
+						accept_word = false,
+						accept_line = false,
+						next = "<M-]>",
+						prev = "<M-[>",
+						dismiss = "<C-]>",
+					},
+				},
+			})
 		end,
 	})
 
@@ -187,7 +201,7 @@ return packer.startup(function(use)
 	-- Illuminate : Highlight word under cursor
 	use("RRethy/vim-illuminate")
 
-  -- Eyeliner
+	-- Eyeliner
 	use({
 		"jinh0/eyeliner.nvim",
 		config = function()
