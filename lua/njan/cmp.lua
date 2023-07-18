@@ -119,7 +119,7 @@ cmp.setup({
 		end,
 	},
 	sources = {
-		{ name = "copilot" },
+		--[[ { name = "copilot" }, ]]
 		{ name = "nvim_lsp" },
 		{ name = "nvim_lua" },
 		{ name = "luasnip" },
@@ -135,7 +135,7 @@ cmp.setup({
 		documentation = cmp.config.window.bordered(),
 	},
 	experimental = {
-		ghost_text = true,
+		ghost_text = false,
 		native_menu = false,
 	},
 })
