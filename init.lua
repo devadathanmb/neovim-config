@@ -16,7 +16,7 @@ require "njan.autopairs"
 require "njan.comments"
 require "njan.gitsigns"
 require "njan.nvim-tree"
---[[ require "njan.bufferline" ]]
+require "njan.bufferline"
 require "njan.toggleterm"
 require "njan.nvim-which-key"
 --[[ require "njan.flutter-tools" ]]
