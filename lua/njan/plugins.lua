@@ -97,7 +97,7 @@ return packer.startup(function(use)
 	use("nvim-telescope/telescope-file-browser.nvim") -- Telescope file browser plugin
 
 	-- Colorizer
-	use("norcalli/nvim-colorizer.lua")
+	use("NvChad/nvim-colorizer.lua")
 
 	-- Treesitter
 	use({
