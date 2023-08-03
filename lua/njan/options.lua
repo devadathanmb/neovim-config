@@ -8,6 +8,9 @@ vim.opt.swapfile = false
 vim.opt.ignorecase = true -- Ignore case while searching
 vim.opt.smartcase = true -- Smart case searching
 
+-- Don't display the cmd, why waste space 
+vim.opt.cmdheight = 0
+
 -- Indentation and line wrap
 vim.opt.smartindent = true -- Make indentation smarter
 vim.opt.wrap = false -- No line wrapping
