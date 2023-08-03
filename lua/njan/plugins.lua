@@ -153,6 +153,19 @@ return packer.startup(function(use)
 		event = "InsertEnter",
 		config = function()
 			require("copilot").setup({
+				filetypes = {
+					markdown = false, -- overrides default
+					java = false,
+					c = false,
+					sh = function()
+						if string.match(vim.fs.basename(vim.api.nvim_buf_get_name(0)), "^%.env.*") then
+							-- disable for .env files
+							return false
+						end
+						return true
+					end,
+					["*"] = false, -- disable for all other filetypes and ignore default `filetypes`
+				},
 				suggestion = {
 					enabled = true,
 					auto_trigger = true,
@@ -212,7 +225,27 @@ return packer.startup(function(use)
 		end,
 	})
 
-	-- Put this at the end after all plugins
+	-- Dap
+	-- Debugging
+	use({
+		"mfussenegger/nvim-dap",
+		opt = true,
+		event = "BufReadPre",
+		module = { "dap" },
+		wants = { "nvim-dap-virtual-text", "DAPInstall.nvim", "nvim-dap-ui", "nvim-dap-python", "which-key.nvim" },
+		requires = {
+			"Pocco81/DAPInstall.nvim",
+			"theHamsta/nvim-dap-virtual-text",
+			"rcarriga/nvim-dap-ui",
+			"mfussenegger/nvim-dap-python",
+			"nvim-telescope/telescope-dap.nvim",
+			{ "leoluz/nvim-dap-go", module = "dap-go" },
+			{ "jbyuki/one-small-step-for-vimkind", module = "osv" },
+		},
+		config = function()
+			require("config.dap").setup()
+		end,
+	}) -- Put this at the end after all plugins
 	if PACKER_BOOTSTRAP then
 		require("packer").sync()
 	end
