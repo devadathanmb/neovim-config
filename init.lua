@@ -1,4 +1,4 @@
--- require "impatient"
+require "impatient"
 require "njan.options"
 require "njan.keymaps"
 require "njan.plugins"
@@ -10,6 +10,7 @@ require "njan.lualine"
 require "njan.illuminate"
 require "njan.cmp"
 require "njan.lsp"
+--[[ require "njan.dap" ]]
 require "njan.telescope"
 require "njan.treesitter"
 require "njan.autopairs"
