@@ -166,6 +166,7 @@ local which_key_mappings = {
 			l = { "<cmd>Telescope live_grep<cr>", "Live grep" },
 			f = { "<cmd>Telescope find_files<cr>", "Find files" },
 			b = { "<cmd>Telescope buffers<cr>", "Find buffers" },
+			s = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Current buffer fuzzy finds" },
 		},
 
 		-- Markdown
