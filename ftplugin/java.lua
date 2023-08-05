@@ -50,7 +50,7 @@ local config = {
 		"-data",
 		workspace_dir,
 	},
-	on_attach = require("njan.lsp.handlers").on_attach,
+	on_attach = require("user.lsp.handlers").on_attach,
 	root_dir = require("jdtls.setup").find_root({ ".git", "mvnw", "gradlew", "pom.xml", "build.gradle" }),
 	capabilities = capabilities,
 	settings = {
