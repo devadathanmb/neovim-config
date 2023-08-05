@@ -22,7 +22,7 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 --[[ keymap("n", "c", "\"_c", opts) ]]
 --[[ keymap("v", "c", "\"_c", opts) ]]
 -- Manage buffers
-keymap("n", "<C-x>", ":Bdelete<CR>", opts)
+keymap("n", "<C-x>", "<cmd>BufferKill<CR>", opts)
 keymap("n", "<C-n>", ":enew<CR>", opts)
 
 -- Navigate buffers

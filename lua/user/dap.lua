@@ -1,3 +1,6 @@
+local M = {
+
+}
 local status_ok, which_key = pcall(require, "which-key")
 if not status_ok then
 	return
@@ -33,9 +36,3 @@ if not status_ok then
 end
 
 dapui.setup()
-
-local status_ok, python_dap = pcall(require, "dap-python")
-if not status_ok then
-	return
-end
-python_dap.setup()
