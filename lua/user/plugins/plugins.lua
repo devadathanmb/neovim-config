@@ -1,6 +1,9 @@
 local plugins = {
 	{ "Mofiqul/vscode.nvim", opts = {} },
-	{ "ThePrimeagen/harpoon" },
+	{
+		"ThePrimeagen/harpoon",
+		event = "VeryLazy",
+	},
 	{
 		"iamcco/markdown-preview.nvim",
 		build = "cd app && npm install",
@@ -13,8 +16,12 @@ local plugins = {
 	{
 
 		"itchyny/calendar.vim",
+		event = "VeryLazy",
 	},
-	{ "lervag/vimtex" },
+	{
+		"lervag/vimtex",
+		ft = { "tex" },
+	},
 	{ "RRethy/vim-illuminate" },
 }
 
