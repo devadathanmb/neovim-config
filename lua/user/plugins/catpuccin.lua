@@ -3,6 +3,7 @@ local M = {
 	name = "catppuccin",
 	lazy = false,
 	build = ":CatppuccinCompile",
+  enabled = false,
 	priority = 1000,
 }
 
