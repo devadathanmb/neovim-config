@@ -10,6 +10,8 @@ function M.config()
 			markdown = false, -- overrides default
 			java = false,
 			c = false,
+			javascript = true,
+			python = true,
 			sh = function()
 				if string.match(vim.fs.basename(vim.api.nvim_buf_get_name(0)), "^%.env.*") then
 					-- disable for .env files
@@ -24,7 +26,7 @@ function M.config()
 			auto_trigger = true,
 			debounce = 75,
 			keymap = {
-				accept = "<M-l>",
+				accept = "<M-S-L>",
 				accept_word = false,
 				accept_line = false,
 				next = "<M-]>",
