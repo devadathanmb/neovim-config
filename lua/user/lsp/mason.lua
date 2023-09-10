@@ -5,6 +5,7 @@ local servers = {
 	"bashls",
 	"jdtls",
 	"clangd",
+  "dockerls",
 	"tsserver",
 	"gopls",
 	"html",
