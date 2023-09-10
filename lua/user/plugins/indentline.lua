@@ -5,7 +5,7 @@ local M = {
 
 function M.config()
   local indent_blankline = require("indent_blankline")
-  vim.opt.list = true
+  vim.opt.list = false
 
   indent_blankline.setup({
     show_current_context = true,
