@@ -57,7 +57,7 @@ keymap("v", "p", '"_dP', opts)
 keymap(
 	"n",
 	"<leader>ff",
-	"<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false }))<cr>",
+	"<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false, no_ignore = true }))<cr>",
 	opts
 )
 keymap("n", "<leader>fb", "<cmd>Telescope file_browser<cr>", opts)
