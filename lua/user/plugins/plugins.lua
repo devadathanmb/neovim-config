@@ -1,5 +1,4 @@
 local plugins = {
-	{ "Mofiqul/vscode.nvim", opts = {} },
 	{
 		"ThePrimeagen/harpoon",
 		event = "VeryLazy",
@@ -17,10 +16,6 @@ local plugins = {
 
 		"itchyny/calendar.vim",
 		event = "VeryLazy",
-	},
-	{
-		"lervag/vimtex",
-		ft = { "tex" },
 	},
 	{ "RRethy/vim-illuminate" },
 }
