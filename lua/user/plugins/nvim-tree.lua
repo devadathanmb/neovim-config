@@ -1,6 +1,6 @@
 local M = {
   "nvim-tree/nvim-tree.lua",
-  enabled = true,
+  enabled = false,
 }
 
 local function on_attach(bufnr)
