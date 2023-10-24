@@ -1,6 +1,13 @@
 local M = {
 	"lervag/vimtex",
-	ft = "tex",
+	commit = "a7b1654ef59bfd8c15ab3e0eb27451319174a131",
+	ft = { "tex", "cls" },
+	init = function()
+		vim.g.vimtex_view_general_viewer = "zathura"
+		vim.g.tex_comment_nospell = 1
+		vim.g.compiler_method = "pdflatex"
+	end,
+	enabled = false,
 }
 
 return M
