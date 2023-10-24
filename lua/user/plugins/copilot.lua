@@ -10,7 +10,13 @@ function M.config()
 			markdown = false, -- overrides default
 			java = false,
 			c = false,
+      lua = true,
 			javascript = true,
+			typescript = true,
+      html = true,
+      javascriptreact = true,
+      typescriptreact = true,
+      css = true,
 			python = true,
 			sh = function()
 				if string.match(vim.fs.basename(vim.api.nvim_buf_get_name(0)), "^%.env.*") then
