@@ -1,35 +1,15 @@
 local M = {
 	"nvim-lualine/lualine.nvim",
-	event = { "InsertEnter", "BufReadPre", "BufAdd", "BufNew", "BufReadPost" },
 }
 
 function M.config()
-	local lualine = require("lualine")
-	local hide_in_width = function()
-		return vim.fn.winwidth(0) > 80
-	end
-
-	local diagnostics = {
-		"diagnostics",
-		sources = { "nvim_diagnostic" },
-		sections = { "error", "warn" },
-		symbols = { error = " ", warn = " " },
-		colored = false,
-		update_in_insert = false,
-		always_visible = true,
-	}
-
+	local sl_hl = vim.api.nvim_get_hl_by_name("StatusLine", true)
+	vim.api.nvim_set_hl(0, "Copilot", { fg = "#6CC644", bg = sl_hl.background })
+	local icons = require("user.utils.icons")
 	local diff = {
 		"diff",
-		colored = false,
-		symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
-		cond = hide_in_width,
-	}
-
-	local filetype = {
-		"filetype",
-		icons_enabled = false,
-		icon = nil,
+		colored = true,
+		symbols = { added = icons.git.LineAdded, modified = icons.git.LineModified, removed = icons.git.LineRemoved }, -- Changes the symbols used by the diff.
 	}
 
 	local copilot = function()
@@ -38,11 +18,9 @@ function M.config()
 			return "LSP Inactive"
 		end
 
-		local buf_ft = vim.bo.filetype
 		local buf_client_names = {}
 		local copilot_active = false
 
-		-- add client
 		for _, client in pairs(buf_clients) do
 			if client.name ~= "null-ls" and client.name ~= "copilot" then
 				table.insert(buf_client_names, client.name)
@@ -54,53 +32,36 @@ function M.config()
 		end
 
 		if copilot_active then
-			return " "
+			return "%#Copilot#" .. icons.git.Octoface .. "%*"
 		end
 		return ""
 	end
 
-	local branch = {
-		"branch",
-		icons_enabled = true,
-		icon = "",
-	}
-
-	local location = {
-		"location",
-		padding = 0,
-	}
-
-	lualine.setup({
+	require("lualine").setup({
 		options = {
-			icons_enabled = true,
 			theme = require("user.utils.lualine-themes.arctic"),
+			-- component_separators = { left = "", right = "" },
+			-- section_separators = { left = "", right = "" },
 			component_separators = { left = "", right = "" },
-			section_separators = { left = "", right = "" },
-			disabled_filetypes = {
-				statusline = { "alpha", "dashboard" },
-			},
-			always_divide_middle = true,
-			globalstatus = true,
+			section_separators = { left = "", right = "" },
+
+			ignore_focus = { "NvimTree", "neo-tree" },
 		},
 		sections = {
-			lualine_a = { branch },
-			lualine_b = {},
-			lualine_c = {
-				{ "filename", file_status = true, path = 0 },
-				{ copilot },
-			},
-			lualine_x = { diff, filetype },
-			lualine_y = { "require'lsp-status'.status()" },
+			-- lualine_a = { {"branch", icon =""} },
+			-- lualine_b = { diff },
+			-- lualine_c = { "diagnostics" },
+			-- lualine_x = { copilot },
+			-- lualine_y = { "filetype" },
+			-- lualine_z = { "progress" },
+			lualine_a = { "mode" },
+			lualine_b = { "branch" },
+			lualine_c = { diff },
+			lualine_x = { "diagnostics" },
+			lualine_y = { copilot, "filetype" },
+			lualine_z = { "progress" },
 		},
-		inactive_sections = {
-			lualine_a = {},
-			lualine_b = {},
-			lualine_x = { "location" },
-			lualine_y = {},
-			lualine_z = {},
-		},
-		tabline = {},
-		extensions = {},
+		extensions = { "quickfix", "man", "fugitive" },
 	})
 end
 
