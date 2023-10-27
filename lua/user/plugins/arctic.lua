@@ -5,6 +5,7 @@ local M = {
 	branch = "v2",
 	lazy = false,
 	priority = 1000,
+	enabled = true,
 }
 
 function M.config()
