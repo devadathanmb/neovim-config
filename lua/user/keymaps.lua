@@ -37,7 +37,7 @@ keymap("n", "<C-M-u>", ":BufferLineMovePrev<CR>", opts)
 keymap("n", "<leader>p", ":BufferLineTogglePin<CR>", opts)
 
 -- Nvim Tree
-keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
+--[[ keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts) ]]
 
 -- Resize with arrows
 keymap("n", "<C-Up>", ":resize +2<CR>", opts)
