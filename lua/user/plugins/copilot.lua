@@ -9,6 +9,7 @@ function M.config()
 		filetypes = {
 			markdown = false, -- overrides default
 			java = false,
+      yaml = true,
 			c = false,
       lua = true,
 			javascript = true,
