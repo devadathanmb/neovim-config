@@ -14,6 +14,11 @@ keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 
+-- Word wrap navigation
+keymap("n", "j", "gj", opts)
+keymap("n", "k", "gk", opts)
+
+
 -- Remap cutting using d
 --[[ keymap("n", "<leader>d", "d", opts) ]]
 -- Put deleting using c and d to blackhole register
