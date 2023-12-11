@@ -39,7 +39,7 @@ keymap("n", "<C-M-i>", ":BufferLineMoveNext<CR>", opts)
 keymap("n", "<C-M-u>", ":BufferLineMovePrev<CR>", opts)
 
 -- Pin/Unpin a tab using in BufferLine
-keymap("n", "<leader>p", ":BufferLineTogglePin<CR>", opts)
+--[[ keymap("n", "<leader>p", ":BufferLineTogglePin<CR>", opts) ]]
 
 -- Nvim Tree
 --[[ keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts) ]]
