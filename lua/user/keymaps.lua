@@ -18,7 +18,6 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 keymap("n", "j", "gj", opts)
 keymap("n", "k", "gk", opts)
 
-
 -- Remap cutting using d
 --[[ keymap("n", "<leader>d", "d", opts) ]]
 -- Put deleting using c and d to blackhole register
@@ -60,10 +59,10 @@ keymap("v", "p", '"_dP', opts)
 
 -- Telescope keybindings
 keymap(
-	"n",
-	"<leader>ff",
-	"<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false, no_ignore = true }))<cr>",
-	opts
+  "n",
+  "<leader>ff",
+  "<cmd>lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ previewer = false, no_ignore = true }))<cr>",
+  opts
 )
 keymap("n", "<leader>fb", "<cmd>Telescope file_browser<cr>", opts)
 

@@ -4,7 +4,7 @@ local M = {
 }
 
 function M.config()
-  local toggleterm = require "toggleterm"
+  local toggleterm = require("toggleterm")
 
   toggleterm.setup({
     size = 20,
