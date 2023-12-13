@@ -21,7 +21,7 @@ local M = {
   --[[     require("user.lsp.null-ls") ]]
   --[[   end, ]]
   --[[ }, ]]
-  {"mfussenegger/nvim-jdtls"}
+  { "mfussenegger/nvim-jdtls" },
 }
 
 return M
