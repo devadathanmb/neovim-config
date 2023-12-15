@@ -13,9 +13,4 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 vim.g.mapleader = " " -- Make sure to set `mapleader` before lazy so your mappings are correct
-require("lazy").setup("user.plugins", {
-  disabled_plugins = {
-    "catppuccin",
-  },
-  --[[ install = { colorscheme = { "arctic" } }, ]]
-})
+require("lazy").setup({ { import = "user.plugins" }, { import = "user.plugins.lsp" } })
