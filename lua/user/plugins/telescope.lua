@@ -1,10 +1,10 @@
 local M = {
   "nvim-telescope/telescope.nvim",
-  tag = "0.1.2",
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-telescope/telescope-media-files.nvim",
     "nvim-telescope/telescope-ui-select.nvim",
+    { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
     "nvim-telescope/telescope-file-browser.nvim",
   },
 }
@@ -110,6 +110,13 @@ function M.config()
         -- defaults to {"png", "jpg", "mp4", "webm", "pdf"}
         filetypes = { "png", "webp", "jpg", "jpeg" },
         find_cmd = "rg", -- find command (defaults to `fd`)
+      },
+      fzf = {
+        fuzzy = true, -- false will only do exact matching
+        override_generic_sorter = true, -- override the generic sorter
+        override_file_sorter = true, -- override the file sorter
+        case_mode = "smart_case", -- or "ignore_case" or "respect_case"
+        -- the default case_mode is "smart_case"
       },
       -- Your extension configuration goes here:
       -- extension_name = {
