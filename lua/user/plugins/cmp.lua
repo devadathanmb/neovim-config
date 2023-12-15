@@ -49,7 +49,6 @@ function M.config()
     return col == 0 or vim.fn.getline("."):sub(col, col):match("%s")
   end
 
-  --   פּ ﯟ   some other good icons
   local kind_icons = {
     Copilot = "",
     Array = "",
@@ -87,7 +86,6 @@ function M.config()
     Value = "",
     Variable = "",
   }
-  -- find more here: https://www.nerdfonts.com/cheat-sheet
 
   cmp.setup({
     snippet = {
