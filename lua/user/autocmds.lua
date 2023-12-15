@@ -1,4 +1,5 @@
-vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = require("user.utils.neo-tree-helper").open_neo_tree })
+-- vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = require("user.utils.neo-tree-helper").open_neo_tree })
+vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = require("user.utils.nvim-tree-helper").open_nvim_tree })
 
 -- Load bufferline when there's only more than one buffer
 vim.api.nvim_create_autocmd({ "BufNewFile", "BufRead", "TabEnter" }, {
