@@ -23,12 +23,18 @@ function M.config()
       percentage = 0.15,
     },
     no_italic = false, -- Force no italic
-    no_bold = false, -- Force no bold
+    no_bold = false,   -- Force no bold
     styles = {
       comments = { "italic" },
       conditionals = { "italic" },
     },
-    color_overrides = {},
+    color_overrides = {
+      mocha = {
+        base = "#000000",
+        mantle = "#000000",
+        crust = "#000000",
+      },
+    },
     integrations = {
       cmp = true,
       gitsigns = true,
