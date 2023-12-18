@@ -28,6 +28,7 @@ local formatters = {
   "stylua",
   "isort",
   "black",
+  "beautysh",
 }
 
 function M.config()
