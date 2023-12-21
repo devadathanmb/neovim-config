@@ -17,7 +17,7 @@ function M.config()
         enabled = false,
       },
       progress = {
-        enabled = false,
+        enabled = true,
       },
       message = {
         enabled = false,
@@ -29,6 +29,13 @@ function M.config()
         ["cmp.entry.get_documentation"] = true,
       },
     },
+    views = {
+      mini = {
+        win_options = {
+          winblend = 0,
+        },
+      },
+    },
     -- you can enable a preset for easier configuration
     presets = {
       bottom_search = true, -- use a classic bottom cmdline for search
@@ -37,7 +44,12 @@ function M.config()
       inc_rename = false, -- enables an input dialog for inc-rename.nvim
       lsp_doc_border = true, -- add a border to hover docs and signature help
     },
-    -- stylua: ignore
+    routes = {
+      {
+        view = "notify",
+        filter = { event = "msg_showmode" },
+      },
+    },
   })
   require("lualine").setup({
     sections = {
