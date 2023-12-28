@@ -5,7 +5,16 @@ local M = {
 }
 
 function M.config()
-  require("github-theme").setup({})
+  require("github-theme").setup({
+    options = {
+      transparent = false,
+      hide_nc_statusline = false, -- Override the underline style for non-active statuslines
+      terminal_colors = false,
+    },
+    paletts = {
+      github_dark_default = {},
+    },
+  })
 
   vim.cmd([[autocmd! ColorScheme * highlight NormalFloat guibg=#04070D]])
   vim.cmd([[autocmd! ColorScheme * highlight FloatBorder guifg=#58A6FF guibg=#04070D]])
