@@ -4,7 +4,6 @@ local M = {
 
 function M.config()
   local sl_hl = vim.api.nvim_get_hl_by_name("StatusLine", true)
-  vim.api.nvim_set_hl(0, "Copilot", { fg = "#6CC644", bg = sl_hl.background })
   local icons = require("user.utils.icons")
   local diff = {
     "diff",
@@ -32,7 +31,7 @@ function M.config()
     end
 
     if copilot_active then
-      return "%#Copilot#" .. icons.git.Octoface .. "%*"
+      return icons.git.Octoface
     end
     return ""
   end
@@ -40,11 +39,11 @@ function M.config()
   require("lualine").setup({
     options = {
       disabled_filetypes = { "NvimTree", "Lazy", "alpha" },
-      --[[ theme = require("user.utils.lualine-themes.arctic"), ]]
+      --[[ theme = require("user.utils.lualine-themes.gruvbox"), ]]
       -- component_separators = { left = "", right = "" },
-      -- section_separators = { left = "", right = "" },
+      section_separators = { left = "", right = "" },
       component_separators = { left = "", right = "" },
-      section_separators = { left = "", right = "" },
+      --[[ section_separators = { left = "", right = "" }, ]]
 
       ignore_focus = { "NvimTree", "neo-tree" },
     },
@@ -57,9 +56,9 @@ function M.config()
       -- lualine_z = { "progress" },
       lualine_a = { "mode" },
       lualine_b = { { "branch", icon = "" } },
-      lualine_c = { diff },
+      lualine_c = { diff, copilot },
       lualine_x = { "diagnostics" },
-      lualine_y = { copilot, "filetype" },
+      lualine_y = { "filetype" },
       lualine_z = { "progress" },
     },
     extensions = { "quickfix", "man", "fugitive" },
