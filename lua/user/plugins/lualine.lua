@@ -4,6 +4,7 @@ local M = {
 
 function M.config()
   local sl_hl = vim.api.nvim_get_hl_by_name("StatusLine", true)
+  vim.api.nvim_set_hl(0, "Copilot", { fg = "white", bg = sl_hl.bg })
   local icons = require("user.utils.icons")
   local diff = {
     "diff",
@@ -31,7 +32,7 @@ function M.config()
     end
 
     if copilot_active then
-      return icons.git.Octoface
+      return "%#Copilot#" .. icons.git.Octoface .. "%*"
     end
     return ""
   end
