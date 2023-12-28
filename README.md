@@ -10,13 +10,13 @@ Heavily inspired from [Neovim from scratch series](https://www.youtube.com/playl
 
 ## Preview
 
-![Home](https://i.imgur.com/6A4FR24.png)
+![Home](https://i.imgur.com/z3yTwsB.png)
 
-![First](https://i.imgur.com/tLxXsfi.png)
+![First](https://i.imgur.com/BhfczXt.png)
 
-![Second](https://i.imgur.com/M6QWjHw.png)
+![Second](https://i.imgur.com/DMes4tU.png)
 
-![Third](https://i.imgur.com/kltidNy.png)
+![Third](https://i.imgur.com/MFZkkjR.png)
 
 ---
 
