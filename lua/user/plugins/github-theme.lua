@@ -7,8 +7,8 @@ local M = {
 function M.config()
   require("github-theme").setup({})
 
-  vim.cmd([[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]])
-  vim.cmd([[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
+  vim.cmd([[autocmd! ColorScheme * highlight NormalFloat guibg=#04070D]])
+  vim.cmd([[autocmd! ColorScheme * highlight FloatBorder guifg=#58A6FF guibg=#04070D]])
   vim.cmd("colorscheme github_dark_default")
 end
 
