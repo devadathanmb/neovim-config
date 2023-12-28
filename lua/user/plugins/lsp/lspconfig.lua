@@ -64,13 +64,15 @@ function M.config()
   -- used to enable autocompletion (assign to every lsp server config)
   local capabilities = cmp_nvim_lsp.default_capabilities()
 
+  vim.cmd([[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]])
+  vim.cmd([[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
   -- config looks
   local config = {
     -- disable virtual text
     virtual_text = true,
     -- show signs
     update_in_insert = false,
-    underline = false,
+    underline = true,
     severity_sort = true,
     float = {
       focusable = false,
@@ -81,6 +83,7 @@ function M.config()
       prefix = "",
     },
   }
+
   vim.diagnostic.config(config)
   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
     border = "rounded",

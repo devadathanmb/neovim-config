@@ -1,7 +1,7 @@
 local colors = {
   pink = "#D3869B",
   red = "#FB4934",
-  orange = "#FE8019",
+  orange = "#d65d0e",
   green = "#98971A",
   blue = "#076678",
   violet = "#B16286",

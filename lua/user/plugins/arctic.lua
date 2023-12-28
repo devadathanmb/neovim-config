@@ -10,9 +10,9 @@ local M = {
 
 function M.config()
   vim.g.arctic_config = {
-    transparent = true,
+    transparent = false,
   }
-  vim.cmd([[colorscheme arctic]])
+  -- vim.cmd([[colorscheme arctic]])
 end
 
 return M
