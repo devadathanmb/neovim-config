@@ -18,7 +18,12 @@ function M.config()
 
   vim.cmd([[autocmd! ColorScheme * highlight NormalFloat guibg=#04070D]])
   vim.cmd([[autocmd! ColorScheme * highlight FloatBorder guifg=#58A6FF guibg=#04070D]])
+  -- Set the background color of nvimtree
   vim.cmd("colorscheme github_dark_default")
+
+  vim.cmd([[
+  hi NvimTreeNormal guibg=#04070D
+]])
 end
 
 return M
