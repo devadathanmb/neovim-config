@@ -64,8 +64,6 @@ function M.config()
   -- used to enable autocompletion (assign to every lsp server config)
   local capabilities = cmp_nvim_lsp.default_capabilities()
 
-  vim.cmd([[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]])
-  vim.cmd([[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
   -- config looks
   local config = {
     -- disable virtual text
@@ -136,7 +134,6 @@ function M.config()
       lspconfig[server].setup({
         capabilities = capabilities,
         on_attach = on_attach,
-        filetypes = filetypes,
       })
     end
   end
