@@ -10,6 +10,11 @@ function M.config()
       transparent = false,
       hide_nc_statusline = false, -- Override the underline style for non-active statuslines
       terminal_colors = false,
+      styles = {
+        comments = "italic",
+        keywords = "bold",
+        types = "italic,bold",
+      },
     },
     paletts = {
       github_dark_default = {},
