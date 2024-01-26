@@ -27,7 +27,7 @@ function M.config()
     terminal_colors = true, -- enable terminal colors
   }
   tokyodark.setup(opts)
-  vim.cmd([[colorscheme tokyodark]])
+  --vim.cmd([[colorscheme tokyodark]])
 end
 
 return M

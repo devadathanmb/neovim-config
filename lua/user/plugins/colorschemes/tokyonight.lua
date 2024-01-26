@@ -1,7 +1,7 @@
 local M = {
   "folke/tokyonight.nvim",
   lazy = false,
-  enabled = false,
+  enabled = true,
   priority = 1000,
   opts = {},
 }
@@ -9,9 +9,9 @@ local M = {
 function M.config()
   require("tokyonight").setup({
     style = "night",
-    transparent = true,
+    transparent = false,
   })
-  vim.cmd([[colorscheme tokyonight]])
+  --vim.cmd([[colorscheme tokyonight]])
 end
 
 return M

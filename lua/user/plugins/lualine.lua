@@ -4,7 +4,7 @@ local M = {
 
 function M.config()
   local sl_hl = vim.api.nvim_get_hl_by_name("StatusLine", true)
-  vim.api.nvim_set_hl(0, "Copilot", { fg = "white", bg = sl_hl.bg })
+  vim.api.nvim_set_hl(0, "Copilot", { fg = "#58A6FF", bg = sl_hl.bg })
   local icons = require("user.utils.icons")
   local diff = {
     "diff",

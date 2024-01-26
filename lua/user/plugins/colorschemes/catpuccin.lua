@@ -51,14 +51,14 @@ function M.config()
   })
 
   M.name = "catppuccin"
-  local status_ok, _ = pcall(vim.cmd.colorscheme, M.name)
-  if not status_ok then
-    return
-  end
-end
+  --[[ local status_ok, _ = pcall(vim.cmd.colorscheme, M.name) ]]
+  --[[ if not status_ok then ]]
+  --[[   return ]]
+  --[[ end ]]
 
-vim.api.nvim_set_hl(0, "IlluminatedWordText", { link = "Visual" })
-vim.api.nvim_set_hl(0, "IlluminatedWordRead", { link = "Visual" })
-vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { link = "Visual" })
+  vim.api.nvim_set_hl(0, "IlluminatedWordText", { link = "Visual" })
+  vim.api.nvim_set_hl(0, "IlluminatedWordRead", { link = "Visual" })
+  vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { link = "Visual" })
+end
 
 return M
