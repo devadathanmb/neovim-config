@@ -2,12 +2,13 @@ local M = {
   "projekt0n/github-nvim-theme",
   lazy = false, -- make sure we load this during startup if it is your main colorscheme
   priority = 1000, -- make sure to load this before all the other start plugins
+  enabled = true,
 }
 
 function M.config()
   require("github-theme").setup({
     options = {
-      transparent = false,
+      transparent = true,
       hide_nc_statusline = false, -- Override the underline style for non-active statuslines
       terminal_colors = false,
       styles = {
