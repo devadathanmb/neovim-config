@@ -4,6 +4,7 @@ local M = {
   dependencies = {
     "jay-babu/mason-null-ls.nvim",
   },
+  commit = "a311c7cc8f17543143a7482cdbe3a384c371d56a",
 }
 
 function M.config()
