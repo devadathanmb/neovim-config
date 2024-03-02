@@ -13,6 +13,7 @@ function M.config()
       yaml = true,
       c = false,
       lua = true,
+      go = true,
       javascript = true,
       typescript = true,
       html = true,
