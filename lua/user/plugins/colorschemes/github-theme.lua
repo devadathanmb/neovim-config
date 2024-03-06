@@ -26,6 +26,7 @@ function M.config()
   vim.cmd([[autocmd! ColorScheme * highlight FloatBorder guifg=#58A6FF guibg=#04070D]])
   -- Set the background color of nvimtree
   vim.cmd("colorscheme github_dark_default")
+  vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#58a6ff" })
 
   vim.cmd([[
   hi NvimTreeNormal guibg=#04070D
