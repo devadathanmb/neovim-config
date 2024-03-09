@@ -6,6 +6,9 @@ local M = {
       "folke/neodev.nvim",
     },
     {
+      "mfussenegger/nvim-jdtls",
+    },
+    {
       "zeioth/garbage-day.nvim",
       dependencies = "neovim/nvim-lspconfig",
       event = "LspAttach",
@@ -89,7 +92,6 @@ function M.config()
   local lspconfig = require("lspconfig")
   local icons = require("user.utils.icons")
 
-  local servers = require("mason-lspconfig").get_installed_servers()
   local default_diagnostic_config = {
     signs = {
       active = true,
@@ -102,7 +104,7 @@ function M.config()
     },
     virtual_text = true,
     update_in_insert = false,
-    underline = true,
+    underline = false,
     severity_sort = true,
     float = {
       focusable = true,
@@ -124,7 +126,12 @@ function M.config()
   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
   require("lspconfig.ui.windows").default_options.border = "rounded"
 
+  local servers = require("mason-lspconfig").get_installed_servers()
   for _, server in pairs(servers) do
+    if server == "jdtls" then
+      ::continue::
+    end
+
     local opts = {
       on_attach = M.on_attach,
       capabilities = M.common_capabilities(),
