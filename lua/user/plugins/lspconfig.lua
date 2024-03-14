@@ -8,6 +8,7 @@ local M = {
     {
       "mfussenegger/nvim-jdtls",
     },
+    { "antosha417/nvim-lsp-file-operations", config = true },
     {
       "zeioth/garbage-day.nvim",
       dependencies = "neovim/nvim-lspconfig",
@@ -72,9 +73,9 @@ end
 M.on_attach = function(client, bufnr)
   lsp_keymaps(bufnr)
 
-  if client.supports_method("textDocument/inlayHint") then
+  --[[ if client.supports_method("textDocument/inlayHint") then
     vim.lsp.inlay_hint.enable(bufnr, true)
-  end
+  end ]]
 end
 
 function M.common_capabilities()
