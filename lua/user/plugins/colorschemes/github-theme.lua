@@ -8,7 +8,7 @@ local M = {
 function M.config()
   require("github-theme").setup({
     options = {
-      transparent = true,
+      transparent = false,
       hide_nc_statusline = false, -- Override the underline style for non-active statuslines
       terminal_colors = false,
       styles = {
