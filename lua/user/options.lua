@@ -21,7 +21,7 @@ vim.opt.shiftwidth = 2 -- 4 spaces for each indentation
 -- Line numbering : Hybrid numbering
 vim.opt.number = true
 vim.opt.relativenumber = true
-vim.opt.numberwidth = 4 -- Sets number col width to 2
+vim.opt.numberwidth = 2 -- Sets number col width to 2
 
 -- Cursor line
 vim.opt.cursorline = true -- Highlight the current line

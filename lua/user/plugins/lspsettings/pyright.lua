@@ -13,6 +13,7 @@ return {
           reportOptionalMemberAccess = "none",
           reportArgumentType = "none",
           reportIncompatibleVariableOverride = "none",
+          reportGeneralTypeIssues = "none",
         },
       },
     },
