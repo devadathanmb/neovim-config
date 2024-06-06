@@ -45,8 +45,8 @@ function M.config()
         extra_filetypes = { "svelte" },
       }), -- js/ts formatter
       formatting.stylua, -- lua formatter
-      formatting.isort,
-      formatting.black,
+      --[[ formatting.isort, ]]
+      --[[ formatting.black, ]]
       formatting.beautysh, -- bash formatter
       --[[ diagnostics.pylint, ]]
       diagnostics.eslint_d.with({ -- js/ts linter

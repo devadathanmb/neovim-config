@@ -6,6 +6,8 @@ return {
     },
     python = {
       analysis = {
+        diagnosticMode = "off",
+        typeCheckingMode = "off",
         diagnosticSeverityOverrides = {
           -- https://github.com/microsoft/pyright/blob/main/docs/configuration.md#type-check-diagnostics-settings
           reportUndefinedVariable = "none",
@@ -14,6 +16,9 @@ return {
           reportArgumentType = "none",
           reportIncompatibleVariableOverride = "none",
           reportGeneralTypeIssues = "none",
+          reportInvalidTypeForm = "none",
+          reportCallIssue = "none",
+          reportAssignmentType = "none",
         },
       },
     },

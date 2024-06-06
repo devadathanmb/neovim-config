@@ -55,9 +55,9 @@ function M.config()
   }
 
   -- Set footer
-  local fortune = require("alpha.fortune")
-  dashboard.section.footer.val = fortune()
-
+  --[[ local fortune = require("alpha.fortune") ]]
+  --[[ dashboard.section.footer.val = fortune() ]]
+  --[[]]
   -- Send config to alpha
   alpha.setup(dashboard.opts)
 
