@@ -10,6 +10,7 @@ function M.config()
   require("vscode").setup({
     -- Alternatively set style in setup
     -- style = 'light'
+    terminal_color = false,
 
     -- Enable transparent background
     transparent = false,
@@ -19,6 +20,12 @@ function M.config()
 
     -- Underline `@markup.link.*` variants
     underline_links = true,
+
+    group_overrides = {
+      -- this supports the same val table as vim.api.nvim_set_hl
+      -- use colors from this colorscheme by requiring vscode.colors!
+      NormalFloat = { bg = c.vscNone },
+    },
   })
   require("vscode").load()
 
