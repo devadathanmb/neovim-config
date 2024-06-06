@@ -42,6 +42,7 @@ function M.config()
 
   require("lualine").setup({
     options = {
+      theme = "vscode",
       disabled_filetypes = { "NvimTree", "Lazy", "alpha" },
       --[[ theme = require("user.utils.lualine-themes.arctic"), ]]
       -- component_separators = { left = "", right = "" },

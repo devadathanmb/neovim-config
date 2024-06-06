@@ -25,18 +25,8 @@ function M.config()
     invert_intend_guides = false,
     inverse = true, -- invert background for search, diffs, statuslines and errors
     contrast = "", -- can be "hard", "soft" or empty string
-    palette_overrides = {
-      bright_blue = "#3abdb0",
-      bright_purple = "#e37f9a",
-      bright_aqua = "#80d162",
-
-      dark_blue = "#3abdb0",
-      dark_purple = "#e37f9a",
-      dark_aqua = "#80d162",
-    },
     overrides = {},
     dim_inactive = false,
-    transparent_mode = true,
   })
   --[[ vim.cmd("colorscheme gruvbox") ]]
 end

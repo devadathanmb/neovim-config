@@ -9,7 +9,7 @@ vim.opt.ignorecase = true -- Ignore case while searching
 vim.opt.smartcase = true -- Smart case searching
 
 -- Don't display the cmd, why waste space
-vim.opt.cmdheight = 0
+--[[ vim.opt.cmdheight = 0 ]]
 
 -- Indentation and line wrap
 vim.opt.smartindent = true -- Make indentation smarter
@@ -20,8 +20,8 @@ vim.opt.shiftwidth = 2 -- 4 spaces for each indentation
 
 -- Line numbering : Hybrid numbering
 vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.numberwidth = 2 -- Sets number col width to 2
+vim.opt.relativenumber = false
+vim.opt.numberwidth = 4 -- Sets number col width to 2
 
 -- Cursor line
 vim.opt.cursorline = true -- Highlight the current line

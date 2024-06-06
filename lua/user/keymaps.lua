@@ -81,6 +81,9 @@ keymap("n", "<C-c>", ":ColorizerAttachToBuffer<cr>", opts)
 keymap("c", "<C-j>", "<C-n>", opts)
 keymap("c", "<C-k>", "<C-p>", opts)
 
+-- Get current buffer filename
+keymap("n", "<leader>cb", ":lua vim.notify(vim.api.nvim_buf_get_name(0))<cr>", opts)
+
 -- Harpoon keymaps
 keymap("n", "<leader>a", ":lua require('harpoon.mark').add_file()<cr>", opts)
 keymap("n", "<C-e>", ":lua require('harpoon.ui').toggle_quick_menu()<cr>", opts)

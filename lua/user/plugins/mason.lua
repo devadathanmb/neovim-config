@@ -8,6 +8,7 @@ local M = {
 
 local servers = {
   "pyright",
+  "ruff",
   "jsonls",
   "svelte",
   "bashls",
