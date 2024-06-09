@@ -111,6 +111,19 @@ function M.config()
       find_files = {
         hidden = true,
       },
+      buffers = {
+        theme = "dropdown",
+        previewer = false,
+        initial_mode = "normal",
+        mappings = {
+          i = {
+            ["<C-d>"] = actions.delete_buffer,
+          },
+          n = {
+            ["dd"] = actions.delete_buffer,
+          },
+        },
+      },
     },
 
     extensions = {
@@ -127,11 +140,6 @@ function M.config()
         case_mode = "smart_case", -- or "ignore_case" or "respect_case"
         -- the default case_mode is "smart_case"
       },
-      -- Your extension configuration goes here:
-      -- extension_name = {
-      --   extension_config_key = value,
-      -- }
-      -- please take a look at the readme of the extension you want to configure
       file_browser = {},
     },
   })
