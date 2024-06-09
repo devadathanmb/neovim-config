@@ -7,6 +7,22 @@ local M = {
 function M.config()
   local which_key = require("which-key")
 
+  local function live_grep()
+    local root_path = vim.fn.getcwd()
+    require("telescope.builtin").live_grep({
+      search_dirs = { root_path },
+      prompt_title = string.format("Grep in [%s]", vim.fs.basename(root_path)),
+    })
+  end
+
+  local function find_files()
+    local root_path = vim.fn.getcwd()
+    require("telescope.builtin").find_files({
+      search_dirs = { root_path },
+      prompt_title = string.format("Find files in [%s]", vim.fs.basename(root_path)),
+    })
+  end
+
   which_key.setup({
     plugins = {
       marks = true, -- shows a list of your marks on ' and `
@@ -83,9 +99,9 @@ function M.config()
   -- Your mappings and documentation of existing mappings goes here
   -- Already declared bindings in keymaps.lua
   local declared_mappings = {
-    ["<leader>ff"] = { "Fuzzy finder" },
+    ["<leader>ff"] = { "Telescope Fuzzy finder" },
     ["<leader>fr"] = { "Format code" },
-    ["<leader>fb"] = { "File browser" },
+    ["<leader>fb"] = { "Telescope File browser" },
     ["<leader>e"] = { "Open Nvim Tree" },
     ["gl"] = { "Show diagnostics" },
     ["gd"] = { "Go to definition" },
@@ -107,6 +123,8 @@ function M.config()
           "<cmd>lua vim.diagnostic.goto_next()<CR>",
           "Next Diagnostic",
         },
+        d = { "<cmd>Telescope diagnostics bufnr=0<cr>", "Document diagnostics" },
+        D = { "<cmd>Telescope diagnostics<cr>", "Workspace diagnostics" },
 
         k = {
           "<cmd>lua vim.diagnostic.goto_prev()<cr>",
@@ -114,6 +132,12 @@ function M.config()
         },
         q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>", "Quickfix" },
         r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
+
+        s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
+        S = {
+          "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
+          "Workspace Symbols",
+        },
       },
       -- Toggle term bindings
       t = {
@@ -124,44 +148,25 @@ function M.config()
         f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
         h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
         v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
-        t = { "<cmd>ToggleTerm<cr>", "toggle" },
-      },
-      -- Telescope git stuff
-      g = {
-        name = "Git",
-        g = { "<cmd>lua _LAZYGIT_TOGGLE()<CR>", "Lazygit" },
-        j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
-        k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
-        l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
-        p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", "Preview Hunk" },
-        r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk" },
-        R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer" },
-        s = { "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", "Stage Hunk" },
-        u = {
-          "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
-          "Undo Stage Hunk",
-        },
-
-        o = { "<cmd>Telescope git_status<cr>", "See status" },
-        b = { "<cmd>Telescope git_branches<cr>", "See branches" },
-        c = { "<cmd>Telescope git_commits<cr>", "See commits" },
-        d = {
-          "<cmd>Gitsigns diffthis HEAD<cr>",
-          "Diff",
-        },
+        t = { "<cmd>ToggleTerm<cr>", "Toggle termnal" },
       },
 
       -- Searching
       s = {
         name = "Search",
-        z = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Zen mode" },
-        l = { "<cmd>Telescope live_grep<cr>", "Live grep" },
+        z = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Current buffer fuzzy" },
+        l = { "<cmd>Telescope live_grep<cr>", "Live grep current dir" },
+        L = { live_grep, "Live grep rootdir" },
         h = { "<cmd>Telescope help_tags<cr>", "Help tags" },
-        d = { "<cmd>Telescope lsp_document_diagnostics<cr>", "Document diagnostics" },
         k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-        leader = { "<cmd>Telescope buffers<cr>", "Filetypes" },
         f = { "<cmd>Telescope find_files<cr>", "Find files" },
+        F = { find_files, "Find files rootdir" },
         b = { "<cmd>Telescope buffers<cr>", "Find buffers" },
+      },
+
+      f = {
+        name = "Find",
+        F = { find_files, "Find files rootdir" },
       },
 
       -- Markdown
