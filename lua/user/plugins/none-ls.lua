@@ -14,6 +14,23 @@ function M.config()
 
   local null_ls_utils = require("null-ls.utils")
 
+  local wk = require("which-key")
+
+  -- Function to toggle formatting
+  function ToggleFormatting()
+    if vim.g.auto_format_enabled then
+      vim.g.auto_format_enabled = false
+      vim.notify("Auto formatting disabled...")
+    else
+      vim.g.auto_format_enabled = true
+      vim.notify("Auto formatting enabled..")
+    end
+  end
+
+  wk.register({
+    ["<leader>lF"] = { ToggleFormatting, "Toggle auto format" },
+  })
+
   mason_null_ls.setup({
     ensure_installed = {
       "prettier", -- prettier formatter
@@ -63,6 +80,9 @@ function M.config()
           group = augroup,
           buffer = bufnr,
           callback = function()
+            if not vim.g.auto_format_enabled then
+              return
+            end
             vim.lsp.buf.format({
               filter = function(client)
                 --  only use null-ls for formatting instead of lsp server
