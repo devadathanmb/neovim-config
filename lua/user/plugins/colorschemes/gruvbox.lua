@@ -1,7 +1,7 @@
 local M = {
   "ellisonleao/gruvbox.nvim",
   priority = 1000,
-  enabled = true,
+  enabled = false,
 }
 
 function M.config()
