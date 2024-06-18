@@ -29,12 +29,6 @@ function M.config()
   })
   require("vscode").load()
 
-  -- load the theme without affecting devicon colors.
-
-  vim.cmd([[autocmd! ColorScheme * highlight NormalFloat guibg=NONE]])
-  vim.cmd([[autocmd! ColorScheme * highlight FloatBorder guifg=#58A6FF guibg=NONE]])
-  vim.cmd([[autocmd! ColorScheme * highlight TelescopeBorder guifg=#58A6FF guibg=NONE]])
-
   vim.cmd.colorscheme("vscode")
 
   vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#58a6ff" })
