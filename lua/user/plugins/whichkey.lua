@@ -23,6 +23,16 @@ function M.config()
     })
   end
 
+  -- Get current buffer filename
+  local function get_buf_name()
+    local home_dir = vim.env.HOME
+    local buf_full_path = vim.api.nvim_buf_get_name(0)
+
+    local buf_name = string.gsub(buf_full_path, "^" .. home_dir .. "/", "")
+    vim.notify("File : " .. buf_name)
+    vim.api.nvim_call_function("setreg", { "+", buf_name })
+  end
+
   which_key.setup({
     plugins = {
       marks = true, -- shows a list of your marks on ' and `
@@ -116,7 +126,6 @@ function M.config()
       l = {
         name = "LSP",
         a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-        F = { "<cmd>LspToggleAutoFormat<cr>", "Toggle Autoformat" },
         i = { "<cmd>LspInfo<cr>", "Info" },
         I = { "<cmd>Mason<cr>", "Installer Info" },
         j = {
@@ -137,6 +146,10 @@ function M.config()
         S = {
           "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
           "Workspace Symbols",
+        },
+        b = {
+          get_buf_name,
+          "Get current buffer",
         },
       },
       -- Toggle term bindings
