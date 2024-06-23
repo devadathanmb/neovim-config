@@ -43,7 +43,7 @@ function M.config()
   -- Set menu
   dashboard.section.buttons.val = {
     dashboard.button("e", "  > New file", ":ene <BAR> startinsert <CR>"),
-    dashboard.button("f", "󰩉  > Find file", ":cd $HOME | Telescope find_files<CR>"),
+    dashboard.button("b", "󰩉  > File browser", "<cmd>Telescope file_browser path=%:p:h <cr>"),
     dashboard.button("r", "  > Recent", ":Telescope oldfiles<CR>"),
     dashboard.button(
       "c",
@@ -51,6 +51,11 @@ function M.config()
       ":lua vim.api.nvim_set_current_dir('~/.config/nvim') vim.cmd('edit ~/.config/nvim/init.lua') <CR>"
     ),
     dashboard.button("u", "  > Update plugins", "<cmd>Lazy update<CR>"),
+    dashboard.button(
+      "p",
+      "  Projects",
+      ":lua require'telescope'.extensions.project.project{}<cr>"
+    ),
     dashboard.button("q", "󰗼  > Quit NVIM", ":qa<CR>"),
   }
 
