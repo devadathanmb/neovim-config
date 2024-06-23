@@ -2,6 +2,7 @@ local M = {
   "nvim-telescope/telescope.nvim",
   dependencies = {
     "nvim-lua/plenary.nvim",
+    "nvim-telescope/telescope-project.nvim",
     "nvim-telescope/telescope-media-files.nvim",
     "nvim-telescope/telescope-ui-select.nvim",
     { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
@@ -14,8 +15,10 @@ function M.config()
   telescope.load_extension("media_files")
   telescope.load_extension("file_browser")
   telescope.load_extension("ui-select")
+  telescope.load_extension("project")
 
   local actions = require("telescope.actions")
+  local project_actions = require("telescope._extensions.project.actions")
 
   telescope.setup({
     defaults = {
@@ -141,6 +144,22 @@ function M.config()
         -- the default case_mode is "smart_case"
       },
       file_browser = {},
+      project = {
+        base_dirs = {
+          "~/fyle/fyle-platform-api",
+          "~/fyle/fyle-app",
+        },
+        hidden_files = true, -- default: false
+        theme = "dropdown",
+        order_by = "asc",
+        search_by = "title",
+        sync_with_nvim_tree = true, -- default false
+        -- default for on_project_selected = find project files
+        on_project_selected = function(prompt_bufnr)
+          -- Do anything you want in here. For example:
+          project_actions.change_working_directory(prompt_bufnr, false)
+        end,
+      },
     },
   })
 end

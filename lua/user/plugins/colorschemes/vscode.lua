@@ -25,6 +25,10 @@ function M.config()
       -- this supports the same val table as vim.api.nvim_set_hl
       -- use colors from this colorscheme by requiring vscode.colors!
       NormalFloat = { bg = c.vscNone },
+
+      -- override virtual text color
+      CopilotSuggestion = { fg = "#636262" },
+      TreesitterContextBottom = { bg = "#262626" },
     },
   })
   require("vscode").load()

@@ -175,6 +175,10 @@ function M.config()
         f = { "<cmd>Telescope find_files<cr>", "Find files" },
         F = { find_files, "Find files rootdir" },
         b = { "<cmd>Telescope buffers<cr>", "Find buffers" },
+        p = {
+          ":lua require'telescope'.extensions.project.project{}<CR>",
+          "Find projects",
+        },
       },
 
       f = {

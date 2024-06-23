@@ -1,6 +1,6 @@
 local M = {
   "karb94/neoscroll.nvim",
-  enabled = false,
+  enabled = true,
 }
 
 function M.config()

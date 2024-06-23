@@ -81,6 +81,14 @@ keymap("n", "<C-c>", ":ColorizerAttachToBuffer<cr>", opts)
 keymap("c", "<C-j>", "<C-n>", opts)
 keymap("c", "<C-k>", "<C-p>", opts)
 
+-- Find projects
+vim.api.nvim_set_keymap(
+  "n",
+  "<C-p>",
+  ":lua require'telescope'.extensions.project.project{}<CR>",
+  { noremap = true, silent = true }
+)
+
 -- Harpoon keymaps
 keymap("n", "<leader>a", ":lua require('harpoon.mark').add_file()<cr>", opts)
 keymap("n", "<C-e>", ":lua require('harpoon.ui').toggle_quick_menu()<cr>", opts)

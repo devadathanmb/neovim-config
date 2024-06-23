@@ -18,7 +18,8 @@ function M.config()
     on_attach = nil, -- (fun(buf: integer): boolean) return false to disable attaching
   })
 
-  vim.cmd("hi TreesitterContextLineNumberBottom gui=underline")
+  --[[ vim.cmd("hi TreesitterContextLineNumberBottom gui=underline") ]]
+  --[[ vim.cmd("hi TreesitterContextBottom  guibg='#383838'") ]]
 end
 
 return M
