@@ -147,6 +147,19 @@ function M.config()
       require("neodev").setup({})
     end
 
+    if server == "jedi_language_server" then
+      opts.init_options = {
+        diagnostics = { enable = false },
+      }
+    end
+
+    if server == "sqlls" then
+      local root_dir = function()
+        return vim.loop.cwd()
+      end
+      opts.root_dir = root_dir
+    end
+
     lspconfig[server].setup(opts)
   end
 end

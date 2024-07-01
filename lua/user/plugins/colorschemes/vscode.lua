@@ -35,7 +35,7 @@ function M.config()
 
   vim.cmd.colorscheme("vscode")
 
-  vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#58a6ff" })
+  --[[ vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#58a6ff" }) ]]
 end
 
 return M
