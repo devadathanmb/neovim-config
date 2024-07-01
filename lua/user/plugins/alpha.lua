@@ -53,7 +53,7 @@ function M.config()
     dashboard.button("u", "  > Update plugins", "<cmd>Lazy update<CR>"),
     dashboard.button(
       "p",
-      "  Projects",
+      " > Projects",
       ":lua require'telescope'.extensions.project.project{}<cr>"
     ),
     dashboard.button("q", "󰗼  > Quit NVIM", ":qa<CR>"),

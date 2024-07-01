@@ -5,7 +5,7 @@ local M = {
 
 function M.config()
   require("colorizer").setup({
-    filetypes = { "*" },
+    filetypes = { "html", "css" },
     user_default_options = {
       RGB = true, -- #RGB hex codes
       RRGGBB = true, -- #RRGGBB hex codes
