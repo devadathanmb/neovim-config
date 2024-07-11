@@ -7,7 +7,7 @@ local M = {
 }
 
 local servers = {
-  --[[ "pyright", ]]
+  "pyright",
   "ruff",
   "jsonls",
   "svelte",
@@ -23,7 +23,8 @@ local servers = {
   "lua_ls",
   "marksman",
   "tailwindcss",
-  "sqlls"
+  --[[ "sqlls", ]]
+  "astro"
 }
 
 local formatters = {

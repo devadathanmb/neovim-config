@@ -1,6 +1,7 @@
 local M = {
   "lewis6991/gitsigns.nvim",
   event = "BufReadPost",
+  commit = "af3fdad8ddcadbdad835975204f6503310526fd9"
 }
 
 function M.config()

@@ -8,7 +8,9 @@ function M.config()
   local copilot = require("copilot")
   copilot.setup({
     filetypes = {
-      markdown = false, -- overrides default
+      bash = true,
+      zsh = true,
+      markdown = true,
       java = false,
       yaml = true,
       c = false,

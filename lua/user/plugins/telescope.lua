@@ -19,6 +19,7 @@ function M.config()
 
   local actions = require("telescope.actions")
   local project_actions = require("telescope._extensions.project.actions")
+  local fb_actions = require("telescope._extensions.file_browser.actions")
 
   telescope.setup({
     defaults = {
@@ -143,7 +144,20 @@ function M.config()
         case_mode = "smart_case", -- or "ignore_case" or "respect_case"
         -- the default case_mode is "smart_case"
       },
-      file_browser = {},
+      file_browser = {
+        mappings = {
+          ["BS"] = false,
+          ["Del"] = false,
+          ["i"] = {
+            ["BS"] = false,
+            ["Del"] = false,
+          },
+          ["n"] = {
+            ["BS"] = false,
+            ["Del"] = false,
+          },
+        },
+      },
       project = {
         base_dirs = {
           "~/fyle/fyle-platform-api",
