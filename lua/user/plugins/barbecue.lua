@@ -13,7 +13,7 @@ function M.config()
   local barbecue = require("barbecue")
   barbecue.setup({
     exclude_filetypes = { "netrw", "toggleterm" },
-    show_dirname = false,
+    show_dirname = true,
     show_basename = true,
     show_modified = true,
 
@@ -37,6 +37,13 @@ function M.config()
       ---
       ---@type string
       separator = "",
+    },
+    modifiers = {
+      ---@type string
+      -- dirname = ":s?.*??",
+      dirname = ":~:.",
+      ---@type string
+      basename = "",
     },
     theme = {
       modified = { fg = "#808080" },
