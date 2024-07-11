@@ -11,7 +11,7 @@ function M.config()
     style = "night",
     transparent = false,
   })
-  --vim.cmd([[colorscheme tokyonight]])
+  -- vim.cmd([[colorscheme tokyonight]])
 end
 
 return M

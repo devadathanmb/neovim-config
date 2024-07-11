@@ -6,7 +6,7 @@ local M = {
   opts = {},
   keys = {
     -- suggested keymap
-    { "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste clipboard image" },
+    { "<leader>P", "<cmd>PasteImage<cr>", desc = "Paste clipboard image" },
   },
 }
 

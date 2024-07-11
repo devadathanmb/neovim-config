@@ -25,6 +25,7 @@ function M.config()
       "bash",
       "python",
       "http",
+      "astro"
     },
     auto_install = true,
     autotag = {

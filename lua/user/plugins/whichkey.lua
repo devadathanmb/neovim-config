@@ -167,6 +167,7 @@ function M.config()
       -- Searching
       s = {
         name = "Search",
+        c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
         z = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "Current buffer fuzzy" },
         l = { "<cmd>Telescope live_grep<cr>", "Live grep current dir" },
         L = { live_grep, "Live grep rootdir" },

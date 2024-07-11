@@ -89,6 +89,10 @@ vim.api.nvim_set_keymap(
   { noremap = true, silent = true }
 )
 
+-- Last used buffer jump
+keymap("n", "<leader>p", "<C-^>", opts)
+keymap("n", "<C-p>", "<C-^>", opts)
+
 -- Harpoon keymaps
 keymap("n", "<leader>a", ":lua require('harpoon.mark').add_file()<cr>", opts)
 keymap("n", "<C-e>", ":lua require('harpoon.ui').toggle_quick_menu()<cr>", opts)
