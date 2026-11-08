@@ -22,6 +22,26 @@ test: _check-config
     done; \
     exit "$failed"
 
+# Fast feedback while iterating: every suite except the slow language servers.
+test-fast: _check-config
+    @failed=0; \
+    for suite in smoke theme workflow notifications git navigation; do \
+      printf '\n=== %s ===\n' "$suite"; \
+      TEST_SUITE="$suite" nvim --headless "+luafile tests/run.lua" || failed=1; \
+    done; \
+    exit "$failed"
+
+# Print startup time (best of five runs, milliseconds).
+startup: _check-config
+    @log=$(mktemp); best=""; \
+    for i in 1 2 3 4 5; do \
+      rm -f "$log"; \
+      nvim --headless --startuptime "$log" -c 'lua vim.defer_fn(function() vim.cmd("qa!") end, 100)'; \
+      t=$(awk '/NVIM STARTED/ {print $1}' "$log" | tail -1); \
+      if [ -z "$best" ] || [ "$(echo "$t < $best" | bc)" = 1 ]; then best=$t; fi; \
+    done; \
+    rm -f "$log"; printf 'startup: %.1f ms (best of 5)\n' "$best"
+
 # Run one suite, optionally only cases containing a filter: just test-suite git "reset"
 test-suite suite filter="": _check-config
     @test -f "tests/test_$1.lua" || { printf 'Unknown suite: %s\n' "$1" >&2; exit 2; }; \
