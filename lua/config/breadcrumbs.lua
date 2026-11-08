@@ -1,4 +1,4 @@
-local M = { enabled = true, zen = false }
+local M = { enabled = false, zen = false }
 local winbar = "%{%v:lua.dropbar()%}"
 
 function M.allow(buf, win)

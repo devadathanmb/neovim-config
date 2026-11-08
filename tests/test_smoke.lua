@@ -271,7 +271,13 @@ end
 
 T["Space uz toggles zen mode"] = function()
   vim.cmd.edit(temp .. "/sample.txt")
+  local crumbs = require("config.breadcrumbs")
+  local enabled = crumbs.enabled
+  crumbs.enabled = true
+  crumbs.refresh()
   MiniTest.finally(function()
+    crumbs.enabled = enabled
+    crumbs.set_zen(false)
     if Snacks.zen.win and Snacks.zen.win:valid() then
       Snacks.zen.win:close()
     end
@@ -303,11 +309,14 @@ end
 T["zen respects the breadcrumb toggle preference"] = function()
   vim.cmd.edit(temp .. "/sample.txt")
   local crumbs = require("config.breadcrumbs")
+  local enabled = crumbs.enabled
+  crumbs.enabled = true
+  crumbs.refresh()
   MiniTest.finally(function()
     if Snacks.zen.win and Snacks.zen.win:valid() then
       Snacks.zen.win:close()
     end
-    crumbs.enabled = true
+    crumbs.enabled = enabled
     crumbs.set_zen(false)
   end)
   h.keys(" ub")

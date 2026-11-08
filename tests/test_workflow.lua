@@ -47,14 +47,26 @@ local T = MiniTest.new_set({
   },
 })
 
+T["breadcrumbs are disabled by default"] = function()
+  vim.api.nvim_set_current_buf(source)
+  h.eq({ require("config.breadcrumbs").enabled, vim.wo.winbar }, { false, "" })
+  h.keys(" ub")
+  assert(vim.wo.winbar:find("dropbar", 1, true))
+  h.keys(" ub")
+  h.eq(vim.wo.winbar, "")
+end
+
 T["breadcrumbs"] = MiniTest.new_set({
   hooks = {
     pre_case = function()
       vim.api.nvim_set_current_buf(source)
+      local crumbs = require("config.breadcrumbs")
+      crumbs.enabled = true
+      crumbs.refresh()
     end,
     post_case = function()
       local crumbs = require("config.breadcrumbs")
-      crumbs.enabled = true
+      crumbs.enabled = false
       crumbs.set_zen(false)
       h.no_errors.post_case()
     end,
