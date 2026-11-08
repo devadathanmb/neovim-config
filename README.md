@@ -14,11 +14,11 @@ My personal Neovim config, built on [lazy.nvim](https://github.com/folke/lazy.nv
 ## Install
 
 ```sh
-git clone -b v2 https://github.com/devadathanmb/neovim-config ~/.config/nvim-next
-NVIM_APPNAME=nvim-next nvim
+git clone -b v2 https://github.com/devadathanmb/neovim-config ~/.config/nvim
+nvim
 ```
 
-Or clone into `~/.config/nvim`. The first start installs plugins and language tools.
+The first start installs plugins and language tools.
 
 Keybindings are in [KEYMAPS.md](KEYMAPS.md).
 
