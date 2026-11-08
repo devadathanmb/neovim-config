@@ -21,6 +21,13 @@ Blink completion ghost text (Copilot ghost text is the only inline suggestion).
 Editor and UI
 - snacks.nvim provides explorer, pickers, input, notifier toasts, indent guides,
   word highlights, bigfile/quickfile. Not Telescope.
+- Snacks image previews (Kitty graphics via tmux passthrough). Under tmux,
+  `lua/config/image.lua` seeds terminal detection from `#{client_termname}`: snacks
+  only does this itself when `extended-keys` is `on`, and with our `always` its
+  XTVERSION query times out (images "unsupported") and its reply leaks as input,
+  stalling the picker. Seeding skips snacks' own setup, so the module also
+  installs its tmux passthrough wrapper (without it images render blank).
+  Recheck after a deliberate snacks update.
 - bufferline.nvim for tabs, lualine for the statusline, which-key for discovery.
 - nvim-web-devicons, not mini.icons: its independent colors match Material icons.
 - nvim-surround (classic `ys`/`cs`/`ds`), mini.pairs for auto-pairs.
@@ -114,6 +121,8 @@ real-world use and cannot be closed by tests.
 - [x] Promoted to the default `nvim` (cloned into `~/.config/nvim` by the dotfiles setup); old minimal config and LazyVim retired.
 - [x] Plugins and state moved to the default app name; Mason tools reinstalled.
 - [x] Repaired migrated Tree-sitter query symlinks pointing at the retired `nvim-next` data directory; TypeScript syntax captures are regression-tested.
+- [x] Snacks image previews work in Ghostty + tmux (detection workaround, see Decisions).
+- [ ] Human: preview images in the picker and Markdown inside Ghostty + tmux.
 - [x] Added a justfile for interactive setup and health checks, individual or full headless suites, and the separate upstream shutdown probe.
 
 ## Known issues
