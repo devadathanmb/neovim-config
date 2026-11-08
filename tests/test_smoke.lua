@@ -296,4 +296,25 @@ T["Space uz toggles zen mode"] = function()
   h.eq(require("gitsigns.config").config.current_line_blame, blame)
 end
 
+T["lazygit and scratch mappings"] = function()
+  for _, lhs in ipairs({ "<Space>gg", "<Space>.", "<Space>s." }) do
+    assert(vim.fn.maparg(lhs, "n") ~= "", "missing mapping: " .. lhs)
+  end
+  -- Keep test scratches out of the real data directory.
+  local config = Snacks.config.scratch
+  Snacks.config.scratch = vim.tbl_extend("force", config or {}, { root = temp .. "/scratch" })
+  h.keys(" .")
+  local win = vim.api.nvim_get_current_win()
+  MiniTest.finally(function()
+    if vim.api.nvim_win_is_valid(win) then
+      vim.api.nvim_win_close(win, true)
+    end
+    Snacks.config.scratch = config
+  end)
+  -- Scratch defaults to Markdown; the ftplugin's `silent! nunmap` leaves E31.
+  vim.v.errmsg = ""
+  h.eq(vim.api.nvim_win_get_config(win).relative, "editor")
+  h.eq(vim.bo.buflisted, false)
+end
+
 return T
