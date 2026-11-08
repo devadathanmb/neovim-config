@@ -19,6 +19,22 @@ return {
       -- Highlights other references to the symbol under the cursor (VS Code occurrences).
       words = { enabled = true, debounce = 150 },
       notifier = { enabled = true, timeout = 2500, style = "compact", top_down = true },
+      -- Zen hides inline Git blame and restores the previous setting on close.
+      zen = {
+        on_open = function()
+          local ok, config = pcall(require, "gitsigns.config")
+          vim.g.zen_blame = ok and config.config.current_line_blame or false
+          if vim.g.zen_blame then
+            require("gitsigns").toggle_current_line_blame(false)
+          end
+        end,
+        on_close = function()
+          if vim.g.zen_blame then
+            require("gitsigns").toggle_current_line_blame(true)
+          end
+          vim.g.zen_blame = nil
+        end,
+      },
       styles = {
         notification = { border = "rounded", focusable = false, wo = { winblend = 0 } },
         zen = {

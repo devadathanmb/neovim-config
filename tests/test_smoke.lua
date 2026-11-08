@@ -276,6 +276,7 @@ T["Space uz toggles zen mode"] = function()
       Snacks.zen.win:close()
     end
   end)
+  local blame = require("gitsigns.config").config.current_line_blame
   h.keys(" uz")
   h.wait(function()
     return Snacks.zen.win and Snacks.zen.win:valid()
@@ -287,10 +288,12 @@ T["Space uz toggles zen mode"] = function()
   local backdrop = Snacks.zen.win.backdrop
   assert(backdrop and backdrop:valid(), "zen backdrop missing")
   h.eq(vim.wo[backdrop.win].winblend, 0)
+  h.eq(require("gitsigns.config").config.current_line_blame, false)
   h.keys(" uz")
   h.wait(function()
     return not (Snacks.zen.win and Snacks.zen.win:valid())
   end, "zen window did not close", 3000)
+  h.eq(require("gitsigns.config").config.current_line_blame, blame)
 end
 
 return T
