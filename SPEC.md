@@ -88,6 +88,9 @@ Other
   Lua toolchain, plenary's harness is barely maintained). Suites run in-process
   in the real config rather than in child Neovims, so plugins and servers are
   exercised as used; one Neovim per suite keeps suites isolated.
+- Swap files stay on for crash recovery. Nvim already skips the prompt for swaps
+  owned by a running Nvim and deletes unmodified swaps of dead processes; the
+  prompt only appears when a dead session left unsaved changes (smoke-tested).
 - Search, explorer and bookmarks are scoped to the working directory; no automatic
   root switching. Ctrl-h/j/k/l move between Neovim windows only.
 

@@ -35,6 +35,7 @@ opt.autoread = true
 opt.updatetime = 300
 opt.timeoutlen = 400
 opt.completeopt = { "menu", "menuone", "noselect" }
+opt.pumheight = 10
 opt.list = true
 -- Matches VS Code `editor.renderWhitespace: "boundary"`: leading, trailing and
 -- repeated spaces are drawn; single spaces between words are not.
@@ -51,6 +52,8 @@ opt.grepformat = "%f:%l:%c:%m"
 opt.laststatus = 3
 opt.showmode = false
 opt.shortmess:append("IcC")
+-- Ftplugins reset formatoptions per buffer, so `o`/`O` comment continuation is
+-- removed in config.autocmds; Enter in a comment still continues it.
 
 -- Load plugin configuration as Lua files, not through local project scripts.
 opt.exrc = false

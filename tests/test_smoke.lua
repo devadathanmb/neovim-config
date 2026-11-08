@@ -126,4 +126,63 @@ T["resize mode repeats until another key"] = function()
   h.eq(vim.api.nvim_win_get_height(0), height - 8)
 end
 
+-- Swap prompts only for real recovery cases. Built in, no config code: Nvim skips
+-- the prompt when a running Nvim owns the swap and deletes an unmodified swap
+-- left by a dead process. A dead process's unsaved changes must still ask.
+T["swap files"] = MiniTest.new_set()
+
+-- Leave a real swap file behind: edit in a separate Nvim, then kill it.
+local function stale_swap(name, dirty)
+  local dir, file = temp .. "/swap", temp .. "/" .. name
+  vim.fn.mkdir(dir, "p")
+  vim.fn.writefile({ "saved" }, file)
+  local cmd = { "nvim", "--clean", "--headless", "-c", "set directory=" .. dir .. "//", "-c", "edit " .. file }
+  if dirty then vim.list_extend(cmd, { "-c", "call setline(1, 'unsaved')", "-c", "preserve" }) end
+  local child = vim.system(cmd)
+  h.wait(function() return #vim.fn.glob(dir .. "/*" .. name .. ".sw?", false, true) > 0 end, "child did not write a swap", 5000)
+  vim.wait(200)
+  child:kill(9)
+  child:wait()
+  local directory = vim.o.directory
+  vim.o.directory = dir .. "//"
+  MiniTest.finally(function() vim.o.directory = directory end)
+  return file, dir
+end
+
+T["swap files"]["stale swap without changes is removed silently"] = function()
+  local file, dir = stale_swap("clean.txt", false)
+  vim.cmd.edit(file)
+  h.eq(vim.fn.getline(1), "saved")
+  assert(vim.bo.modifiable and not vim.bo.readonly, "file did not open normally")
+  vim.cmd("bwipeout!")
+  h.eq(#vim.fn.glob(dir .. "/*clean.txt.sw?", false, true), 0)
+end
+
+T["swap files"]["stale swap with unsaved changes still asks"] = function()
+  local file = stale_swap("dirty.txt", true)
+  local choice
+  -- Runs after the built-in handler: record its decision and answer the prompt.
+  local id = vim.api.nvim_create_autocmd("SwapExists", {
+    callback = function()
+      choice = vim.v.swapchoice
+      vim.v.swapchoice = "o"
+    end,
+  })
+  MiniTest.finally(function()
+    vim.api.nvim_del_autocmd(id)
+    vim.cmd("silent! bwipeout!")
+  end)
+  vim.cmd.edit(file)
+  h.eq(choice, "")
+end
+
+T["options"] = MiniTest.new_set()
+
+T["options"]["o/O do not continue comments"] = function()
+  vim.cmd.enew()
+  vim.bo.filetype = "lua"
+  assert(not vim.bo.formatoptions:find("o", 1, true), "formatoptions still has o: " .. vim.bo.formatoptions)
+  h.eq(vim.o.pumheight, 10)
+end
+
 return T
