@@ -1,0 +1,7 @@
+{
+  "Today's date": {
+    "prefix": "date",
+    "body": "$CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE",
+    "description": "ISO date (YYYY-MM-DD)"
+  }
+}
