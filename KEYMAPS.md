@@ -141,7 +141,8 @@ immediately instead of waiting for a longer key sequence.
 Peek opens a picker with a preview rather than a VS Code inline peek widget.
 
 In insert-mode completion: Ctrl-j/k, Ctrl-n/p, Tab/Shift-Tab navigate; Enter
-accepts; Ctrl-e dismisses; Ctrl-Space requests completion. Snippets show with a `~`
+accepts; Ctrl-e dismisses; Ctrl-Space requests completion and Ctrl-; toggles it
+(Ctrl-; requires terminal support for extended keys). Snippets show with a `~`
 suffix; Enter expands one. While a snippet is active, Tab/Shift-Tab jump between its
 placeholders (use Ctrl-j/k for the menu); otherwise Tab falls back to indentation. The first item is preselected
 but does not insert text until accepted. No ghost text is enabled.

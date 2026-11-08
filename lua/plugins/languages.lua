@@ -16,6 +16,7 @@ return {
       keymap = {
         preset = "none",
         ["<C-Space>"] = { "show", "show_documentation", "hide_documentation" },
+        ["<C-;>"] = { "hide", "show" },
         ["<C-e>"] = { "hide", "fallback" },
         ["<C-j>"] = { "select_next", "fallback" },
         ["<C-k>"] = { "select_prev", "fallback" },
