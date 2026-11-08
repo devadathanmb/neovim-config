@@ -55,7 +55,10 @@ local function run()
   for _, executable in ipairs({ "basedpyright-langserver", "ruff", "tsc", "vscode-eslint-language-server", "yaml-language-server", "vscode-json-language-server", "lua-language-server", "docker-langserver", "black", "prettier", "sqlfluff", "stylua", "tree-sitter" }) do
     assert(vim.fn.exepath(executable):find(mason, 1, true) == 1, "tool is not Mason-local: " .. executable)
   end
-  assert(require("blink.cmp.config").completion.ghost_text.enabled() == false)
+  local blink = require("blink.cmp.config")
+  assert(blink.completion.ghost_text.enabled() == false)
+  assert(vim.deep_equal(blink.keymap["<C-;>"], { "hide", "show" }), "Ctrl-; must toggle completion")
+  assert(vim.deep_equal(blink.keymap["<C-Space>"], { "show", "show_documentation", "hide_documentation" }), "Ctrl-Space behavior changed")
   for _, parser in ipairs(require("config.treesitter").parsers) do
     assert(vim.treesitter.language.add(parser), "missing parser: " .. parser)
   end

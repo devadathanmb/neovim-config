@@ -53,6 +53,7 @@ Languages
 - YAML/JSON use SchemaStore; Kubernetes schemas apply only to `*.k8s.yaml` and
   `k8s/`/`kubernetes/` directories, never all YAML.
 - Blink completion with the Rust fuzzy matcher, friendly-snippets plus `snippets/`.
+  Ctrl-Space requests completion; Ctrl-; toggles it (requires extended terminal keys).
   Tab: snippet placeholder → menu item → accept Copilot → indent.
 - Tree-sitter parsers install on first use of a filetype; GritQL comes from the
   pinned biomejs/tree-sitter-gritql grammar.
