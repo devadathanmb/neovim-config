@@ -11,8 +11,11 @@ when you finish work.
 - Formatting stays manual (`Space lf`). Never add format-on-save.
 - Plugin revisions are pinned in `lazy-lock.json`. Change them only deliberately
   (`:Lazy update <plugin>`), never as a side effect.
-- Prefer maintained, best-in-class plugins; replace abandoned ones. Write a small local
-  module only when no plugin fits (see bookmarks).
+- The Neovim ecosystem changes fast: before choosing or configuring a plugin, research
+  current options (built-in Neovim features first, then maintenance activity, then
+  the plugin's current docs) instead of relying on prior knowledge. Prefer native
+  features, then maintained best-in-class plugins; replace abandoned ones. Write a
+  small local module only when neither fits (see bookmarks).
 - Do not define a `FileChangedShell` autocmd: it replaces Neovim's reload/conflict
   handling, which protects unsaved edits from agent changes on disk.
 - Keep the theme a data-driven port (`theme/*.json` → `lua/theme/github.lua`). UI
