@@ -111,4 +111,19 @@ T["buffer close keeps split layout"] = function()
   h.eq(#vim.api.nvim_list_wins(), windows)
 end
 
+T["resize mode repeats until another key"] = function()
+  vim.cmd.vsplit()
+  vim.cmd.split()
+  MiniTest.finally(function() vim.cmd.only() end)
+  local width, height = vim.api.nvim_win_get_width(0), vim.api.nvim_win_get_height(0)
+  h.keys(" wrlllkq")
+  h.eq(vim.api.nvim_win_get_width(0), width + 6)
+  h.eq(vim.api.nvim_win_get_height(0), height + 2)
+  -- The finishing key is consumed, not executed: `q` must not start a recording.
+  h.eq(vim.fn.reg_recording(), "")
+  h.keys(" wrHJ\27")
+  h.eq(vim.api.nvim_win_get_width(0), width - 4)
+  h.eq(vim.api.nvim_win_get_height(0), height - 8)
+end
+
 return T
