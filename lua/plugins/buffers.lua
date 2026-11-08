@@ -16,7 +16,9 @@ return {
           middle_mouse_command = close,
           right_mouse_command = false,
           indicator = { style = "none" },
-          separator_style = "thin",
+          -- No separators: the selected tab's background already marks it, and the thin
+          -- separator showed as a stray bar on one side of the selected tab only.
+          separator_style = { "", "" },
           diagnostics = false,
           show_buffer_icons = true,
           color_icons = true,
