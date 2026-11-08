@@ -1,20 +1,5 @@
 local M = {}
 
-function M.python_path(root)
-  if root then
-    local python = vim.fs.joinpath(root, ".venv", "bin", "python")
-    if vim.fn.executable(python) == 1 then return python end
-    if vim.fn.executable("mise") == 1 then
-      local result = vim.system({ "mise", "which", "python" }, { cwd = root, text = true }):wait(2000)
-      local path = vim.trim(result.stdout or "")
-      if result.code == 0 and vim.fn.executable(path) == 1 then return path end
-    end
-  end
-  local active = vim.env.VIRTUAL_ENV and vim.fs.joinpath(vim.env.VIRTUAL_ENV, "bin", "python")
-  if active and vim.fn.executable(active) == 1 then return active end
-  return vim.fn.exepath("python3")
-end
-
 function M.setup()
   -- Neovim's default gr* LSP maps make the buffer-local gr (references) wait for
   -- timeoutlen. Equivalent actions live under gd/gr/gi/gt and Space l.
@@ -22,48 +7,8 @@ function M.setup()
     pcall(vim.keymap.del, lhs == "gra" and { "n", "x" } or "n", lhs)
   end
   vim.lsp.config("*", { capabilities = require("blink.cmp").get_lsp_capabilities() })
-  -- basedpyright: a pyright fork with Pylance-only features (semantic tokens,
-  -- richer completions/hover). Reads [tool.basedpyright] or [tool.pyright].
-  vim.lsp.config("basedpyright", {
-    before_init = function(_, config)
-      config.settings.python = config.settings.python or {}
-      config.settings.python.pythonPath = M.python_path(config.root_dir)
-    end,
-    settings = {
-      basedpyright = {
-        disableOrganizeImports = true,
-        analysis = {
-          typeCheckingMode = "basic",
-          autoImportCompletions = true,
-          diagnosticSeverityOverrides = {
-            reportReturnType = "warning",
-            reportGeneralTypeIssues = "warning",
-            reportOptionalMemberAccess = "none",
-            reportOptionalSubscript = "none",
-          },
-        },
-      },
-    },
-  })
+  require("config.languages").setup_lsp()
   require("config.copilot").setup()
-  vim.lsp.config("jsonls", {
-    settings = {
-      json = { schemas = require("schemastore").json.schemas(), validate = { enable = true } },
-    },
-  })
-  local schemas = require("schemastore").yaml.schemas()
-  -- Kubernetes schemas are opt-in by filename/directory, never every YAML file.
-  schemas.kubernetes = { "*.k8s.yaml", "*.k8s.yml", "k8s/**/*.yaml", "k8s/**/*.yml", "kubernetes/**/*.yaml", "kubernetes/**/*.yml" }
-  vim.lsp.config("yamlls", {
-    settings = {
-      yaml = {
-        schemaStore = { enable = false, url = "" },
-        schemas = schemas,
-        validate = true,
-        keyOrdering = false,
-      },
-    },
-  })
 
   vim.diagnostic.config({
     severity_sort = true,
@@ -84,10 +29,6 @@ function M.setup()
   vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("personal_lsp", { clear = true }),
     callback = function(event)
-      local client = vim.lsp.get_client_by_id(event.data.client_id)
-      if client and client.name == "ruff" then
-        client.server_capabilities.hoverProvider = false
-      end
       local function map(lhs, rhs, desc)
         vim.keymap.set("n", lhs, rhs, { buffer = event.buf, silent = true, desc = desc })
       end

@@ -56,6 +56,15 @@ local function run()
     assert(hl(group).italic, "missing VS Code italic override: " .. group)
   end
   assert(not hl("@keyword").italic, "Python italics leaked into all languages")
+  local ts = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(ts, 0, -1, false, { '// comment', 'export const value = "hello"' })
+  vim.treesitter.start(ts, "typescript")
+  vim.treesitter.get_parser(ts, "typescript"):parse()
+  for _, position in ipairs({ { 0, 0 }, { 1, 0 }, { 1, 21 } }) do
+    assert(#vim.treesitter.get_captures_at_pos(ts, position[1], position[2]) > 0,
+      "TypeScript highlight queries missing at " .. vim.inspect(position))
+  end
+  vim.api.nvim_buf_delete(ts, { force = true })
   local python = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_buf_set_lines(python, 0, -1, false, { "assert True", "del value", "with resource:", "    pass" })
   vim.treesitter.start(python, "python")

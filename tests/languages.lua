@@ -47,26 +47,58 @@ local function completion(c, buf, line, character, label)
   for _, item in ipairs(items) do
     if item.label == label then return end
   end
-  error("completion not found: " .. c.name .. " / " .. label)
+  error("completion not found: " .. c.name .. " / " .. label .. " " .. vim.inspect(items))
 end
 
 local function run()
   local mason = vim.fn.stdpath("data") .. "/mason/bin/"
-  for _, executable in ipairs({ "basedpyright-langserver", "ruff", "tsc", "vscode-eslint-language-server", "yaml-language-server", "vscode-json-language-server", "black", "prettier", "sqlfluff", "tree-sitter" }) do
+  for _, executable in ipairs({ "basedpyright-langserver", "ruff", "tsc", "vscode-eslint-language-server", "yaml-language-server", "vscode-json-language-server", "lua-language-server", "docker-langserver", "black", "prettier", "sqlfluff", "stylua", "tree-sitter" }) do
     assert(vim.fn.exepath(executable):find(mason, 1, true) == 1, "tool is not Mason-local: " .. executable)
   end
   assert(require("blink.cmp.config").completion.ghost_text.enabled() == false)
   for _, parser in ipairs(require("config.treesitter").parsers) do
     assert(vim.treesitter.language.add(parser), "missing parser: " .. parser)
   end
+  write("lua-project/.luarc.json", { '{}' })
+  local lua_buf = open("lua-project/sample.lua", { "unknown_lua_global()", "math.ab" })
+  local lua = client("lua_ls", lua_buf)
+  assert(not (lua.config.settings.Lua.workspace or {}).library, "Neovim runtime leaked into another Lua project")
+  diagnostic(lua_buf, function(d) return d.code == "undefined-global" end, "Lua undefined global")
+  completion(lua, lua_buf, 1, 7, "abs(x)")
+  vim.cmd.edit(vim.fn.fnameescape(vim.fn.stdpath("config") .. "/init.lua"))
+  local config_buf = vim.api.nvim_get_current_buf()
+  local config_lua = client("lua_ls", config_buf)
+  assert(config_lua.config.settings.Lua.runtime.version == "LuaJIT", "Neovim Lua runtime not configured")
+  assert(vim.tbl_contains(config_lua.config.settings.Lua.workspace.library, vim.env.VIMRUNTIME), "Neovim runtime library missing")
+  write("lua-project/stylua.toml", { 'indent_type = "Spaces"', "indent_width = 2" })
+  lua_buf = open("lua-project/format.lua", { "local function greet()", 'print("hello")', "end" })
+  format(lua_buf)
+  assert(vim.api.nvim_buf_get_lines(lua_buf, 1, 2, false)[1] == '  print("hello")', "StyLua ignored project config")
+  vim.api.nvim_buf_set_lines(lua_buf, 1, 2, false, { 'print("hello")' })
+  vim.cmd.write()
+  assert(vim.api.nvim_buf_get_lines(lua_buf, 1, 2, false)[1] == 'print("hello")', "save unexpectedly formatted Lua")
+  print("PASS: Lua LSP diagnostics, completion, workspace settings and manual StyLua formatting")
+
+  local docker = open("docker/Dockerfile", { "FROM alpine", "BADINSTRUCTION value" })
+  local dockerls = client("dockerls", docker)
+  assert(vim.treesitter.highlighter.active[docker], "Dockerfile Tree-sitter highlighting not active")
+  diagnostic(docker, function(d) return d.message:lower():find("badinstruction", 1, true) ~= nil end, "Dockerfile invalid instruction")
+  assert(dockerls:supports_method("textDocument/formatting", docker), "Dockerfile formatting not supported")
+  vim.api.nvim_buf_set_lines(docker, 0, -1, false, { "FROM alpine", "  RUN echo hello" })
+  format(docker)
+  assert(vim.api.nvim_buf_get_lines(docker, 1, 2, false)[1] == "RUN echo hello", "Dockerfile formatter did not apply edits")
+  vim.bo[docker].modified = false
+  print("PASS: Dockerfile LSP, diagnostics, highlighting and manual formatting")
+
   write("pyproject.toml", { "[project]", 'name = "neovim-language-test"', 'version = "0.0.0"' })
   vim.fn.mkdir(temp .. "/.venv/bin", "p")
   assert(vim.uv.fs_symlink(vim.fn.exepath("python3"), temp .. "/.venv/bin/python"))
-  assert(require("config.lsp").python_path(temp) == temp .. "/.venv/bin/python")
+  assert(require("config.languages.python").python_path(temp) == temp .. "/.venv/bin/python")
 
   local buf = open("sample.py", { "import os", 'value: int = "wrong"', "unknown_name", "os.pa" })
   local pyright = client("basedpyright", buf)
-  client("ruff", buf)
+  local ruff = client("ruff", buf)
+  assert(not ruff.server_capabilities.hoverProvider, "Ruff hover must not override basedpyright")
   assert(pyright.settings.python.pythonPath == temp .. "/.venv/bin/python", "wrong Python environment: " .. vim.inspect(pyright.settings.python))
   diagnostic(buf, function(d) return d.source == "basedpyright" end, "Python types")
   diagnostic(buf, function(d) return d.source == "Ruff" and d.code == "F821" end, "Ruff undefined name")

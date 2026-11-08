@@ -1,5 +1,4 @@
--- copilot: see lua/config/copilot.lua (inline suggestions + statusline status).
-local servers = { "basedpyright", "ruff", "tsc", "eslint", "yamlls", "jsonls", "copilot" }
+local languages = require("config.languages")
 
 return {
   {
@@ -56,14 +55,14 @@ return {
   {
     "mason-org/mason-lspconfig.nvim",
     dependencies = { "mason-org/mason.nvim", "neovim/nvim-lspconfig" },
-    opts = { ensure_installed = servers, automatic_enable = servers },
+    opts = { ensure_installed = languages.servers, automatic_enable = languages.servers },
   },
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     event = "VeryLazy",
     dependencies = { "mason-org/mason.nvim" },
     opts = {
-      ensure_installed = { "black", "prettier", "sqlfluff", "tree-sitter-cli" },
+      ensure_installed = languages.tools,
       auto_update = false,
       run_on_start = true,
       integrations = { ["mason-lspconfig"] = false },
@@ -79,49 +78,14 @@ return {
     opts = {
       notify_on_error = true,
       default_format_opts = { timeout_ms = 10000, lsp_format = "never" },
-      formatters_by_ft = {
-        python = { "black" },
-        javascript = { "biome", "prettier", stop_after_first = true },
-        javascriptreact = { "biome", "prettier", stop_after_first = true },
-        typescript = { "biome", "prettier", stop_after_first = true },
-        typescriptreact = { "biome", "prettier", stop_after_first = true },
-        json = { "biome", "prettier", stop_after_first = true },
-        jsonc = { "biome", "prettier", stop_after_first = true },
-        yaml = { "prettier" },
-        markdown = { "prettier" },
-        css = { "prettier" },
-        sql = { "sqlfluff" },
-      },
-      formatters = {
-        biome = { require_cwd = true },
-        sqlfluff = {
-          args = { "format", "--stdin-filename", "$FILENAME", "-" },
-          require_cwd = false,
-        },
-      },
+      formatters_by_ft = languages.formatters_by_ft,
+      formatters = languages.formatters,
     },
   },
   {
     "mfussenegger/nvim-lint",
     ft = "sql",
-    config = function()
-      local lint = require("lint")
-      lint.linters_by_ft = { sql = { "sqlfluff" } }
-      lint.linters.sqlfluff.args = { "lint", "--format=json", "--stdin-filename", function()
-        return vim.api.nvim_buf_get_name(0)
-      end, "-" }
-      local group = vim.api.nvim_create_augroup("personal_lint", { clear = true })
-      vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost", "InsertLeave" }, {
-        group = group,
-        callback = function(event)
-          if vim.bo[event.buf].filetype == "sql" and vim.bo[event.buf].buftype == "" then
-            lint.try_lint()
-          end
-        end,
-      })
-      -- Loaded by the first SQL FileType, after that buffer's BufReadPost.
-      if vim.bo.filetype == "sql" and vim.bo.buftype == "" then lint.try_lint() end
-    end,
+    config = function() require("config.languages.sql").setup_lint() end,
   },
   {
     "nvim-treesitter/nvim-treesitter",
