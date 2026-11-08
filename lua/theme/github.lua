@@ -114,6 +114,8 @@ function M.load()
   set("Normal", { fg = fg, bg = bg })
   link("NormalNC", "Normal")
   set("NormalFloat", { fg = fg, bg = float })
+  -- Avoid Sidekick's float background; inherit the editor's default colors.
+  set("SidekickChat", { fg = "NONE", bg = "NONE", nocombine = true })
   -- More visible than the upstream #30363d widget border on a black terminal.
   set("FloatBorder", { fg = c("editorLineNumber.foreground"), bg = float })
   set("FloatTitle", { fg = c("foreground"), bg = float, bold = true })

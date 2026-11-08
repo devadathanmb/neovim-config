@@ -47,6 +47,7 @@ return {
       delay = 300,
       win = { border = "rounded" },
       spec = {
+        { "<leader>a", group = "Agents" },
         { "<leader>B", group = "Buffers" },
         { "<leader>b", group = "Bookmarks" },
         { "<leader>x", group = "Problems / lists" },

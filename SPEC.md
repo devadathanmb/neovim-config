@@ -7,14 +7,13 @@ items off when done.
 ## Goal
 
 A personal Neovim config (plain lazy.nvim, no distribution) that replaces VS Code for
-daily work while keeping VS Code muscle memory where sensible. AI coding agents run
-outside Neovim in Ghostty/tmux; Neovim is for reading, navigating, reviewing and
-editing their changes.
+daily work while keeping VS Code muscle memory where sensible. AI coding agents can
+run outside Neovim in Ghostty/tmux or in a quick Sidekick terminal panel.
 
 Languages: Python, TypeScript/JavaScript, PostgreSQL SQL, YAML/Kubernetes, JSON/JSONC,
 INI, Lua, Markdown, Dockerfile.
 
-**Out of scope:** debugger, embedded terminal, embedded AI chat/agent, format-on-save,
+**Out of scope:** debugger, format-on-save,
 Blink completion ghost text (Copilot ghost text is the only inline suggestion).
 
 ## Decisions
@@ -63,6 +62,10 @@ Git
   squash merges included), commit page fallback via Snacks.gitbrowse.
 
 Other
+- sidekick.nvim provides an optional agent CLI panel; its Copilot NES and file watcher
+  are disabled to preserve existing Copilot and external-change handling. Its panel
+  inherits editor defaults instead of the float background; ANSI colors remain themed.
+  Agent CLIs are installed separately; sessions do not persist across Neovim exits.
 - trouble.nvim tracks `main`: v3.7.1 breaks on Neovim 0.12 and the fix is unreleased.
 - Bookmarks are a local module: tomasky/bookmarks.nvim stores bookmarks globally and
   only navigates within one file. Ours are per cwd, cross-file, and re-anchor by line
@@ -103,6 +106,7 @@ real-world use and cannot be closed by tests.
 - [x] Copilot wiring, keys and statusline status.
 - [ ] Human: sign in to Copilot (`:LspCopilotSignIn`) and confirm suggestions appear.
 - [ ] Human: bookmark persistence and movement comfort.
+- [ ] Human: try the Sidekick agent panel and decide whether to keep it.
 
 ### Phase 5 — Stabilize and promote
 - [ ] Fix friction found in daily use; remove unused features.
