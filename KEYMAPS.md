@@ -247,4 +247,17 @@ working, yellow for warnings, red for errors (e.g. not signed in), `off` when to
 off. Clicking it signs in, shows the problem, or toggles suggestions.
 Sign in once with `:LspCopilotSignIn`.
 
-No debugger bindings, embedded terminal toggle, or AI chat mappings are planned.
+## Agent panel
+
+| Keys | Action |
+| --- | --- |
+| Space aa | Toggle the current agent panel |
+| Space as | Select an installed agent |
+| Space ad | Detach the current agent session |
+| Space af | Send the current file reference to the agent |
+| Space at | Send current context (or visual selection) to the agent |
+| Space ap | Select an agent prompt |
+
+In the panel, Ctrl-z returns to the editor, Ctrl-h moves left, Ctrl-q enters
+terminal normal mode, and q hides the panel from normal mode. Agent CLIs must be
+installed separately. Sidekick does not enable Copilot next-edit suggestions.
