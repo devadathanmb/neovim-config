@@ -13,7 +13,9 @@ local T = MiniTest.new_set({
       vim.cmd("silent! %bwipeout!")
       h.no_errors.post_case()
     end,
-    post_once = function() vim.fn.delete(temp, "rf") end,
+    post_once = function()
+      vim.fn.delete(temp, "rf")
+    end,
   },
 })
 
@@ -68,7 +70,9 @@ T["external changes"]["never overwrite unsaved edits"] = function()
       vim.v.fcs_choice = ""
     end,
   })
-  MiniTest.finally(function() vim.api.nvim_del_autocmd(id) end)
+  MiniTest.finally(function()
+    vim.api.nvim_del_autocmd(id)
+  end)
   vim.cmd.checktime()
   h.eq(conflict, "conflict")
   assert(vim.bo.modified, "buffer lost its modified flag")
@@ -76,15 +80,25 @@ T["external changes"]["never overwrite unsaved edits"] = function()
 end
 
 T["pickers"] = MiniTest.new_set({
-  hooks = { post_case = function() vim.wait(100) end },
+  hooks = {
+    post_case = function()
+      vim.wait(100)
+    end,
+  },
 })
 
 local function await_items(picker)
-  MiniTest.finally(function() picker:close() end)
-  h.wait(function() return picker:count() > 0 and picker.shown end, "picker returned no results", 5000)
+  MiniTest.finally(function()
+    picker:close()
+  end)
+  h.wait(function()
+    return picker:count() > 0 and picker.shown
+  end, "picker returned no results", 5000)
   assert(not picker.closed, "picker unexpectedly closed")
   picker:focus()
-  h.wait(function() return not picker:is_active() end, "picker finder did not finish", 5000)
+  h.wait(function()
+    return not picker:is_active()
+  end, "picker finder did not finish", 5000)
 end
 
 T["pickers"]["files"] = function()
@@ -105,7 +119,9 @@ end
 T["buffer close keeps split layout"] = function()
   vim.cmd.edit(temp .. "/sample.txt")
   vim.cmd.vsplit()
-  MiniTest.finally(function() vim.cmd.only() end)
+  MiniTest.finally(function()
+    vim.cmd.only()
+  end)
   local windows = #vim.api.nvim_list_wins()
   Snacks.bufdelete()
   h.eq(#vim.api.nvim_list_wins(), windows)
@@ -114,7 +130,9 @@ end
 T["resize mode repeats until another key"] = function()
   vim.cmd.vsplit()
   vim.cmd.split()
-  MiniTest.finally(function() vim.cmd.only() end)
+  MiniTest.finally(function()
+    vim.cmd.only()
+  end)
   local width, height = vim.api.nvim_win_get_width(0), vim.api.nvim_win_get_height(0)
   h.keys(" wrlllkq")
   h.eq(vim.api.nvim_win_get_width(0), width + 6)
@@ -137,15 +155,21 @@ local function stale_swap(name, dirty)
   vim.fn.mkdir(dir, "p")
   vim.fn.writefile({ "saved" }, file)
   local cmd = { "nvim", "--clean", "--headless", "-c", "set directory=" .. dir .. "//", "-c", "edit " .. file }
-  if dirty then vim.list_extend(cmd, { "-c", "call setline(1, 'unsaved')", "-c", "preserve" }) end
+  if dirty then
+    vim.list_extend(cmd, { "-c", "call setline(1, 'unsaved')", "-c", "preserve" })
+  end
   local child = vim.system(cmd)
-  h.wait(function() return #vim.fn.glob(dir .. "/*" .. name .. ".sw?", false, true) > 0 end, "child did not write a swap", 5000)
+  h.wait(function()
+    return #vim.fn.glob(dir .. "/*" .. name .. ".sw?", false, true) > 0
+  end, "child did not write a swap", 5000)
   vim.wait(200)
   child:kill(9)
   child:wait()
   local directory = vim.o.directory
   vim.o.directory = dir .. "//"
-  MiniTest.finally(function() vim.o.directory = directory end)
+  MiniTest.finally(function()
+    vim.o.directory = directory
+  end)
   return file, dir
 end
 
@@ -191,11 +215,17 @@ T["startup stays fast"] = function()
   local best = math.huge
   for _ = 1, 3 do
     vim.fn.delete(log)
-    vim.system({ "nvim", "--headless", "--startuptime", log, "-c", "lua vim.defer_fn(function() vim.cmd('qa!') end, 100)" },
-      { cwd = temp }):wait(10000)
+    vim
+      .system(
+        { "nvim", "--headless", "--startuptime", log, "-c", "lua vim.defer_fn(function() vim.cmd('qa!') end, 100)" },
+        { cwd = temp }
+      )
+      :wait(10000)
     for _, entry in ipairs(vim.fn.readfile(log)) do
       local ms = entry:match("^(%d+%.%d+)%s+%d+%.%d+: %-%-%- NVIM STARTED")
-      if ms then best = math.min(best, tonumber(ms)) end
+      if ms then
+        best = math.min(best, tonumber(ms))
+      end
     end
   end
   assert(best < math.huge, "no startup time recorded")
@@ -211,15 +241,23 @@ T["markdown renders in normal mode, raw on the cursor line"] = function()
   local function marks(row)
     return vim.api.nvim_buf_get_extmarks(0, ns or -1, { row, 0 }, { row, -1 }, {})
   end
-  h.wait(function() return ns ~= nil and #marks(4) > 0 end, "table was not rendered", 5000)
-  h.wait(function() return #marks(2) > 0 end, "checkbox was not rendered", 5000)
+  h.wait(function()
+    return ns ~= nil and #marks(4) > 0
+  end, "table was not rendered", 5000)
+  h.wait(function()
+    return #marks(2) > 0
+  end, "checkbox was not rendered", 5000)
   vim.api.nvim_win_set_cursor(0, { 3, 0 })
   -- API cursor moves fire no CursorMoved headless; render-markdown redraws on it.
   vim.api.nvim_exec_autocmds("CursorMoved", { buffer = 0 })
-  h.wait(function() return #marks(0) > 0 end, "heading was not rendered", 5000)
+  h.wait(function()
+    return #marks(0) > 0
+  end, "heading was not rendered", 5000)
   h.wait(function()
     for _, mark in ipairs(vim.api.nvim_buf_get_extmarks(0, ns, { 2, 0 }, { 2, -1 }, { details = true })) do
-      if mark[4].virt_text or mark[4].conceal then return false end
+      if mark[4].virt_text or mark[4].conceal then
+        return false
+      end
     end
     return true
   end, "cursor line is not shown raw", 5000)

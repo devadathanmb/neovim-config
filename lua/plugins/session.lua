@@ -13,8 +13,15 @@ return {
       suppressed_dirs = { "~/", "~/Downloads", "~/Desktop", "/", "/tmp" },
       -- Tool windows are rebuilt on demand; restoring them leaves broken buffers.
       close_filetypes_on_save = {
-        "checkhealth", "snacks_layout_box", "snacks_picker_list", "snacks_picker_input",
-        "sidekick_terminal", "DiffviewFiles", "DiffviewFileHistory", "trouble", "grug-far",
+        "checkhealth",
+        "snacks_layout_box",
+        "snacks_picker_list",
+        "snacks_picker_input",
+        "sidekick_terminal",
+        "DiffviewFiles",
+        "DiffviewFileHistory",
+        "trouble",
+        "grug-far",
       },
       bypass_save_filetypes = { "snacks_dashboard" },
       session_lens = { picker = "snacks" },

@@ -21,7 +21,9 @@ end
 
 function M.setup_lsp()
   for _, module in ipairs(modules) do
-    if module.setup_lsp then module.setup_lsp() end
+    if module.setup_lsp then
+      module.setup_lsp()
+    end
   end
 end
 

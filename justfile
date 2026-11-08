@@ -22,6 +22,15 @@ test: _check-config
     done; \
     exit "$failed"
 
+# Format all Lua with the Mason StyLua (twice: StyLua is not always idempotent).
+fmt:
+    @stylua="${XDG_DATA_HOME:-$HOME/.local/share}/nvim/mason/bin/stylua"; \
+    "$stylua" lua tests init.lua && "$stylua" lua tests init.lua
+
+# Check formatting without changing files; run before committing.
+check:
+    @"${XDG_DATA_HOME:-$HOME/.local/share}/nvim/mason/bin/stylua" --check lua tests init.lua
+
 # Fast feedback while iterating: every suite except the slow language servers.
 test-fast: _check-config
     @failed=0; \

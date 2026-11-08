@@ -25,14 +25,25 @@ return {
         -- Tab: snippet placeholder → menu item → accept Copilot ghost text → indent.
         -- Inside a snippet use Ctrl-j/k for the menu. Ctrl-l always accepts Copilot.
         ["<Tab>"] = {
-          function(cmp) if cmp.snippet_active({ direction = 1 }) then return cmp.snippet_forward() end end,
+          function(cmp)
+            if cmp.snippet_active({ direction = 1 }) then
+              return cmp.snippet_forward()
+            end
+          end,
           "select_next",
-          function() return require("config.copilot").accept() end,
+          function()
+            return require("config.copilot").accept()
+          end,
           "fallback",
         },
         ["<S-Tab>"] = {
-          function(cmp) if cmp.snippet_active({ direction = -1 }) then return cmp.snippet_backward() end end,
-          "select_prev", "fallback",
+          function(cmp)
+            if cmp.snippet_active({ direction = -1 }) then
+              return cmp.snippet_backward()
+            end
+          end,
+          "select_prev",
+          "fallback",
         },
         ["<CR>"] = { "accept", "fallback" },
       },
@@ -51,7 +62,9 @@ return {
   {
     "neovim/nvim-lspconfig",
     dependencies = { "saghen/blink.cmp", "b0o/SchemaStore.nvim" },
-    config = function() require("config.lsp").setup() end,
+    config = function()
+      require("config.lsp").setup()
+    end,
   },
   {
     "mason-org/mason-lspconfig.nvim",
@@ -73,8 +86,21 @@ return {
     "stevearc/conform.nvim",
     cmd = "ConformInfo",
     keys = {
-      { "<leader>lf", function() require("conform").format({ async = true }) end, desc = "Format document" },
-      { "<leader>lv", function() require("conform").format({ async = true }) end, mode = "x", desc = "Format selection (when supported)" },
+      {
+        "<leader>lf",
+        function()
+          require("conform").format({ async = true })
+        end,
+        desc = "Format document",
+      },
+      {
+        "<leader>lv",
+        function()
+          require("conform").format({ async = true })
+        end,
+        mode = "x",
+        desc = "Format selection (when supported)",
+      },
     },
     opts = {
       notify_on_error = true,
@@ -86,7 +112,9 @@ return {
   {
     "mfussenegger/nvim-lint",
     ft = "sql",
-    config = function() require("config.languages.sql").setup_lint() end,
+    config = function()
+      require("config.languages.sql").setup_lint()
+    end,
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -94,6 +122,8 @@ return {
     lazy = false,
     build = ":TSUpdate",
     dependencies = { "mason-org/mason.nvim" },
-    config = function() require("config.treesitter").setup() end,
+    config = function()
+      require("config.treesitter").setup()
+    end,
   },
 }

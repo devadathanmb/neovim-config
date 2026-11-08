@@ -19,7 +19,9 @@ function M.copy(visual)
     return
   end
   vim.fn.setreg("+", reference)
-  if visual then vim.cmd.normal({ args = { "\27" }, bang = true }) end
+  if visual then
+    vim.cmd.normal({ args = { "\27" }, bang = true })
+  end
   vim.notify("Copied " .. reference)
 end
 

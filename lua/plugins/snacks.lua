@@ -25,8 +25,12 @@ return {
         layout = {
           config = function(layout)
             local function borders(box)
-              if box.border == true or box.win == "preview" then box.border = "rounded" end
-              for _, child in ipairs(box) do borders(child) end
+              if box.border == true or box.win == "preview" then
+                box.border = "rounded"
+              end
+              for _, child in ipairs(box) do
+                borders(child)
+              end
             end
             borders(layout.layout)
           end,

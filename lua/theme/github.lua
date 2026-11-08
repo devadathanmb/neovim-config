@@ -9,8 +9,12 @@ local colors = vim.tbl_extend("force", source.colors, overrides.colors)
 
 -- VS Code alpha colors must be composited: terminal highlights only accept RGB.
 function M.blend(hex, background)
-  if #hex == 4 then hex = "#" .. hex:sub(2, 2):rep(2) .. hex:sub(3, 3):rep(2) .. hex:sub(4, 4):rep(2) end
-  if #hex == 7 then return hex end
+  if #hex == 4 then
+    hex = "#" .. hex:sub(2, 2):rep(2) .. hex:sub(3, 3):rep(2) .. hex:sub(4, 4):rep(2)
+  end
+  if #hex == 7 then
+    return hex
+  end
   assert(#hex == 9, "unsupported theme color: " .. hex)
   local alpha = tonumber(hex:sub(8, 9), 16) / 255
   local channels = {}
@@ -30,7 +34,9 @@ local function settings(scope, rules)
   local result = {}
   for _, rule in ipairs(rules) do
     local scopes = type(rule.scope) == "table" and rule.scope or { rule.scope }
-    if vim.tbl_contains(scopes, scope) then result = vim.tbl_extend("force", result, rule.settings) end
+    if vim.tbl_contains(scopes, scope) then
+      result = vim.tbl_extend("force", result, rule.settings)
+    end
   end
   return result
 end
@@ -39,8 +45,12 @@ end
 local function token(scope, fallback)
   local result = fallback and token(fallback) or {}
   local spec = vim.tbl_extend("force", settings(scope, source.tokenColors), settings(scope, overrides.tokenColors))
-  if spec.foreground then result.fg = spec.foreground end
-  if spec.background then result.bg = spec.background end
+  if spec.foreground then
+    result.fg = spec.foreground
+  end
+  if spec.background then
+    result.bg = spec.background
+  end
   if spec.fontStyle then
     for _, style in ipairs({ "italic", "bold", "underline", "strikethrough" }) do
       result[style] = spec.fontStyle:find(style, 1, true) ~= nil
@@ -105,10 +115,16 @@ function M.load()
   local c = M.color
   local fg, bg = c("editor.foreground"), c("editor.background")
   local float = c("editorWidget.background")
-  local function set(name, value) vim.api.nvim_set_hl(0, name, value) end
-  local function link(name, target) set(name, { link = target }) end
+  local function set(name, value)
+    vim.api.nvim_set_hl(0, name, value)
+  end
+  local function link(name, target)
+    set(name, { link = target })
+  end
   local function many(names, value)
-    for _, name in ipairs(names) do set(name, vim.deepcopy(value)) end
+    for _, name in ipairs(names) do
+      set(name, vim.deepcopy(value))
+    end
   end
 
   set("Normal", { fg = fg, bg = bg })
@@ -170,16 +186,42 @@ function M.load()
   set("Substitute", { fg = bg, bg = token("entity.name").fg })
 
   for name, scope in pairs({
-    Comment = "comment", Constant = "constant", String = "string", Character = "constant.character",
-    Number = "constant", Boolean = "constant", Float = "constant", Identifier = "variable.other",
-    Function = "entity.name.function", Statement = "keyword", Conditional = "keyword", Repeat = "keyword",
-    Label = "keyword", Operator = "keyword", Keyword = "keyword", Exception = "keyword",
-    PreProc = "keyword", Include = "keyword", Define = "storage", Macro = "entity.name.function",
-    PreCondit = "keyword", Type = "entity.name", StorageClass = "storage", Structure = "storage",
-    Typedef = "storage.type", Special = "support", SpecialChar = "constant.character",
-    Tag = "entity.name.tag", Delimiter = "variable.other", SpecialComment = "comment",
-    Debug = "support", Underlined = "markup.underline", Error = "invalid.illegal",
-  }) do set(name, token(scope)) end
+    Comment = "comment",
+    Constant = "constant",
+    String = "string",
+    Character = "constant.character",
+    Number = "constant",
+    Boolean = "constant",
+    Float = "constant",
+    Identifier = "variable.other",
+    Function = "entity.name.function",
+    Statement = "keyword",
+    Conditional = "keyword",
+    Repeat = "keyword",
+    Label = "keyword",
+    Operator = "keyword",
+    Keyword = "keyword",
+    Exception = "keyword",
+    PreProc = "keyword",
+    Include = "keyword",
+    Define = "storage",
+    Macro = "entity.name.function",
+    PreCondit = "keyword",
+    Type = "entity.name",
+    StorageClass = "storage",
+    Structure = "storage",
+    Typedef = "storage.type",
+    Special = "support",
+    SpecialChar = "constant.character",
+    Tag = "entity.name.tag",
+    Delimiter = "variable.other",
+    SpecialComment = "comment",
+    Debug = "support",
+    Underlined = "markup.underline",
+    Error = "invalid.illegal",
+  }) do
+    set(name, token(scope))
+  end
   set("Todo", { fg = token("entity.name").fg, bold = true })
   set("Added", token("markup.inserted"))
   set("Removed", token("markup.deleted"))
@@ -194,8 +236,13 @@ function M.load()
   set("diffFile", token("meta.diff.header"))
   set("diffLine", token("meta.diff.range"))
 
-  for severity, key in pairs({ Error = "notificationsErrorIcon.foreground", Warn = "notificationsWarningIcon.foreground",
-    Info = "notificationsInfoIcon.foreground", Hint = "descriptionForeground", Ok = "gitDecoration.addedResourceForeground" }) do
+  for severity, key in pairs({
+    Error = "notificationsErrorIcon.foreground",
+    Warn = "notificationsWarningIcon.foreground",
+    Info = "notificationsInfoIcon.foreground",
+    Hint = "descriptionForeground",
+    Ok = "gitDecoration.addedResourceForeground",
+  }) do
     local color = c(key)
     set("Diagnostic" .. severity, { fg = color })
     set("DiagnosticSign" .. severity, { fg = color })
@@ -213,44 +260,89 @@ function M.load()
   set("ComplHintMore", { fg = c("descriptionForeground") })
   set("LspInlayHint", { fg = c("editorInlayHint.foreground"), bg = c("editorInlayHint.background") })
   link("LspSignatureActiveParameter", "Visual")
-  for name, key in pairs({ SpellBad = "notificationsErrorIcon.foreground", SpellCap = "notificationsWarningIcon.foreground",
-    SpellLocal = "notificationsInfoIcon.foreground", SpellRare = "descriptionForeground" }) do
+  for name, key in pairs({
+    SpellBad = "notificationsErrorIcon.foreground",
+    SpellCap = "notificationsWarningIcon.foreground",
+    SpellLocal = "notificationsInfoIcon.foreground",
+    SpellRare = "descriptionForeground",
+  }) do
     set(name, { sp = c(key), undercurl = true })
   end
 
   local captures = {
-    ["@variable"] = "variable.other", ["@variable.builtin"] = "variable.language",
-    ["@variable.parameter"] = "variable.parameter.function", ["@variable.member"] = "meta.object.member",
-    ["@constant"] = "constant", ["@constant.builtin"] = "constant", ["@constant.macro"] = "support.constant",
-    ["@module"] = "meta.module-reference", ["@module.builtin"] = "support", ["@label"] = "entity.name",
-    ["@string"] = "string", ["@string.documentation"] = "string", ["@string.regexp"] = "string.regexp",
-    ["@string.escape"] = "constant.character", ["@string.special"] = "constant.character",
-    ["@string.special.url"] = "string.other.link", ["@string.special.path"] = "string",
-    ["@character"] = "constant.character", ["@number"] = "constant", ["@number.float"] = "constant",
-    ["@boolean"] = "constant", ["@type"] = "entity.name", ["@type.builtin"] = "support",
-    ["@type.definition"] = "entity.name", ["@attribute"] = "entity.name", ["@property"] = "meta.property-name",
-    ["@function"] = "entity.name.function", ["@function.builtin"] = "support",
-    ["@function.call"] = "entity.name.function", ["@function.macro"] = "entity.name.function",
-    ["@function.method"] = "entity.name.function", ["@function.method.call"] = "entity.name.function",
-    ["@constructor"] = "entity.name", ["@operator"] = "keyword", ["@keyword"] = "keyword",
-    ["@keyword.function"] = "storage.type", ["@keyword.type"] = "storage.type",
-    ["@keyword.import"] = "keyword", ["@keyword.return"] = "keyword", ["@keyword.operator"] = "keyword",
-    ["@keyword.coroutine"] = "keyword", ["@keyword.modifier"] = "storage",
-    ["@keyword.repeat"] = "keyword", ["@keyword.conditional"] = "keyword", ["@keyword.exception"] = "keyword",
-    ["@keyword.directive"] = "keyword", ["@keyword.debug"] = "keyword",
-    ["@punctuation.delimiter"] = "variable.other", ["@punctuation.bracket"] = "variable.other",
-    ["@punctuation.special"] = "punctuation.section.embedded", ["@comment"] = "comment",
-    ["@markup.heading"] = "markup.heading", ["@markup.strong"] = "markup.bold", ["@markup.italic"] = "markup.italic",
-    ["@markup.strikethrough"] = "markup.strikethrough", ["@markup.underline"] = "markup.underline",
-    ["@markup.quote"] = "markup.quote", ["@markup.math"] = "markup.inline.raw",
-    ["@markup.raw"] = "markup.inline.raw", ["@markup.link"] = "constant.other.reference.link",
-    ["@markup.link.url"] = "string.other.link", ["@markup.link.label"] = "constant.other.reference.link",
+    ["@variable"] = "variable.other",
+    ["@variable.builtin"] = "variable.language",
+    ["@variable.parameter"] = "variable.parameter.function",
+    ["@variable.member"] = "meta.object.member",
+    ["@constant"] = "constant",
+    ["@constant.builtin"] = "constant",
+    ["@constant.macro"] = "support.constant",
+    ["@module"] = "meta.module-reference",
+    ["@module.builtin"] = "support",
+    ["@label"] = "entity.name",
+    ["@string"] = "string",
+    ["@string.documentation"] = "string",
+    ["@string.regexp"] = "string.regexp",
+    ["@string.escape"] = "constant.character",
+    ["@string.special"] = "constant.character",
+    ["@string.special.url"] = "string.other.link",
+    ["@string.special.path"] = "string",
+    ["@character"] = "constant.character",
+    ["@number"] = "constant",
+    ["@number.float"] = "constant",
+    ["@boolean"] = "constant",
+    ["@type"] = "entity.name",
+    ["@type.builtin"] = "support",
+    ["@type.definition"] = "entity.name",
+    ["@attribute"] = "entity.name",
+    ["@property"] = "meta.property-name",
+    ["@function"] = "entity.name.function",
+    ["@function.builtin"] = "support",
+    ["@function.call"] = "entity.name.function",
+    ["@function.macro"] = "entity.name.function",
+    ["@function.method"] = "entity.name.function",
+    ["@function.method.call"] = "entity.name.function",
+    ["@constructor"] = "entity.name",
+    ["@operator"] = "keyword",
+    ["@keyword"] = "keyword",
+    ["@keyword.function"] = "storage.type",
+    ["@keyword.type"] = "storage.type",
+    ["@keyword.import"] = "keyword",
+    ["@keyword.return"] = "keyword",
+    ["@keyword.operator"] = "keyword",
+    ["@keyword.coroutine"] = "keyword",
+    ["@keyword.modifier"] = "storage",
+    ["@keyword.repeat"] = "keyword",
+    ["@keyword.conditional"] = "keyword",
+    ["@keyword.exception"] = "keyword",
+    ["@keyword.directive"] = "keyword",
+    ["@keyword.debug"] = "keyword",
+    ["@punctuation.delimiter"] = "variable.other",
+    ["@punctuation.bracket"] = "variable.other",
+    ["@punctuation.special"] = "punctuation.section.embedded",
+    ["@comment"] = "comment",
+    ["@markup.heading"] = "markup.heading",
+    ["@markup.strong"] = "markup.bold",
+    ["@markup.italic"] = "markup.italic",
+    ["@markup.strikethrough"] = "markup.strikethrough",
+    ["@markup.underline"] = "markup.underline",
+    ["@markup.quote"] = "markup.quote",
+    ["@markup.math"] = "markup.inline.raw",
+    ["@markup.raw"] = "markup.inline.raw",
+    ["@markup.link"] = "constant.other.reference.link",
+    ["@markup.link.url"] = "string.other.link",
+    ["@markup.link.label"] = "constant.other.reference.link",
     ["@markup.list"] = "punctuation.definition.list.begin.markdown",
-    ["@diff.plus"] = "markup.inserted", ["@diff.minus"] = "markup.deleted", ["@diff.delta"] = "markup.changed",
-    ["@tag"] = "entity.name.tag", ["@tag.attribute"] = "meta.tag.attributes", ["@tag.delimiter"] = "variable.other",
+    ["@diff.plus"] = "markup.inserted",
+    ["@diff.minus"] = "markup.deleted",
+    ["@diff.delta"] = "markup.changed",
+    ["@tag"] = "entity.name.tag",
+    ["@tag.attribute"] = "meta.tag.attributes",
+    ["@tag.delimiter"] = "variable.other",
     ["@string.special.key.json"] = "support.type.property-name.json",
     ["@string.special.key.jsonc"] = "support.type.property-name.json",
-    ["@string.special.key.yaml"] = "entity.name.tag", ["@property.yaml"] = "entity.name.tag",
+    ["@string.special.key.yaml"] = "entity.name.tag",
+    ["@property.yaml"] = "entity.name.tag",
     ["@keyword.import.python"] = "keyword.control.import.python",
     ["@keyword.function.python"] = "storage.type.function.python",
     ["@keyword.return.python"] = "keyword.control.flow.python",
@@ -269,28 +361,60 @@ function M.load()
 
   -- Semantic tokens must not replace the syntax palette with Neovim defaults.
   for kind, target in pairs({
-    namespace = "@module", type = "@type", class = "@type", enum = "@type", interface = "@type",
-    struct = "@type", typeParameter = "@type", parameter = "@variable.parameter", variable = "@variable",
-    property = "@variable.member", enumMember = "@constant", event = "@type", ["function"] = "@function",
-    method = "@function.method", macro = "@function.macro", keyword = "@keyword", modifier = "@keyword.modifier",
-    comment = "@comment", string = "@string", number = "@number", regexp = "@string.regexp",
-    operator = "@operator", decorator = "@attribute", label = "@label",
-  }) do link("@lsp.type." .. kind, target) end
+    namespace = "@module",
+    type = "@type",
+    class = "@type",
+    enum = "@type",
+    interface = "@type",
+    struct = "@type",
+    typeParameter = "@type",
+    parameter = "@variable.parameter",
+    variable = "@variable",
+    property = "@variable.member",
+    enumMember = "@constant",
+    event = "@type",
+    ["function"] = "@function",
+    method = "@function.method",
+    macro = "@function.macro",
+    keyword = "@keyword",
+    modifier = "@keyword.modifier",
+    comment = "@comment",
+    string = "@string",
+    number = "@number",
+    regexp = "@string.regexp",
+    operator = "@operator",
+    decorator = "@attribute",
+    label = "@label",
+  }) do
+    link("@lsp.type." .. kind, target)
+  end
   for selector, spec in pairs(overrides.semanticTokenColors) do
     if selector == "*.typeHint" then
       set("@lsp.mod.typeHint", { italic = spec.fontStyle == "italic" })
     elseif selector == "type:python" then
-      set("@lsp.type.type.python", vim.tbl_extend("force", token("entity.name"), { italic = spec.fontStyle == "italic" }))
+      set(
+        "@lsp.type.type.python",
+        vim.tbl_extend("force", token("entity.name"), { italic = spec.fontStyle == "italic" })
+      )
     end
   end
   set("@lsp.mod.deprecated", { strikethrough = true })
 
   for change, key in pairs({ Add = "added", Change = "modified", Delete = "deleted" }) do
     local color = c("editorGutter." .. key .. "Background")
-    many({ "GitSigns" .. change, "GitSignsStaged" .. change, "GitSigns" .. change .. "Nr", "GitGutter" .. change, "SignifySign" .. change }, { fg = color })
+    many({
+      "GitSigns" .. change,
+      "GitSignsStaged" .. change,
+      "GitSigns" .. change .. "Nr",
+      "GitGutter" .. change,
+      "SignifySign" .. change,
+    }, { fg = color })
     set("SnacksDiff" .. change, { fg = color })
   end
-  many({ "GitSignsCurrentLineBlame", "SnacksPickerGitStatusIgnored", "SnacksPickerIgnored" }, { fg = c("gitlens.trailingLineForegroundColor") })
+  many(
+    { "GitSignsCurrentLineBlame", "SnacksPickerGitStatusIgnored", "SnacksPickerIgnored" },
+    { fg = c("gitlens.trailingLineForegroundColor") }
+  )
   set("SnacksPickerGitStatusAdded", { fg = c("gitDecoration.addedResourceForeground") })
   set("SnacksPickerGitStatusModified", { fg = c("gitDecoration.modifiedResourceForeground") })
   set("SnacksPickerGitStatusDeleted", { fg = c("gitDecoration.deletedResourceForeground") })
@@ -320,84 +444,220 @@ function M.load()
   set("FlashCurrent", { fg = c("foreground"), bg = c("editor.findMatchBackground") })
   set("FlashBackdrop", { fg = token("comment").fg })
   for name, target in pairs({
-    TroubleNormal = "GithubUiPanel", TroubleNormalNC = "GithubUiPanel", TroubleText = "GithubUiText",
-    TroubleCount = "GithubUiAccent", TroubleFilename = "GithubUiText", TroubleDirectory = "GithubUiMuted",
-    TroubleBasename = "GithubUiText", TroublePos = "GithubUiMuted", TroubleSource = "GithubUiMuted",
-    TroubleCode = "GithubUiMuted", TroubleIndent = "GithubUiTree", TroubleIndentFoldClosed = "GithubUiTree",
-    TroubleIndentFoldOpen = "GithubUiTree", TroublePreview = "Visual", TroubleIconDirectory = "GithubUiAccent",
-  }) do link(name, target) end
+    TroubleNormal = "GithubUiPanel",
+    TroubleNormalNC = "GithubUiPanel",
+    TroubleText = "GithubUiText",
+    TroubleCount = "GithubUiAccent",
+    TroubleFilename = "GithubUiText",
+    TroubleDirectory = "GithubUiMuted",
+    TroubleBasename = "GithubUiText",
+    TroublePos = "GithubUiMuted",
+    TroubleSource = "GithubUiMuted",
+    TroubleCode = "GithubUiMuted",
+    TroubleIndent = "GithubUiTree",
+    TroubleIndentFoldClosed = "GithubUiTree",
+    TroubleIndentFoldOpen = "GithubUiTree",
+    TroublePreview = "Visual",
+    TroubleIconDirectory = "GithubUiAccent",
+  }) do
+    link(name, target)
+  end
   set("GitReviewRemovedLine", { bg = c("diffEditor.removedLineBackground") })
   set("GitReviewRemovedText", { bg = c("diffEditor.removedTextBackground") })
   set("GitReviewAddedLine", { bg = c("diffEditor.insertedLineBackground") })
   set("GitReviewAddedText", { bg = c("diffEditor.insertedTextBackground") })
   set("DiffviewFilePanelSelected", { fg = fg, bold = true })
   for name, target in pairs({
-    FilePanelTitle = "GithubUiPanelTitle", FilePanelCounter = "GithubUiAccent",
-    FilePanelRootPath = "GithubUiText", FilePanelFileName = "GithubUiText", FilePanelPath = "GithubUiMuted",
-    FolderName = "GithubUiText", FolderSign = "GithubUiAccent", Dim1 = "GithubUiMuted",
-    Primary = "GithubUiAccent", Secondary = "GithubUiText", Hash = "GithubUiAccent", Reference = "GithubUiAccent",
-    StatusAdded = "GitSignsAdd", StatusUntracked = "GitSignsAdd", StatusModified = "GitSignsChange",
-    StatusRenamed = "GitSignsChange", StatusCopied = "GitSignsChange", StatusDeleted = "GitSignsDelete",
-    StatusIgnored = "GithubUiMuted", FilePanelInsertions = "GitSignsAdd", FilePanelDeletions = "GitSignsDelete",
+    FilePanelTitle = "GithubUiPanelTitle",
+    FilePanelCounter = "GithubUiAccent",
+    FilePanelRootPath = "GithubUiText",
+    FilePanelFileName = "GithubUiText",
+    FilePanelPath = "GithubUiMuted",
+    FolderName = "GithubUiText",
+    FolderSign = "GithubUiAccent",
+    Dim1 = "GithubUiMuted",
+    Primary = "GithubUiAccent",
+    Secondary = "GithubUiText",
+    Hash = "GithubUiAccent",
+    Reference = "GithubUiAccent",
+    StatusAdded = "GitSignsAdd",
+    StatusUntracked = "GitSignsAdd",
+    StatusModified = "GitSignsChange",
+    StatusRenamed = "GitSignsChange",
+    StatusCopied = "GitSignsChange",
+    StatusDeleted = "GitSignsDelete",
+    StatusIgnored = "GithubUiMuted",
+    FilePanelInsertions = "GitSignsAdd",
+    FilePanelDeletions = "GitSignsDelete",
     DiffDeleteDim = "GithubUiMuted",
-  }) do link("Diffview" .. name, target) end
+  }) do
+    link("Diffview" .. name, target)
+  end
 
   for _, level in ipairs({ "Trace", "Debug", "Info", "Warn", "Error" }) do
     link("SnacksNotifier" .. level, "NormalFloat")
     link("SnacksNotifierBorder" .. level, "FloatBorder")
     link("SnacksNotifierTitle" .. level, "FloatTitle")
     link("SnacksNotifierFooter" .. level, "GithubUiMuted")
-    link("SnacksNotifierIcon" .. level, (level == "Trace" or level == "Debug") and "GithubUiMuted" or ("DiagnosticSign" .. level))
+    link(
+      "SnacksNotifierIcon" .. level,
+      (level == "Trace" or level == "Debug") and "GithubUiMuted" or ("DiagnosticSign" .. level)
+    )
   end
 
   for name, target in pairs({
-    SnacksNormal = "NormalFloat", SnacksNormalNC = "NormalFloat", SnacksWinBar = "GithubUiPanelTitle",
-    SnacksWinBarNC = "GithubUiPanelToggle", SnacksTitle = "GithubUiPanelTitle", SnacksFooter = "GithubUiPanelToggle",
+    SnacksNormal = "NormalFloat",
+    SnacksNormalNC = "NormalFloat",
+    SnacksWinBar = "GithubUiPanelTitle",
+    SnacksWinBarNC = "GithubUiPanelToggle",
+    SnacksTitle = "GithubUiPanelTitle",
+    SnacksFooter = "GithubUiPanelToggle",
     SnacksWinSeparator = "GithubUiPanelBorder",
-    SnacksPicker = "GithubUiPanel", SnacksPickerBorder = "GithubUiPanelBorder", SnacksPickerTitle = "GithubUiPanelTitle",
-    SnacksPickerInput = "GithubUiPanel", SnacksPickerInputBorder = "GithubUiPanelBorder", SnacksPickerInputTitle = "GithubUiPanelTitle",
-    SnacksPickerList = "GithubUiPanel", SnacksPickerListBorder = "GithubUiPanelBorder", SnacksPickerListTitle = "GithubUiPanelTitle",
-    SnacksPickerPreview = "Normal", SnacksPickerPreviewBorder = "GithubUiPanelBorder", SnacksPickerPreviewTitle = "GithubUiPanelTitle",
-    SnacksPickerBox = "GithubUiPanel", SnacksPickerBoxBorder = "GithubUiPanelBorder", SnacksPickerBoxTitle = "GithubUiPanelTitle",
-    SnacksInputNormal = "NormalFloat", SnacksInputBorder = "FloatBorder", SnacksInputTitle = "FloatTitle",
-    SnacksPickerMatch = "PmenuMatchSel", SnacksPickerSearch = "PmenuMatchSel",
-    SnacksPickerDirectory = "GithubUiText", SnacksPickerFile = "GithubUiText", SnacksPickerDir = "GithubUiMuted",
-    SnacksPickerPathHidden = "GithubUiHidden", SnacksPickerPathIgnored = "GithubUiMuted", SnacksPickerIgnored = "GithubUiMuted",
-    SnacksPickerTotals = "GithubUiMuted", SnacksPickerDimmed = "GithubUiMuted", SnacksPickerUnselected = "GithubUiMuted",
-    SnacksPickerPrompt = "GithubUiPanelPrompt", SnacksPickerInputSearch = "GithubUiPanelSearch", SnacksPickerTree = "GithubUiTree",
-    SnacksPickerSelected = "GithubUiAccent", SnacksPickerCursorLine = "GithubUiSelection",
-    SnacksPickerListCursorLine = "GithubUiSelection", SnacksPickerPreviewCursorLine = "GithubUiSelection",
-    SnacksPickerToggle = "GithubUiPanelToggle", SnacksPickerToggleHidden = "GithubUiPanelToggle",
-    SnacksPickerToggleIgnored = "GithubUiPanelToggle", SnacksPickerToggleFollow = "GithubUiPanelToggle",
-    SnacksPickerComment = "GithubUiMuted", SnacksPickerDesc = "GithubUiMuted", SnacksPickerDelim = "GithubUiMuted",
-    SnacksPickerDiagnosticSource = "GithubUiMuted", SnacksPickerDiagnosticCode = "GithubUiMuted",
-    SnacksPickerLink = "GithubUiMuted", SnacksPickerLabel = "GithubUiText", SnacksPickerBufFlags = "GithubUiMuted",
-    WhichKey = "GithubUiAccent", WhichKeyGroup = "GithubUiText", WhichKeyDesc = "GithubUiText", WhichKeyBorder = "FloatBorder",
-    WhichKeyNormal = "NormalFloat", WhichKeySeparator = "GithubUiMuted", WhichKeyValue = "GithubUiMuted",
-    BlinkCmpMenu = "Pmenu", BlinkCmpMenuBorder = "FloatBorder", BlinkCmpMenuSelection = "PmenuSel",
-    BlinkCmpLabel = "GithubUiText", BlinkCmpLabelMatch = "PmenuMatchSel", BlinkCmpLabelDeprecated = "DiagnosticDeprecated",
-    BlinkCmpLabelDetail = "GithubUiMuted", BlinkCmpLabelDescription = "GithubUiMuted", BlinkCmpSource = "GithubUiMuted",
-    BlinkCmpDoc = "NormalFloat", BlinkCmpDocBorder = "FloatBorder", BlinkCmpDocSeparator = "FloatBorder",
-    BlinkCmpSignatureHelp = "NormalFloat", BlinkCmpSignatureHelpBorder = "FloatBorder",
+    SnacksPicker = "GithubUiPanel",
+    SnacksPickerBorder = "GithubUiPanelBorder",
+    SnacksPickerTitle = "GithubUiPanelTitle",
+    SnacksPickerInput = "GithubUiPanel",
+    SnacksPickerInputBorder = "GithubUiPanelBorder",
+    SnacksPickerInputTitle = "GithubUiPanelTitle",
+    SnacksPickerList = "GithubUiPanel",
+    SnacksPickerListBorder = "GithubUiPanelBorder",
+    SnacksPickerListTitle = "GithubUiPanelTitle",
+    SnacksPickerPreview = "Normal",
+    SnacksPickerPreviewBorder = "GithubUiPanelBorder",
+    SnacksPickerPreviewTitle = "GithubUiPanelTitle",
+    SnacksPickerBox = "GithubUiPanel",
+    SnacksPickerBoxBorder = "GithubUiPanelBorder",
+    SnacksPickerBoxTitle = "GithubUiPanelTitle",
+    SnacksInputNormal = "NormalFloat",
+    SnacksInputBorder = "FloatBorder",
+    SnacksInputTitle = "FloatTitle",
+    SnacksPickerMatch = "PmenuMatchSel",
+    SnacksPickerSearch = "PmenuMatchSel",
+    SnacksPickerDirectory = "GithubUiText",
+    SnacksPickerFile = "GithubUiText",
+    SnacksPickerDir = "GithubUiMuted",
+    SnacksPickerPathHidden = "GithubUiHidden",
+    SnacksPickerPathIgnored = "GithubUiMuted",
+    SnacksPickerIgnored = "GithubUiMuted",
+    SnacksPickerTotals = "GithubUiMuted",
+    SnacksPickerDimmed = "GithubUiMuted",
+    SnacksPickerUnselected = "GithubUiMuted",
+    SnacksPickerPrompt = "GithubUiPanelPrompt",
+    SnacksPickerInputSearch = "GithubUiPanelSearch",
+    SnacksPickerTree = "GithubUiTree",
+    SnacksPickerSelected = "GithubUiAccent",
+    SnacksPickerCursorLine = "GithubUiSelection",
+    SnacksPickerListCursorLine = "GithubUiSelection",
+    SnacksPickerPreviewCursorLine = "GithubUiSelection",
+    SnacksPickerToggle = "GithubUiPanelToggle",
+    SnacksPickerToggleHidden = "GithubUiPanelToggle",
+    SnacksPickerToggleIgnored = "GithubUiPanelToggle",
+    SnacksPickerToggleFollow = "GithubUiPanelToggle",
+    SnacksPickerComment = "GithubUiMuted",
+    SnacksPickerDesc = "GithubUiMuted",
+    SnacksPickerDelim = "GithubUiMuted",
+    SnacksPickerDiagnosticSource = "GithubUiMuted",
+    SnacksPickerDiagnosticCode = "GithubUiMuted",
+    SnacksPickerLink = "GithubUiMuted",
+    SnacksPickerLabel = "GithubUiText",
+    SnacksPickerBufFlags = "GithubUiMuted",
+    WhichKey = "GithubUiAccent",
+    WhichKeyGroup = "GithubUiText",
+    WhichKeyDesc = "GithubUiText",
+    WhichKeyBorder = "FloatBorder",
+    WhichKeyNormal = "NormalFloat",
+    WhichKeySeparator = "GithubUiMuted",
+    WhichKeyValue = "GithubUiMuted",
+    BlinkCmpMenu = "Pmenu",
+    BlinkCmpMenuBorder = "FloatBorder",
+    BlinkCmpMenuSelection = "PmenuSel",
+    BlinkCmpLabel = "GithubUiText",
+    BlinkCmpLabelMatch = "PmenuMatchSel",
+    BlinkCmpLabelDeprecated = "DiagnosticDeprecated",
+    BlinkCmpLabelDetail = "GithubUiMuted",
+    BlinkCmpLabelDescription = "GithubUiMuted",
+    BlinkCmpSource = "GithubUiMuted",
+    BlinkCmpDoc = "NormalFloat",
+    BlinkCmpDocBorder = "FloatBorder",
+    BlinkCmpDocSeparator = "FloatBorder",
+    BlinkCmpSignatureHelp = "NormalFloat",
+    BlinkCmpSignatureHelpBorder = "FloatBorder",
     BlinkCmpSignatureHelpActiveParameter = "LspSignatureActiveParameter",
-    TelescopeNormal = "GithubUiPanel", TelescopeBorder = "GithubUiPanelBorder", TelescopeSelection = "GithubUiSelection",
-    TelescopeMatching = "PmenuMatchSel", TelescopePromptBorder = "GithubUiPanelBorder", TelescopeResultsBorder = "GithubUiPanelBorder",
-    TelescopePreviewBorder = "GithubUiPanelBorder", TelescopePromptTitle = "GithubUiPanelTitle", TelescopePreviewTitle = "GithubUiPanelTitle",
-  }) do link(name, target) end
+    TelescopeNormal = "GithubUiPanel",
+    TelescopeBorder = "GithubUiPanelBorder",
+    TelescopeSelection = "GithubUiSelection",
+    TelescopeMatching = "PmenuMatchSel",
+    TelescopePromptBorder = "GithubUiPanelBorder",
+    TelescopeResultsBorder = "GithubUiPanelBorder",
+    TelescopePreviewBorder = "GithubUiPanelBorder",
+    TelescopePromptTitle = "GithubUiPanelTitle",
+    TelescopePreviewTitle = "GithubUiPanelTitle",
+  }) do
+    link(name, target)
+  end
 
-  for _, kind in ipairs({ "Array", "Boolean", "Class", "Color", "Constant", "Constructor", "Enum", "EnumMember",
-    "Event", "Field", "File", "Folder", "Function", "Interface", "Key", "Keyword", "Method", "Module", "Namespace",
-    "Null", "Number", "Object", "Operator", "Package", "Property", "Reference", "Snippet", "String", "Struct",
-    "Text", "TypeParameter", "Unit", "Variable" }) do
+  for _, kind in ipairs({
+    "Array",
+    "Boolean",
+    "Class",
+    "Color",
+    "Constant",
+    "Constructor",
+    "Enum",
+    "EnumMember",
+    "Event",
+    "Field",
+    "File",
+    "Folder",
+    "Function",
+    "Interface",
+    "Key",
+    "Keyword",
+    "Method",
+    "Module",
+    "Namespace",
+    "Null",
+    "Number",
+    "Object",
+    "Operator",
+    "Package",
+    "Property",
+    "Reference",
+    "Snippet",
+    "String",
+    "Struct",
+    "Text",
+    "TypeParameter",
+    "Unit",
+    "Variable",
+  }) do
     local key = "symbolIcon." .. kind:sub(1, 1):lower() .. kind:sub(2) .. "Foreground"
     local value = colors[key]
     -- Upstream 6.3.5 accidentally emits a palette array for Constant; use syntax color.
     local color = type(value) == "string" and c(key) or token("constant").fg
     many({ "BlinkCmpKind" .. kind, "SnacksPickerIcon" .. kind, "NavicIcons" .. kind }, { fg = color })
   end
-  local ansi = { "Black", "Red", "Green", "Yellow", "Blue", "Magenta", "Cyan", "White",
-    "BrightBlack", "BrightRed", "BrightGreen", "BrightYellow", "BrightBlue", "BrightMagenta", "BrightCyan", "BrightWhite" }
-  for i, name in ipairs(ansi) do vim.g["terminal_color_" .. (i - 1)] = c("terminal.ansi" .. name) end
+  local ansi = {
+    "Black",
+    "Red",
+    "Green",
+    "Yellow",
+    "Blue",
+    "Magenta",
+    "Cyan",
+    "White",
+    "BrightBlack",
+    "BrightRed",
+    "BrightGreen",
+    "BrightYellow",
+    "BrightBlue",
+    "BrightMagenta",
+    "BrightCyan",
+    "BrightWhite",
+  }
+  for i, name in ipairs(ansi) do
+    vim.g["terminal_color_" .. (i - 1)] = c("terminal.ansi" .. name)
+  end
 end
 
 return M

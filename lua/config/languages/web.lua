@@ -18,9 +18,12 @@ return {
       settings = { json = { schemas = require("schemastore").json.schemas(), validate = { enable = true } } },
     })
     local schemas = require("schemastore").yaml.schemas()
-    schemas.kubernetes = { "*.k8s.yaml", "*.k8s.yml", "k8s/**/*.yaml", "k8s/**/*.yml", "kubernetes/**/*.yaml", "kubernetes/**/*.yml" }
+    schemas.kubernetes =
+      { "*.k8s.yaml", "*.k8s.yml", "k8s/**/*.yaml", "k8s/**/*.yml", "kubernetes/**/*.yaml", "kubernetes/**/*.yml" }
     vim.lsp.config("yamlls", {
-      settings = { yaml = { schemaStore = { enable = false, url = "" }, schemas = schemas, validate = true, keyOrdering = false } },
+      settings = {
+        yaml = { schemaStore = { enable = false, url = "" }, schemas = schemas, validate = true, keyOrdering = false },
+      },
     })
   end,
 }

@@ -15,12 +15,47 @@ return {
       prompt = { enabled = false },
     },
     keys = {
-      { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash jump" },
+      {
+        "s",
+        mode = { "n", "x", "o" },
+        function()
+          require("flash").jump()
+        end,
+        desc = "Flash jump",
+      },
       -- Visual S is left to nvim-surround.
-      { "S", mode = { "n", "o" }, function() require("flash").treesitter() end, desc = "Flash select syntax node" },
-      { "r", mode = "o", function() require("flash").remote() end, desc = "Flash remote operation" },
-      { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Flash syntax search" },
-      { "<C-s>", mode = "c", function() require("flash").toggle() end, desc = "Toggle Flash labels in search" },
+      {
+        "S",
+        mode = { "n", "o" },
+        function()
+          require("flash").treesitter()
+        end,
+        desc = "Flash select syntax node",
+      },
+      {
+        "r",
+        mode = "o",
+        function()
+          require("flash").remote()
+        end,
+        desc = "Flash remote operation",
+      },
+      {
+        "R",
+        mode = { "o", "x" },
+        function()
+          require("flash").treesitter_search()
+        end,
+        desc = "Flash syntax search",
+      },
+      {
+        "<C-s>",
+        mode = "c",
+        function()
+          require("flash").toggle()
+        end,
+        desc = "Toggle Flash labels in search",
+      },
     },
   },
   {

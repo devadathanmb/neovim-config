@@ -10,25 +10,35 @@ local secret_patterns = { "^%.env", "%.env$", "%.pem$", "%.key$", "^id_[%w_]+$",
 M.status = {} -- client_id -> { kind = "Normal"|"Warning"|"Error"|"Inactive", busy = bool, message = string }
 
 local function allowed(buf)
-  if vim.bo[buf].buftype ~= "" or disabled_filetypes[vim.bo[buf].filetype] then return false end
+  if vim.bo[buf].buftype ~= "" or disabled_filetypes[vim.bo[buf].filetype] then
+    return false
+  end
   local name = vim.fs.basename(vim.api.nvim_buf_get_name(buf))
-  if name == "" then return false end
+  if name == "" then
+    return false
+  end
   for _, pattern in ipairs(secret_patterns) do
-    if name:match(pattern) then return false end
+    if name:match(pattern) then
+      return false
+    end
   end
   return true
 end
 
 local function refresh_statusline()
   local ok, lualine = pcall(require, "lualine")
-  if ok then lualine.refresh({ place = { "statusline" } }) end
+  if ok then
+    lualine.refresh({ place = { "statusline" } })
+  end
 end
 
 function M.setup()
   vim.lsp.config("copilot", {
     -- Not calling on_dir prevents attachment for excluded buffers.
     root_dir = function(buf, on_dir)
-      if allowed(buf) then on_dir(vim.fs.root(buf, ".git") or vim.fn.getcwd()) end
+      if allowed(buf) then
+        on_dir(vim.fs.root(buf, ".git") or vim.fn.getcwd())
+      end
     end,
     on_exit = function(_, _, client_id)
       M.status[client_id] = nil
@@ -44,21 +54,37 @@ function M.setup()
 
   vim.lsp.inline_completion.enable(true)
 
-  local function map(lhs, rhs, desc) vim.keymap.set("i", lhs, rhs, { desc = desc }) end
-  map("<C-l>", function() vim.lsp.inline_completion.get() end, "Accept Copilot suggestion")
-  map("<M-]>", function() vim.lsp.inline_completion.select({ count = 1 }) end, "Next Copilot suggestion")
-  map("<M-[>", function() vim.lsp.inline_completion.select({ count = -1 }) end, "Previous Copilot suggestion")
-  map("<C-]>", function() M.dismiss() end, "Dismiss Copilot suggestion")
+  local function map(lhs, rhs, desc)
+    vim.keymap.set("i", lhs, rhs, { desc = desc })
+  end
+  map("<C-l>", function()
+    vim.lsp.inline_completion.get()
+  end, "Accept Copilot suggestion")
+  map("<M-]>", function()
+    vim.lsp.inline_completion.select({ count = 1 })
+  end, "Next Copilot suggestion")
+  map("<M-[>", function()
+    vim.lsp.inline_completion.select({ count = -1 })
+  end, "Previous Copilot suggestion")
+  map("<C-]>", function()
+    M.dismiss()
+  end, "Dismiss Copilot suggestion")
   vim.keymap.set("n", "<leader>uc", M.toggle, { desc = "Toggle Copilot suggestions" })
   vim.keymap.set("n", "<leader>pc", "<cmd>checkhealth vim.lsp<cr>", { desc = "Copilot / LSP health" })
 end
 
 --- Accept the visible suggestion; returns false when there is none (Tab fallback).
-function M.accept() return vim.lsp.inline_completion.get() end
+function M.accept()
+  return vim.lsp.inline_completion.get()
+end
 
 --- Native inline completion has no dismiss API; aborting through on_accept does it.
 function M.dismiss()
-  if not vim.lsp.inline_completion.get({ on_accept = function() return nil end }) then
+  if not vim.lsp.inline_completion.get({
+    on_accept = function()
+      return nil
+    end,
+  }) then
     return vim.api.nvim_feedkeys(vim.keycode("<C-]>"), "n", false)
   end
 end
@@ -73,11 +99,19 @@ end
 --- Statusline: nothing when Copilot is not attached to this buffer.
 function M.statusline()
   local client = vim.lsp.get_clients({ bufnr = 0, name = "copilot" })[1]
-  if not client then return "" end
+  if not client then
+    return ""
+  end
   local status = M.status[client.id] or {}
-  if not vim.lsp.inline_completion.is_enabled() then return "\u{f4b8} off" end
-  if status.kind == "Error" then return "\u{f4b9}" end
-  if status.kind == "Warning" or status.kind == "Inactive" then return "\u{f4ba}" end
+  if not vim.lsp.inline_completion.is_enabled() then
+    return "\u{f4b8} off"
+  end
+  if status.kind == "Error" then
+    return "\u{f4b9}"
+  end
+  if status.kind == "Warning" or status.kind == "Inactive" then
+    return "\u{f4ba}"
+  end
   return "\u{f4b8}"
 end
 
