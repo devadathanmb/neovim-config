@@ -135,7 +135,7 @@ real-world use and cannot be closed by tests.
 
 ### Phase 5 — Stabilize and promote
 - [ ] Fix friction found in daily use; remove unused features.
-- [ ] Decide on seamless Neovim ↔ tmux pane navigation.
+- [x] Seamless Neovim ↔ tmux pane navigation: not wanted. The owner uses separate tmux windows, not panes beside Neovim, and smart-splits would take Ctrl-l (clear) from shell panes.
 - [x] Promoted to the default `nvim` (cloned into `~/.config/nvim` by the dotfiles setup); old minimal config and LazyVim retired.
 - [x] Plugins and state moved to the default app name; Mason tools reinstalled.
 - [x] Repaired migrated Tree-sitter query symlinks pointing at the retired `nvim-next` data directory; TypeScript syntax captures are regression-tested.
