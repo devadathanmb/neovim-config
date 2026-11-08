@@ -136,6 +136,11 @@ return {
         },
       },
       input = { enabled = true },
+      image = { enabled = true },
     },
+    config = function(_, opts)
+      require("snacks").setup(opts)
+      require("config.image").setup()
+    end,
   },
 }
