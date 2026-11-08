@@ -1,0 +1,36 @@
+{
+  "colors": {
+    "editor.foreground": "#d7d8da",
+    "breadcrumb.activeSelectionForeground": "#61DAFB",
+    "breadcrumb.focusForeground": "#FFFFFF",
+    "breadcrumb.foreground": "#d6dadf",
+    "editorGutter.addedBackground": "#4AE04A",
+    "editorGutter.deletedBackground": "#FF6B6B",
+    "editorGutter.modifiedBackground": "#E2C08D",
+    "gitDecoration.addedResourceForeground": "#4AE04A",
+    "gitDecoration.deletedResourceForeground": "#FF6B6B",
+    "gitDecoration.modifiedResourceForeground": "#E2C08D",
+    "gitlens.gutterForegroundColor": "#656D71",
+    "gitlens.trailingLineForegroundColor": "#656D71",
+    "editor.background": "#000000",
+    "modernEditorTab.activeBackground": "#21262d",
+    "modernEditorTab.activeHoverBackground": "#262c36",
+    "modernEditorTab.hoverBackground": "#0d1117",
+    "modernEditorTab.inactiveBackground": "#000000",
+    "statusBar.foreground": "#E1E4E8",
+    "editorWhitespace.foreground": "#343333"
+  },
+  "tokenColors": [
+    { "scope": "comment", "settings": { "fontStyle": "italic" } },
+    { "scope": "keyword.control.import.python", "settings": { "fontStyle": "italic" } },
+    { "scope": "keyword.control.from.python", "settings": { "fontStyle": "italic" } },
+    {
+      "scope": ["storage.type.function.python", "keyword.control.flow.python"],
+      "settings": { "fontStyle": "italic" }
+    }
+  ],
+  "semanticTokenColors": {
+    "*.typeHint": { "fontStyle": "italic" },
+    "type:python": { "fontStyle": "italic" }
+  }
+}

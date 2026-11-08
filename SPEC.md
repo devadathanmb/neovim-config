@@ -1,0 +1,115 @@
+# SPEC
+
+Goal, decisions and status for this Neovim config. Working rules, layout and tests
+are in [AGENTS.md](AGENTS.md). Keep this file current: record decisions here and tick
+items off when done.
+
+## Goal
+
+A personal Neovim config (plain lazy.nvim, no distribution) that replaces VS Code for
+daily work while keeping VS Code muscle memory where sensible. AI coding agents run
+outside Neovim in Ghostty/tmux; Neovim is for reading, navigating, reviewing and
+editing their changes.
+
+Languages: Python, TypeScript/JavaScript, PostgreSQL SQL, YAML/Kubernetes, JSON/JSONC,
+INI, Lua, Markdown.
+
+**Out of scope:** debugger, embedded terminal, embedded AI chat/agent, format-on-save,
+Blink completion ghost text (Copilot ghost text is the only inline suggestion).
+
+## Decisions
+
+Editor and UI
+- snacks.nvim provides explorer, pickers, input, notifier toasts, indent guides,
+  word highlights, bigfile/quickfile. Not Telescope.
+- bufferline.nvim for tabs, lualine for the statusline, which-key for discovery.
+- nvim-web-devicons, not mini.icons: its independent colors match Material icons.
+- nvim-surround (classic `ys`/`cs`/`ds`), mini.pairs for auto-pairs.
+- flash.nvim covers both Sneak and EasyMotion; no separate EasyMotion plugin.
+  Visual `S` stays with nvim-surround; f/t stay line-local.
+- Whitespace mirrors VS Code `renderWhitespace: boundary`.
+
+Languages
+- basedpyright (not pyright) for Pylance-like semantic tokens and completions;
+  Ruff for lint/import actions; Black formats Python.
+- Native TypeScript 7 LSP (`tsc --lsp`); ts_ls was removed because it fell back to TS6.
+- ESLint attaches only where a project ESLint config exists.
+- Biome formats JS/TS/JSON when the project has a Biome config, else Prettier.
+- SQLFluff lints and formats SQL; the user default dialect is PostgreSQL
+  (`~/.config/sqlfluff`), project configs override it. No database-backed completion.
+- YAML/JSON use SchemaStore; Kubernetes schemas apply only to `*.k8s.yaml` and
+  `k8s/`/`kubernetes/` directories, never all YAML.
+- Blink completion with the Rust fuzzy matcher, friendly-snippets plus `snippets/`.
+  Tab: snippet placeholder → menu item → accept Copilot → indent.
+- Tree-sitter parsers install on first use of a filetype; GritQL comes from the
+  pinned biomejs/tree-sitter-gritql grammar.
+- Copilot via the official copilot-language-server and Neovim's native inline
+  completion (no copilot.lua). It never attaches to text, commit messages, help or
+  secret-like files (`.env`, keys).
+
+Git
+- gitsigns for hunks/blame. Resets confirm with Cancel as default, refuse stale
+  context, edit only the buffer and never save.
+- diffview-plus.nvim (maintained fork; sindrets/diffview is unmaintained) for review
+  and history, with unguarded default shortcuts disabled.
+- Blame → PR: `gh api repos/{owner}/{repo}/commits/<sha>/pulls` (open and merged,
+  squash merges included), commit page fallback via Snacks.gitbrowse.
+
+Other
+- trouble.nvim tracks `main`: v3.7.1 breaks on Neovim 0.12 and the fix is unreleased.
+- Bookmarks are a local module: tomasky/bookmarks.nvim stores bookmarks globally and
+  only navigates within one file. Ours are per cwd, cross-file, and re-anchor by line
+  text after external reloads (Neovim keeps extmark rows, not content, on reload).
+- Search, explorer and bookmarks are scoped to the working directory; no automatic
+  root switching. Ctrl-h/j/k/l move between Neovim windows only.
+
+## Status
+
+Legend: `[x]` done and covered by tests, `[ ]` open. "Human" items need the owner's
+real-world use and cannot be closed by tests.
+
+### Phase 0 — Foundation
+- [x] Isolated `nvim-next` app name, lazy.nvim bootstrap, lockfile.
+- [x] Options, clipboard, undo, indentation, theme, statusline, which-key.
+- [x] External-change reload that never overwrites unsaved buffers.
+- [ ] Human: appearance, clipboard with other apps, reload while agents edit files.
+
+### Phase 1 — Navigation and editing
+- [x] Explorer, file/grep/buffer pickers, buffer/window mappings, file operations.
+- [x] Path and context-reference copying, surround, auto-pairs, visual paste.
+- [ ] Human: navigation and file operations in a real project.
+- [ ] Decide whether the `Space F` file aliases are worth keeping.
+
+### Phase 2 — Language intelligence
+- [x] LSP, completion, snippets, formatting, linting, schemas for all target languages.
+- [x] On-demand Tree-sitter parsers, indentation and folding.
+- [ ] Human: completion, hover, rename, code actions, Kubernetes schemas in real projects.
+
+### Phase 3 — Reviewing agent changes
+- [x] Git signs, hunks, staging, guarded resets, inline blame, Diffview review/history.
+- [x] Blame popup with PR lookup (`Space gb`, `Space gp/gP`).
+- [x] Diagnostics navigation, pickers and Trouble problems panel.
+- [ ] Human: review an agent's change end to end with `Space gt`.
+
+### Phase 4 — Bookmarks, movement, Copilot
+- [x] Per-project bookmarks (`Space b`), Flash jumps.
+- [x] Copilot wiring, keys and statusline status.
+- [ ] Human: sign in to Copilot (`:LspCopilotSignIn`) and confirm suggestions appear.
+- [ ] Human: bookmark persistence and movement comfort.
+
+### Phase 5 — Stabilize and promote
+- [ ] Fix friction found in daily use; remove unused features.
+- [ ] Decide on seamless Neovim ↔ tmux pane navigation.
+- [ ] Back up the old config, then promote this one to the default `nvim`.
+- [ ] Reinstall plugins/tools under the final app name and verify state.
+
+## Known issues
+
+- **TypeScript 7 shutdown**: `tsc --lsp` exits 1 (`context canceled`/EOF) on graceful
+  shutdown. Upstream bug, reproducible without Neovim; `tests/ts_shutdown.lua` fails
+  on purpose until fixed. Recheck after a deliberate TypeScript update. Completion and
+  diagnostics are unaffected.
+- **diffview-plus close race**: closing file history while it is still opening can
+  raise `Invalid window id` from its scroll sync.
+- **Python completion ranking**: basedpyright auto-imports can outrank snippets for
+  short prefixes.

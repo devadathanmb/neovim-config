@@ -1,5 +1,9 @@
-vim.loader.enable()
-require("user.options")
-require("user.keymaps")
-require("user.autocmds")
-require("user.lazy")
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+require("config.options")
+require("config.autocmds")
+vim.cmd.colorscheme("github_personal")
+require("config.lazy")
+require("config.keymaps")
+require("config.bookmarks").setup()
