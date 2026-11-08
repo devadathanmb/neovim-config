@@ -26,6 +26,35 @@ In search inputs: Ctrl-j/k or Tab/Shift-Tab navigate results, Enter opens,
 Esc or Ctrl-x closes. In normal picker mode, j/k also work. Standard picker
 Ctrl-s/Ctrl-v open a horizontal/vertical split. Completion bindings are below.
 
+## Search and replace (grug-far)
+
+| Keys | Action |
+| --- | --- |
+| Space sr | Search and replace across the project (visual: prefill selection) |
+| Space sw | Search and replace the word under the cursor |
+| Space sR | Search and replace in the current file |
+
+Opens a vertical split with editable Search/Replace/Files Filter/Flags/Paths
+inputs; results update as you type (ripgrep). Inside it (local leader is Space,
+`g?` lists everything): Space r replaces all matches, Space s writes lines you
+edited in the results back to their files, Space o or Enter opens a match.
+Nothing changes on disk until you replace or sync.
+
+## Sessions (auto-session)
+
+| Keys | Action |
+| --- | --- |
+| Space Ss | Find a saved session (picker) |
+| Space Sr | Restore the session for the working directory |
+| Space Sw | Save the session now |
+| Space Sd | Delete the session for the working directory |
+| Space St | Toggle session autosave |
+
+Sessions save on exit and restore when Neovim starts in a directory without file
+arguments (`nvim` or `nvim .`). Starting with files (`nvim a.txt`, commit messages)
+neither restores nor autosaves, so quick edits never overwrite a project session. Home, Downloads, Desktop, `/` and `/tmp` are never saved. Tool windows
+(explorer, pickers, Diffview, Trouble, agent panel, grug-far) are closed first.
+
 ## Buffers
 
 | Keys | Action |

@@ -75,10 +75,19 @@ Other
   inherits editor defaults instead of the float background; ANSI colors remain themed.
   Its statusline shows the agent name instead of its executable path. Agent CLIs are
   installed separately; sessions do not persist across Neovim exits.
+- grug-far.nvim for project search and replace (reviewable, editable results; nothing
+  is written until replace/sync). nvim-spectre is unmaintained.
+- auto-session for per-directory sessions (chosen over persistence.nvim, which had
+  no commits for a year). Saves on exit, restores on argument-less start, closes
+  tool windows first, never runs headless. `sessionoptions` follows its README.
 - trouble.nvim tracks `main`: v3.7.1 breaks on Neovim 0.12 and the fix is unreleased.
 - Bookmarks are a local module: tomasky/bookmarks.nvim stores bookmarks globally and
   only navigates within one file. Ours are per cwd, cross-file, and re-anchor by line
   text after external reloads (Neovim keeps extmark rows, not content, on reload).
+- Tests use mini.test (maintained, no luarocks; busted/nlua would need a system
+  Lua toolchain, plenary's harness is barely maintained). Suites run in-process
+  in the real config rather than in child Neovims, so plugins and servers are
+  exercised as used; one Neovim per suite keeps suites isolated.
 - Search, explorer and bookmarks are scoped to the working directory; no automatic
   root switching. Ctrl-h/j/k/l move between Neovim windows only.
 
@@ -125,6 +134,11 @@ real-world use and cannot be closed by tests.
 - [x] Repaired migrated Tree-sitter query symlinks pointing at the retired `nvim-next` data directory; TypeScript syntax captures are regression-tested.
 - [x] Snacks image previews work in Ghostty + tmux (detection workaround, see Decisions).
 - [ ] Human: preview images in the picker and Markdown inside Ghostty + tmux.
+- [x] Split the snacks spec into `lua/plugins/snacks.lua`.
+- [x] Added grug-far search/replace and auto-session sessions, both test-covered.
+- [ ] Human: try `Space sr` and session restore in real projects.
+- [x] Migrated the hand-rolled suites to mini.test: named cases, per-case reports,
+  failures no longer stop a suite, `just test-suite <suite> <filter>`.
 - [x] Added a justfile for interactive setup and health checks, individual or full headless suites, and the separate upstream shutdown probe.
 
 ## Known issues

@@ -54,3 +54,6 @@ opt.shortmess:append("IcC")
 
 -- Load plugin configuration as Lua files, not through local project scripts.
 opt.exrc = false
+
+-- auto-session: restore buffers, layout, cwd and per-window options (no globals).
+opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
