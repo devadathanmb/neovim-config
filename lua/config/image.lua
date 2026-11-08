@@ -10,16 +10,16 @@ local M = {}
 
 function M.setup()
   if not vim.env.TMUX then return end
-  local out = vim.fn.system({ "tmux", "display-message", "-p", "#{client_termname}" })
-  if vim.v.shell_error ~= 0 then return end
-  local term = vim.trim(out):gsub("^xterm%-", "")
+  local result = vim.system({ "tmux", "display-message", "-p", "#{client_termname}" }, { text = true }):wait()
+  if result.code ~= 0 then return end
+  local term = vim.trim(result.stdout or ""):gsub("^xterm%-", "")
   if term == "" then return end
   local terminal = require("snacks.image.terminal")
   if terminal._terminal then return end
   terminal._terminal = { terminal = term, version = "unknown" }
   -- Skipping snacks' detection also skips its tmux passthrough wrapper, without
   -- which tmux drops every graphics command (blank image area). Mirror it here.
-  pcall(vim.fn.system, { "tmux", "set", "-p", "allow-passthrough", "all" })
+  vim.system({ "tmux", "set", "-p", "allow-passthrough", "all" }):wait()
   terminal.transform = function(data)
     return ("\027Ptmux;" .. data:gsub("\027", "\027\027")) .. "\027\\"
   end

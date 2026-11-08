@@ -39,10 +39,11 @@ when you finish work.
 | `lua/config/copilot.lua` | Copilot server config, keys, statusline status |
 | `lua/config/context.lua` | `Space y` agent context references |
 | `lua/config/icons.lua` | Devicons colors matching the VS Code Material icon theme |
-| `lua/plugins/*.lua` | lazy.nvim specs: editor, buffers, git, languages, navigation |
+| `lua/config/image.lua` | Snacks image terminal detection inside tmux (see SPEC.md) |
+| `lua/plugins/*.lua` | lazy.nvim specs: editor, snacks, buffers, git, languages, navigation, search, session, sidekick, testing |
 | `lua/theme/github.lua`, `theme/` | GitHub Dark Default port; upstream JSON + personal overrides |
 | `snippets/` | Personal VS Code-format snippets (registered in `package.json`) |
-| `tests/` | Headless regression suites |
+| `tests/` | mini.test suites (`test_*.lua`), runner `run.lua`, shared `helpers.lua` |
 | `justfile` | Setup and test commands (`just` lists recipes) |
 | `KEYMAPS.md` | Full keybinding reference |
 
@@ -64,8 +65,9 @@ support, add integration coverage in `tests/languages.lua`, and run `just test`.
 just                    # list recipes
 just setup              # start Neovim; first launch bootstraps plugins and Mason tools
 just health             # open the interactive :checkhealth report
-just test               # all supported suites; nonzero if any fail
+just test               # all suites; nonzero if any case fails
 just test-suite theme   # one suite (see table below)
+just test-suite git reset  # only cases whose description contains "reset"
 just test-ts-shutdown   # upstream probe; currently expected to fail, see SPEC.md
 ```
 
@@ -77,12 +79,22 @@ it does not wait for background installs to complete.
 | --- | --- |
 | smoke | Startup, mappings, indentation, reload/conflict safety, pickers, buffer close |
 | theme | Palette, overrides, Tree-sitter captures, float/picker borders, reload |
-| workflow | Context references, icon colors, buffer tabs, safe close |
+| workflow | Context references, statusline, icon colors, buffer tabs, safe close, image detection, sessions |
 | notifications | Toast placement, focus, expiry, colors |
 | git | Hunks, staging, reset safety, blame popup focus/PR keys, review, history |
-| navigation | Bookmarks (persistence, re-anchoring, cross-file), Flash, Trouble |
+| navigation | Bookmarks (persistence, re-anchoring, cross-file), Flash, Trouble, grug-far replace |
 | languages | Servers, diagnostics, completion, hover/rename, formatters, schemas |
 
 Optional: `NVIM_TEST_ESLINT_NODE_MODULES=/path/to/node_modules` (ESLint end to end),
 `NVIM_TEST_REMOTE_SCHEMAS=1` (remote Kubernetes schemas, needs network). Tests use
 temporary files and repositories only. Use `+luafile`, not `nvim -l`.
+
+Suites use [mini.test](https://github.com/nvim-mini/mini.test) and run inside the
+fully configured Neovim (one process per suite, no child processes), so cases see
+real plugins and servers. `tests/run.lua` reads `TEST_SUITE`/`TEST_FILTER`. Write
+small named cases in groups (`MiniTest.new_set`); use `h.eq` (`MiniTest.expect.equality`)
+for clear diffs, `h.wait` for async state, `MiniTest.finally` for per-case cleanup
+and `MiniTest.skip` for optional cases. Cases in a file run in order and may share a
+fixture built in `pre_once`; leave it as you found it. `h.no_errors` hooks fail a
+case that leaves `v:errmsg` set (not used in git: gitsigns' `silent! foldopen!` sets it).
+Headless runs disable auto-session, so tests never touch real sessions.
