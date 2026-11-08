@@ -139,6 +139,7 @@ Space y does not change normal Vim y or start an agent/send any content.
 - Auto-pairs: typing `(`, `[`, `{`, quotes inserts the closing pair (insert mode only).
 - Space uw: toggle wrapping. Space ui: toggle indent guides. Space u.: toggle whitespace dots.
 - Space uh: toggle LSP inlay hints for the buffer (off by default, as in Pylance).
+- Space uz: toggle zen mode (centered, distraction-free, dims other blocks).
 - Space um: toggle Markdown rendering everywhere (`:RenderMarkdown buf_toggle` for one buffer).
 - Space pL: plugin manager.
 - Space pk: this reference.

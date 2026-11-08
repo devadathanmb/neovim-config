@@ -269,4 +269,22 @@ T["markdown renders in normal mode, raw on the cursor line"] = function()
   end, "cursor line is not shown raw", 5000)
 end
 
+T["Space uz toggles zen mode"] = function()
+  vim.cmd.edit(temp .. "/sample.txt")
+  MiniTest.finally(function()
+    if Snacks.zen.win and Snacks.zen.win:valid() then
+      Snacks.zen.win:close()
+    end
+  end)
+  h.keys(" uz")
+  h.wait(function()
+    return Snacks.zen.win and Snacks.zen.win:valid()
+  end, "zen window did not open", 3000)
+  h.eq(vim.api.nvim_win_get_config(Snacks.zen.win.win).relative, "editor")
+  h.keys(" uz")
+  h.wait(function()
+    return not (Snacks.zen.win and Snacks.zen.win:valid())
+  end, "zen window did not close", 3000)
+end
+
 return T

@@ -171,6 +171,9 @@ map("n", "<leader>ui", function()
     Snacks.indent.disable()
   end
 end, "Toggle indent guides")
+map("n", "<leader>uz", function()
+  Snacks.zen()
+end, "Toggle zen mode")
 map("n", "<leader>u.", function()
   vim.wo.list = not vim.wo.list
 end, "Toggle whitespace dots")
