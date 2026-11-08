@@ -276,6 +276,17 @@ T["buffer tabs"]["styling"] = function()
   h.eq(h.hl("BufferLineDevIconTypeScriptSelected").bg, 0x21262d)
 end
 
+T["buffer tabs"]["icons have padding even on long tabs"] = function()
+  local buf = buffer("githubDarkPrecision.ts")
+  MiniTest.finally(function()
+    vim.api.nvim_buf_delete(buf, { force = true })
+  end)
+  vim.api.nvim_set_current_buf(buf)
+  local line = render()
+  local icon = require("nvim-web-devicons").get_icon("githubDarkPrecision.ts", nil, { default = true })
+  assert(line.str:find(" " .. icon .. " githubDarkPrecision.ts", 1, true), "tab icon is missing padding")
+end
+
 T["buffer tabs"]["close asks before discarding and keeps splits"] = function()
   local options = require("bufferline.config").options
   vim.api.nvim_set_current_buf(tab_b)

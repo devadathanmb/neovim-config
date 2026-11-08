@@ -29,6 +29,8 @@ Editor and UI
   installs its tmux passthrough wrapper (without it images render blank).
   Recheck after a deliberate snacks update.
 - bufferline.nvim for tabs, lualine for the statusline, which-key for discovery.
+  Buffer tab icons have a leading space (in addition to bufferline's trailing gap),
+  so long filenames never press the icon against the selected tab's edge.
 - dropbar.nvim for clickable winbar breadcrumbs (path → LSP symbols, Tree-sitter
   fallback; Markdown headings). Neovim provides the winbar but not the complete
   breadcrumb UI; barbecue.nvim is archived, and nvim-navic needs separate UI wiring.
