@@ -204,7 +204,7 @@ No automatic staging, commit, fetch or push actions are enabled.
 | Space bL | Current-file bookmarks picker |
 | Space bc / Space bC | Clear bookmarks in this file / whole project (confirm) |
 
-Bookmarks are per working directory, saved under `~/.local/share/nvim-next/bookmarks/`,
+Bookmarks are per working directory, saved under `~/.local/share/nvim/bookmarks/`,
 follow line edits, and are re-anchored by line text when an agent rewrites the file.
 Deleting a bookmarked line removes its bookmark.
 

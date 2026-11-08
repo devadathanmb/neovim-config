@@ -6,7 +6,7 @@ when you finish work.
 
 ## Rules
 
-- Install tools through Mason only (`~/.local/share/nvim-next/mason`). Never use
+- Install tools through Mason only (`~/.local/share/nvim/mason`). Never use
   Homebrew or other system-wide installs; the owner rejected that explicitly.
 - Formatting stays manual (`Space lf`). Never add format-on-save.
 - Plugin revisions are pinned in `lazy-lock.json`. Change them only deliberately
@@ -48,9 +48,9 @@ when you finish work.
 
 ```sh
 for t in smoke theme workflow notifications git navigation languages; do
-  NVIM_APPNAME=nvim-next nvim --headless "+luafile ~/.config/nvim-next/tests/$t.lua" || echo "FAIL: $t"
+  nvim --headless "+luafile ~/.config/nvim/tests/$t.lua" || echo "FAIL: $t"
 done
-NVIM_APPNAME=nvim-next nvim --headless -u NONE '+luafile ~/.config/nvim-next/tests/ts_shutdown.lua'  # expected to fail, see Known issues
+nvim --headless -u NONE '+luafile ~/.config/nvim/tests/ts_shutdown.lua'  # expected to fail, see Known issues
 ```
 
 | Suite | Covers |

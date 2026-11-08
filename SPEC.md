@@ -69,7 +69,7 @@ Legend: `[x]` done and covered by tests, `[ ]` open. "Human" items need the owne
 real-world use and cannot be closed by tests.
 
 ### Phase 0 — Foundation
-- [x] Isolated `nvim-next` app name, lazy.nvim bootstrap, lockfile.
+- [x] lazy.nvim bootstrap and pinned lockfile.
 - [x] Options, clipboard, undo, indentation, theme, statusline, which-key.
 - [x] External-change reload that never overwrites unsaved buffers.
 - [ ] Human: appearance, clipboard with other apps, reload while agents edit files.
@@ -100,8 +100,8 @@ real-world use and cannot be closed by tests.
 ### Phase 5 — Stabilize and promote
 - [ ] Fix friction found in daily use; remove unused features.
 - [ ] Decide on seamless Neovim ↔ tmux pane navigation.
-- [ ] Back up the old config, then promote this one to the default `nvim`.
-- [ ] Reinstall plugins/tools under the final app name and verify state.
+- [x] Promoted to the default `nvim` (cloned into `~/.config/nvim` by the dotfiles setup); old minimal config and LazyVim retired.
+- [x] Plugins and state moved to the default app name; Mason tools reinstalled.
 
 ## Known issues
 
