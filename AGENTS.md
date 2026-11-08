@@ -69,6 +69,8 @@ just                    # list recipes
 just setup              # start Neovim; first launch bootstraps plugins and Mason tools
 just health             # open the interactive :checkhealth report
 just test               # all suites; nonzero if any case fails
+just fmt                # format Lua with StyLua (stylua.toml)
+just check              # formatting check; must pass before committing
 just test-fast          # all suites except languages (quick iteration)
 just startup            # startup time, best of five
 just test-suite theme   # one suite (see table below)

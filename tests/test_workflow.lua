@@ -24,8 +24,12 @@ local T = MiniTest.new_set({
       vim.fn.mkdir(temp .. "/b", "p")
       vim.fn.chdir(temp)
       copied, notices = {}, {}
-      vim.fn.setreg = function(register, value) copied[register] = value end
-      vim.notify = function(message, level) notices[#notices + 1] = { message, level } end
+      vim.fn.setreg = function(register, value)
+        copied[register] = value
+      end
+      vim.notify = function(message, level)
+        notices[#notices + 1] = { message, level }
+      end
       source = buffer("source sample.txt")
       scratch = vim.api.nvim_create_buf(true, true)
       vim.api.nvim_buf_set_name(scratch, "workflow-tool-buffer")
@@ -79,14 +83,18 @@ end
 
 T["context"]["falls back to absolute paths outside cwd"] = function()
   vim.fn.chdir(temp .. "/a")
-  MiniTest.finally(function() vim.fn.chdir(temp) end)
+  MiniTest.finally(function()
+    vim.fn.chdir(temp)
+  end)
   h.eq(require("config.context").reference(source, 2, 2), "@" .. vim.api.nvim_buf_get_name(source) .. "#L2")
 end
 
 T["context"]["rejects unnamed and tool buffers"] = function()
   copied["+"] = "unchanged"
   local unnamed = vim.api.nvim_create_buf(true, false)
-  MiniTest.finally(function() vim.api.nvim_buf_delete(unnamed, { force = true }) end)
+  MiniTest.finally(function()
+    vim.api.nvim_buf_delete(unnamed, { force = true })
+  end)
   vim.api.nvim_set_current_buf(unnamed)
   h.keys(" y")
   h.eq(copied["+"], "unchanged")
@@ -120,7 +128,8 @@ T["statusline filename"]["names the sidekick agent"] = function()
   h.eq(filename("/long/path"), "Agent")
 end
 
-local icon_colors = { ts = "#0288d1", tsx = "#0288d1", js = "#ffca28", json = "#f9a825", yaml = "#ff5252", md = "#42a5f5" }
+local icon_colors =
+  { ts = "#0288d1", tsx = "#0288d1", js = "#ffca28", json = "#f9a825", yaml = "#ff5252", md = "#42a5f5" }
 local function check_icons()
   local icons = require("nvim-web-devicons")
   for extension, expected in pairs(icon_colors) do
@@ -176,10 +185,14 @@ T["buffer tabs"]["close asks before discarding and keeps splits"] = function()
   end)
   local windows = #vim.api.nvim_list_wins()
   vim.api.nvim_buf_set_lines(tab_b, 0, 1, false, { "unsaved change" })
-  vim.fn.confirm = function() return 3 end
+  vim.fn.confirm = function()
+    return 3
+  end
   options.close_command(tab_b)
   assert(vim.bo[tab_b].buflisted and vim.bo[tab_b].modified, "cancel discarded unsaved changes")
-  vim.fn.confirm = function() return 2 end
+  vim.fn.confirm = function()
+    return 2
+  end
   options.middle_mouse_command(tab_b)
   assert(not vim.bo[tab_b].buflisted, "explicit discard did not close the buffer")
   h.eq(#vim.api.nvim_list_wins(), windows)
@@ -209,7 +222,11 @@ local function with_fake_tmux(termname, fn)
   vim.system = function(cmd)
     calls[#calls + 1] = table.concat(cmd, " ")
     local result = { code = 0, stdout = termname .. "\n" }
-    return { wait = function() return result end }
+    return {
+      wait = function()
+        return result
+      end,
+    }
   end
   terminal._terminal, terminal.transform = nil, nil
   fn(terminal, calls)

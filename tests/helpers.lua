@@ -3,7 +3,9 @@ local M = {}
 
 M.eq = MiniTest.expect.equality
 
-function M.hl(name) return vim.api.nvim_get_hl(0, { name = name, link = false }) end
+function M.hl(name)
+  return vim.api.nvim_get_hl(0, { name = name, link = false })
+end
 
 -- Feed keys as if typed, executing mappings, and wait for them to finish.
 function M.keys(value)
@@ -29,7 +31,9 @@ function M.action(lhs, mode)
 end
 
 function M.floats()
-  return vim.tbl_filter(function(win) return vim.api.nvim_win_get_config(win).relative ~= "" end, vim.api.nvim_list_wins())
+  return vim.tbl_filter(function(win)
+    return vim.api.nvim_win_get_config(win).relative ~= ""
+  end, vim.api.nvim_list_wins())
 end
 
 function M.assert_rounded(win, label)
@@ -40,7 +44,9 @@ end
 
 -- Hooks that fail any case leaving a Neovim error message behind.
 M.no_errors = {
-  pre_case = function() vim.v.errmsg = "" end,
+  pre_case = function()
+    vim.v.errmsg = ""
+  end,
   post_case = function()
     local err = vim.v.errmsg
     vim.v.errmsg = ""

@@ -51,5 +51,7 @@ vim.api.nvim_create_autocmd("FileChangedShellPost", {
 vim.api.nvim_create_autocmd("FileType", {
   group = group,
   desc = "Do not continue comments with o/O",
-  callback = function() vim.opt_local.formatoptions:remove("o") end,
+  callback = function()
+    vim.opt_local.formatoptions:remove("o")
+  end,
 })

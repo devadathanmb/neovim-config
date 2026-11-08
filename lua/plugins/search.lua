@@ -9,16 +9,33 @@ return {
       transient = true,
     },
     keys = {
-      { "<leader>sr", function() require("grug-far").open() end, desc = "Search and replace (project)" },
-      { "<leader>sr", function() require("grug-far").with_visual_selection() end, mode = "x", desc = "Search and replace selection" },
+      {
+        "<leader>sr",
+        function()
+          require("grug-far").open()
+        end,
+        desc = "Search and replace (project)",
+      },
+      {
+        "<leader>sr",
+        function()
+          require("grug-far").with_visual_selection()
+        end,
+        mode = "x",
+        desc = "Search and replace selection",
+      },
       {
         "<leader>sw",
-        function() require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } }) end,
+        function()
+          require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } })
+        end,
         desc = "Search and replace word under cursor",
       },
       {
         "<leader>sR",
-        function() require("grug-far").open({ prefills = { paths = vim.fn.expand("%") } }) end,
+        function()
+          require("grug-far").open({ prefills = { paths = vim.fn.expand("%") } })
+        end,
         desc = "Search and replace (current file)",
       },
     },

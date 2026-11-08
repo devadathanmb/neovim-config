@@ -4,7 +4,9 @@ local bm = require("config.bookmarks")
 local temp, cwd, a, b
 
 local function lines(items)
-  return vim.tbl_map(function(item) return vim.fs.basename(item.file) .. ":" .. item.line end, items)
+  return vim.tbl_map(function(item)
+    return vim.fs.basename(item.file) .. ":" .. item.line
+  end, items)
 end
 local function at()
   return vim.fs.basename(vim.api.nvim_buf_get_name(0)) .. ":" .. vim.fn.line(".")
@@ -100,7 +102,9 @@ T["trouble lists diagnostics"] = function()
     { lnum = 0, col = 0, message = "synthetic problem", severity = vim.diagnostic.severity.ERROR },
   })
   vim.cmd("Trouble diagnostics open")
-  MiniTest.finally(function() vim.cmd("Trouble diagnostics close") end)
+  MiniTest.finally(function()
+    vim.cmd("Trouble diagnostics close")
+  end)
   h.wait(function()
     for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
       local buf = vim.api.nvim_win_get_buf(win)
@@ -121,7 +125,9 @@ T["grug-far replaces across project files"] = function()
   local grug = require("grug-far")
   local windows = #vim.api.nvim_list_wins()
   grug.open({ instanceName = "test", prefills = { search = "old_name", replacement = "new_name", paths = temp } })
-  MiniTest.finally(function() pcall(grug.kill_instance, "test") end)
+  MiniTest.finally(function()
+    pcall(grug.kill_instance, "test")
+  end)
   h.eq(#vim.api.nvim_list_wins(), windows + 1)
   local inst = grug.get_instance("test")
   h.wait(function()
@@ -130,9 +136,12 @@ T["grug-far replaces across project files"] = function()
   end, "grug-far did not find the three matches")
   inst:replace()
   h.wait(function()
-    return vim.fn.readfile(temp .. "/one.lua")[2] == "print(new_name)" and vim.fn.readfile(temp .. "/two.lua")[1] == "return new_name"
+    return vim.fn.readfile(temp .. "/one.lua")[2] == "print(new_name)"
+      and vim.fn.readfile(temp .. "/two.lua")[1] == "return new_name"
   end, "grug-far did not write the replacement")
-  h.wait(function() return inst:get_status_info().status == "success" end, "grug-far replace did not finish")
+  h.wait(function()
+    return inst:get_status_info().status == "success"
+  end, "grug-far replace did not finish")
 end
 
 return T

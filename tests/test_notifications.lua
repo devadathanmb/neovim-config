@@ -13,7 +13,9 @@ T["toast is a non-focusable float on the right"] = function()
   local main = vim.api.nvim_get_current_win()
   local before = vim.fn.execute("messages")
   vim.notify("Copied @src/main.ts#L12-20", vim.log.levels.INFO, { timeout = 300, id = "toast-test" })
-  h.wait(function() return #toasts() > 0 end, "notification did not open a toast", 2000)
+  h.wait(function()
+    return #toasts() > 0
+  end, "notification did not open a toast", 2000)
   local win = toasts()[1]
   local config = vim.api.nvim_win_get_config(win)
   assert(config.relative == "editor" and not config.focusable, "toast is not a non-focusable editor float")
@@ -29,7 +31,9 @@ T["toast uses the float palette"] = function()
 end
 
 T["toast expires into history"] = function()
-  h.wait(function() return #toasts() == 0 end, "toast did not expire", 2000)
+  h.wait(function()
+    return #toasts() == 0
+  end, "toast did not expire", 2000)
   assert(#Snacks.notifier.get_history() > 0, "expired toast is missing from history")
 end
 

@@ -4,7 +4,9 @@ return {
     version = "^4",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = function()
-      local function close(buf) Snacks.bufdelete(buf) end
+      local function close(buf)
+        Snacks.bufdelete(buf)
+      end
       return {
         options = {
           mode = "buffers",
@@ -26,10 +28,24 @@ return {
           tab_size = 22,
           buffer_close_icon = "×",
           modified_icon = "●",
-          custom_filter = function(buf) return vim.bo[buf].buftype == "" end,
+          custom_filter = function(buf)
+            return vim.bo[buf].buftype == ""
+          end,
           offsets = {
-            { filetype = "snacks_layout_box", text = "Explorer", text_align = "left", highlight = "GithubUiPanelTitle", separator = true },
-            { filetype = "DiffviewFiles", text = "Git changes", text_align = "left", highlight = "GithubUiPanelTitle", separator = true },
+            {
+              filetype = "snacks_layout_box",
+              text = "Explorer",
+              text_align = "left",
+              highlight = "GithubUiPanelTitle",
+              separator = true,
+            },
+            {
+              filetype = "DiffviewFiles",
+              text = "Git changes",
+              text_align = "left",
+              highlight = "GithubUiPanelTitle",
+              separator = true,
+            },
           },
         },
         highlights = require("theme.github").bufferline(),
