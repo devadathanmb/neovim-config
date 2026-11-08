@@ -12,7 +12,7 @@ outside Neovim in Ghostty/tmux; Neovim is for reading, navigating, reviewing and
 editing their changes.
 
 Languages: Python, TypeScript/JavaScript, PostgreSQL SQL, YAML/Kubernetes, JSON/JSONC,
-INI, Lua, Markdown.
+INI, Lua, Markdown, Dockerfile.
 
 **Out of scope:** debugger, embedded terminal, embedded AI chat/agent, format-on-save,
 Blink completion ghost text (Copilot ghost text is the only inline suggestion).
@@ -30,6 +30,8 @@ Editor and UI
 - Whitespace mirrors VS Code `renderWhitespace: boundary`.
 
 Languages
+- Language-specific server, tool and formatter declarations live in
+  `lua/config/languages/`; shared plugin wiring and LSP mappings remain central.
 - basedpyright (not pyright) for Pylance-like semantic tokens and completions;
   Ruff for lint/import actions; Black formats Python.
 - Native TypeScript 7 LSP (`tsc --lsp`); ts_ls was removed because it fell back to TS6.
@@ -37,6 +39,11 @@ Languages
 - Biome formats JS/TS/JSON when the project has a Biome config, else Prettier.
 - SQLFluff lints and formats SQL; the user default dialect is PostgreSQL
   (`~/.config/sqlfluff`), project configs override it. No database-backed completion.
+- Dockerfiles use Mason-managed dockerls for diagnostics, completion and manual LSP
+  formatting; Tree-sitter provides highlighting. No Docker daemon is required.
+- Lua uses Mason-managed lua-language-server and StyLua for manual formatting; the
+  Neovim config workspace gets LuaJIT and Neovim runtime definitions without imposing
+  them on other Lua projects. StyLua respects project configuration.
 - YAML/JSON use SchemaStore; Kubernetes schemas apply only to `*.k8s.yaml` and
   `k8s/`/`kubernetes/` directories, never all YAML.
 - Blink completion with the Rust fuzzy matcher, friendly-snippets plus `snippets/`.
@@ -102,6 +109,8 @@ real-world use and cannot be closed by tests.
 - [ ] Decide on seamless Neovim ↔ tmux pane navigation.
 - [x] Promoted to the default `nvim` (cloned into `~/.config/nvim` by the dotfiles setup); old minimal config and LazyVim retired.
 - [x] Plugins and state moved to the default app name; Mason tools reinstalled.
+- [x] Repaired migrated Tree-sitter query symlinks pointing at the retired `nvim-next` data directory; TypeScript syntax captures are regression-tested.
+- [x] Added a justfile for interactive setup and health checks, individual or full headless suites, and the separate upstream shutdown probe.
 
 ## Known issues
 

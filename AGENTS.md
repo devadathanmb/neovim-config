@@ -31,7 +31,8 @@ when you finish work.
 | `lua/config/options.lua` | Editor options (whitespace dots, Tree-sitter folds, clipboard) |
 | `lua/config/autocmds.lua` | Indentation per filetype, yank highlight, external-change reload |
 | `lua/config/keymaps.lua` | Global mappings (files, buffers, windows, UI toggles) |
-| `lua/config/lsp.lua` | Server settings, diagnostics, LSP mappings |
+| `lua/config/lsp.lua` | Shared diagnostics and LSP mappings |
+| `lua/config/languages/` | Language-specific servers, tools, formatter and LSP settings |
 | `lua/config/treesitter.lua` | Baseline parsers, on-demand install, custom GritQL parser, indentexpr |
 | `lua/config/git.lua` | Gitsigns mappings, guarded resets, blame popup → PR lookup, Diffview config |
 | `lua/config/bookmarks.lua` | Per-project bookmarks with text re-anchoring |
@@ -42,16 +43,35 @@ when you finish work.
 | `lua/theme/github.lua`, `theme/` | GitHub Dark Default port; upstream JSON + personal overrides |
 | `snippets/` | Personal VS Code-format snippets (registered in `package.json`) |
 | `tests/` | Headless regression suites |
+| `justfile` | Setup and test commands (`just` lists recipes) |
 | `KEYMAPS.md` | Full keybinding reference |
+
+## Adding language support
+
+Language modules in `lua/config/languages/` declare `servers` (lspconfig names),
+`tools` (Mason package names), `formatters_by_ft` and optional Conform `formatters`.
+Register new modules in `init.lua`; its `setup_lsp` calls each module's optional
+`setup_lsp` after nvim-lspconfig loads. Shared Mason, Conform, LSP and completion
+wiring stays in `lua/plugins/languages.lua` and `lua/config/lsp.lua`. SQL's nvim-lint
+setup lives in `sql.lua` and is loaded on SQL filetypes. Copilot and Tree-sitter CLI
+are shared infrastructure, not per-language modules. Group related languages when
+that avoids duplicating formatter or schema configuration. Check Mason and plugin
+support, add integration coverage in `tests/languages.lua`, and run `just test`.
 
 ## Tests
 
 ```sh
-for t in smoke theme workflow notifications git navigation languages; do
-  nvim --headless "+luafile ~/.config/nvim/tests/$t.lua" || echo "FAIL: $t"
-done
-nvim --headless -u NONE '+luafile ~/.config/nvim/tests/ts_shutdown.lua'  # expected to fail, see Known issues
+just                    # list recipes
+just setup              # start Neovim; first launch bootstraps plugins and Mason tools
+just health             # open the interactive :checkhealth report
+just test               # all supported suites; nonzero if any fail
+just test-suite theme   # one suite (see table below)
+just test-ts-shutdown   # upstream probe; currently expected to fail, see SPEC.md
 ```
+
+`just` requires the active Neovim config (`NVIM_APPNAME`/`XDG_CONFIG_HOME` included)
+to resolve to this checkout for setup, health and the normal suites. Setup is interactive;
+it does not wait for background installs to complete.
 
 | Suite | Covers |
 | --- | --- |
