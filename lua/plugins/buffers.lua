@@ -22,6 +22,13 @@ return {
           diagnostics = false,
           show_buffer_icons = true,
           color_icons = true,
+          get_element_icon = function(element)
+            local icon, hl = require("nvim-web-devicons").get_icon(vim.fn.fnamemodify(element.path, ":t"), nil, {
+              default = true,
+            })
+            -- Bufferline adds the gap after the icon; keep one before it even on long tabs.
+            return icon and (" " .. icon), hl
+          end,
           show_buffer_close_icons = true,
           show_close_icon = false,
           show_tab_indicators = false,
