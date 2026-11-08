@@ -75,6 +75,10 @@ Other
   inherits editor defaults instead of the float background; ANSI colors remain themed.
   Its statusline shows the agent name instead of its executable path. Agent CLIs are
   installed separately; sessions do not persist across Neovim exits.
+- render-markdown.nvim renders Markdown in the buffer (raw text on the cursor line),
+  including LSP hovers; chosen over markview.nvim (smaller, frequent breaking majors).
+  Loaded at startup as its README recommends: `ft` lazy-loading re-fires FileType.
+  LaTeX rendering is off (no parser or converter installed).
 - grug-far.nvim for project search and replace (reviewable, editable results; nothing
   is written until replace/sync). nvim-spectre is unmaintained.
 - auto-session for per-directory sessions (chosen over persistence.nvim, which had
@@ -140,6 +144,8 @@ real-world use and cannot be closed by tests.
 - [x] Split the snacks spec into `lua/plugins/snacks.lua`.
 - [x] Added grug-far search/replace and auto-session sessions, both test-covered.
 - [ ] Human: try `Space sr` and session restore in real projects.
+- [x] Added render-markdown.nvim and a startup-time guard (smoke suite, limit 150 ms).
+- [ ] Human: read Markdown and hovers with rendering; tune or drop it.
 - [x] Migrated the hand-rolled suites to mini.test: named cases, per-case reports,
   failures no longer stop a suite, `just test-suite <suite> <filter>`.
 - [x] Added a justfile for interactive setup and health checks, individual or full headless suites, and the separate upstream shutdown probe.
