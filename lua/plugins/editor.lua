@@ -58,6 +58,7 @@ return {
         { "<leader>g", group = "Git" },
         { "<leader>F", group = "Files" },
         { "<leader>s", group = "Search" },
+        { "<leader>S", group = "Sessions" },
         { "<leader>w", group = "Windows" },
         { "<leader>u", group = "UI" },
         { "<leader>p", group = "Configuration" },
