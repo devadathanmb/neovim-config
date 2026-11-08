@@ -6,7 +6,7 @@ local M = {}
 local ns = vim.api.nvim_create_namespace("personal_bookmarks")
 local SEARCH_RADIUS = 200
 
---- @type table<string, {line: integer, text: string}[]> relpath -> bookmarks (1-based lines)
+--- @type table<string, {line: integer, text: string}[]>? relpath -> bookmarks (1-based lines)
 local store
 local store_root
 
@@ -18,6 +18,7 @@ local function store_path(dir)
   return vim.fn.stdpath("data") .. "/bookmarks/" .. dir:gsub("[/\\:]", "%%") .. ".json"
 end
 
+---@return table<string, {line: integer, text: string}[]>
 local function load()
   local dir = root()
   if store and store_root == dir then
@@ -31,7 +32,7 @@ local function load()
       store = data
     end
   end
-  return store
+  return assert(store)
 end
 
 local function relpath(buf)
@@ -148,12 +149,12 @@ end
 
 --- All bookmarks of this project, ordered by file then line.
 function M.list()
-  load()
+  local bookmarks = load()
   for _, buf in ipairs(vim.api.nvim_list_bufs()) do
     sync(buf)
   end
   local items = {}
-  for rel, marks in pairs(store) do
+  for rel, marks in pairs(bookmarks) do
     for _, mark in ipairs(marks) do
       items[#items + 1] = { file = vim.fs.joinpath(store_root, rel), rel = rel, line = mark.line, text = mark.text }
     end
@@ -229,12 +230,16 @@ function M.pick(current_file)
             vim.api.nvim_buf_del_extmark(buf, ns, mark[1])
           end
         else
+          local bookmarks = load()
           local r = vim.fs.relpath(store_root, item.file)
-          store[r] = vim.tbl_filter(function(m)
+          if not r then
+            return
+          end
+          bookmarks[r] = vim.tbl_filter(function(m)
             return m.line ~= item.pos[1]
-          end, store[r] or {})
-          if #store[r] == 0 then
-            store[r] = nil
+          end, bookmarks[r] or {})
+          if #bookmarks[r] == 0 then
+            bookmarks[r] = nil
           end
         end
         save()

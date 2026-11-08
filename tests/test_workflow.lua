@@ -24,9 +24,12 @@ local T = MiniTest.new_set({
       vim.fn.mkdir(temp .. "/b", "p")
       vim.fn.chdir(temp)
       copied, notices = {}, {}
+      ---@diagnostic disable-next-line: duplicate-set-field
       vim.fn.setreg = function(register, value)
         copied[register] = value
       end
+      -- Capture notifications for assertions instead of displaying them.
+      ---@diagnostic disable-next-line: duplicate-set-field
       vim.notify = function(message, level)
         notices[#notices + 1] = { message, level }
       end
@@ -43,6 +46,92 @@ local T = MiniTest.new_set({
     end,
   },
 })
+
+T["breadcrumbs"] = MiniTest.new_set({
+  hooks = {
+    pre_case = function()
+      vim.api.nvim_set_current_buf(source)
+    end,
+    post_case = function()
+      local crumbs = require("config.breadcrumbs")
+      crumbs.enabled = true
+      crumbs.set_zen(false)
+      h.no_errors.post_case()
+    end,
+  },
+})
+
+T["breadcrumbs"]["file paths render and Space ub toggles all splits"] = function()
+  local win = vim.api.nvim_get_current_win()
+  local function text()
+    return vim.api.nvim_eval_statusline(vim.wo.winbar, { winid = win, use_winbar = true, maxwidth = 240 }).str
+  end
+  h.wait(function()
+    return text():find("source sample.txt", 1, true) ~= nil
+  end, "file breadcrumb missing")
+  vim.cmd.vsplit()
+  local split = vim.api.nvim_get_current_win()
+  MiniTest.finally(function()
+    if vim.api.nvim_win_is_valid(split) then
+      vim.api.nvim_win_close(split, true)
+    end
+  end)
+  h.keys(" ub")
+  h.eq({ vim.wo[win].winbar, vim.wo[split].winbar }, { "", "" })
+  h.keys(" ub")
+  assert(vim.wo[win].winbar:find("dropbar", 1, true))
+  assert(vim.wo[split].winbar:find("dropbar", 1, true))
+end
+
+T["breadcrumbs"]["tool buffers and floats stay clear; other winbars survive"] = function()
+  vim.api.nvim_set_current_buf(scratch)
+  h.eq(vim.wo.winbar, "")
+  vim.api.nvim_set_current_buf(source)
+  local float = vim.api.nvim_open_win(source, false, {
+    relative = "editor",
+    row = 2,
+    col = 2,
+    width = 30,
+    height = 3,
+    style = "minimal",
+  })
+  MiniTest.finally(function()
+    vim.api.nvim_win_close(float, true)
+    vim.wo.winbar = ""
+    require("config.breadcrumbs").refresh()
+  end)
+  require("config.breadcrumbs").refresh()
+  h.eq(vim.wo[float].winbar, "")
+  vim.wo.winbar = "another winbar"
+  h.keys(" ub")
+  h.eq(vim.wo.winbar, "another winbar")
+  h.keys(" ub")
+  h.eq(vim.wo.winbar, "another winbar")
+end
+
+T["breadcrumbs"]["Lua symbol hierarchy follows the cursor"] = function()
+  local path = temp .. "/crumbs.lua"
+  vim.fn.writefile({ "local function outer()", "  local function inner()", "    return 1", "  end", "end" }, path)
+  vim.cmd.edit(path)
+  vim.api.nvim_win_set_cursor(0, { 3, 0 })
+  vim.api.nvim_exec_autocmds("CursorMoved", { buffer = 0 })
+  h.wait(function()
+    local text = vim.api.nvim_eval_statusline(vim.wo.winbar, { use_winbar = true, maxwidth = 240 }).str
+    return text:find("outer", 1, true) and text:find("inner", 1, true)
+  end, "Lua symbol hierarchy missing", 10000)
+end
+
+T["breadcrumbs"]["Markdown headings follow the cursor"] = function()
+  local path = temp .. "/crumbs.md"
+  vim.fn.writefile({ "# Outer", "", "## Inner", "", "body" }, path)
+  vim.cmd.edit(path)
+  vim.api.nvim_win_set_cursor(0, { 5, 0 })
+  vim.api.nvim_exec_autocmds("CursorMoved", { buffer = 0 })
+  h.wait(function()
+    local text = vim.api.nvim_eval_statusline(vim.wo.winbar, { use_winbar = true, maxwidth = 240 }).str
+    return text:find("Outer", 1, true) and text:find("Inner", 1, true)
+  end, "heading hierarchy missing")
+end
 
 T["context"] = MiniTest.new_set({
   hooks = {
@@ -185,11 +274,13 @@ T["buffer tabs"]["close asks before discarding and keeps splits"] = function()
   end)
   local windows = #vim.api.nvim_list_wins()
   vim.api.nvim_buf_set_lines(tab_b, 0, 1, false, { "unsaved change" })
+  ---@diagnostic disable-next-line: duplicate-set-field
   vim.fn.confirm = function()
     return 3
   end
   options.close_command(tab_b)
   assert(vim.bo[tab_b].buflisted and vim.bo[tab_b].modified, "cancel discarded unsaved changes")
+  ---@diagnostic disable-next-line: duplicate-set-field
   vim.fn.confirm = function()
     return 2
   end
@@ -219,6 +310,7 @@ local function with_fake_tmux(termname, fn)
     terminal._terminal, terminal.transform = saved.state, saved.transform
   end)
   vim.env.TMUX = "/tmp/fake-tmux,1,0"
+  ---@diagnostic disable-next-line: duplicate-set-field
   vim.system = function(cmd)
     calls[#calls + 1] = table.concat(cmd, " ")
     local result = { code = 0, stdout = termname .. "\n" }

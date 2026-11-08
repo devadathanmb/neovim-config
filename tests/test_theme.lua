@@ -91,6 +91,15 @@ T["palette"]["editor, git and syntax colors"] = function()
   h.eq(vim.g.terminal_color_15, "#ffffff")
 end
 
+T["palette"]["breadcrumbs use palette colors without opaque backgrounds"] = function()
+  color("DropBarCurrentContext", "fg", "#61dafb")
+  for _, group in ipairs({ "WinBar", "WinBarNC", "DropBarCurrentContext", "DropBarHover", "DropBarIconUISeparator" }) do
+    h.eq(h.hl(group).bg, nil)
+  end
+  h.eq(h.hl("DropBarMenuNormalFloat"), h.hl("NormalFloat"))
+  h.eq(h.hl("DropBarMenuFloatBorder"), h.hl("FloatBorder"))
+end
+
 T["palette"]["python italics stay python-only"] = function()
   for _, group in ipairs({
     "@keyword.import.python",
@@ -215,7 +224,7 @@ T["floats"]["hover keeps code, conceals language label"] = function()
   vim.api.nvim_set_current_win(win)
   h.eq(vim.wo.concealcursor, "nvic")
   h.eq(vim.api.nvim_buf_get_lines(buf, 0, -1, false), preview_lines)
-  local parser = vim.treesitter.get_parser(buf)
+  local parser = assert(vim.treesitter.get_parser(buf), "hover parser missing")
   parser:parse()
   local injected = false
   parser:for_each_tree(function(_, tree)

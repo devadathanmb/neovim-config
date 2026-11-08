@@ -116,7 +116,9 @@ end
 
 -- Snacks resolves the remote (GitHub/GitLab/Bitbucket/…) from the current file.
 local function commit_url(commit, callback)
-  local ok, err = pcall(Snacks.gitbrowse, { what = "commit", commit = commit.sha, notify = false, open = callback })
+  local ok, err = pcall(function()
+    Snacks.gitbrowse({ what = "commit", commit = commit.sha, notify = false, open = callback })
+  end)
   if not ok then
     vim.notify("No browsable remote for this commit: " .. tostring(err), vim.log.levels.WARN)
   end

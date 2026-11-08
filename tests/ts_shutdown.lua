@@ -16,12 +16,14 @@ vim.schedule(function()
     assert(
       vim.wait(15000, function()
         local client = vim.lsp.get_client_by_id(id)
-        return exit_code ~= nil or (client and client.initialized)
+        return exit_code ~= nil or (client ~= nil and client.initialized == true)
       end, 50),
       "TypeScript initialization timed out"
     )
     local client = assert(vim.lsp.get_client_by_id(id), "TypeScript exited before shutdown")
     assert(client.initialized, "TypeScript did not initialize")
+    -- LSP shutdown has no parameters; Neovim's generic request type requires a table.
+    ---@diagnostic disable-next-line: param-type-mismatch
     local response = client:request_sync("shutdown", nil, 5000)
     assert(response and not response.err, "shutdown request failed: " .. vim.inspect(response))
     assert(client:notify("exit"), "exit notification failed")

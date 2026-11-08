@@ -141,7 +141,8 @@ Space y does not change normal Vim y or start an agent/send any content.
 - Space uh: toggle LSP inlay hints for the buffer (off by default, as in Pylance).
 - Space gg: open lazygit in a float (files opened from it land in Neovim).
 - Space .: toggle a per-project scratch buffer (filetype follows the current file, else Markdown; in a Lua scratch, Enter runs it). Space s.: pick saved scratches.
-- Space uz: toggle zen mode (centered, distraction-free, dims other blocks).
+- Space ub: toggle breadcrumbs (file path → enclosing symbols; clickable menus).
+- Space uz: toggle zen mode (centered, distraction-free, dims other blocks; hides breadcrumbs and inline blame without losing their settings).
 - Space um: toggle Markdown rendering everywhere (`:RenderMarkdown buf_toggle` for one buffer).
 - Space pL: plugin manager.
 - Space pk: this reference.
