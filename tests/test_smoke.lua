@@ -185,4 +185,44 @@ T["options"]["o/O do not continue comments"] = function()
   h.eq(vim.o.pumheight, 10)
 end
 
+-- Guards lazy-loading: a plugin that starts loading eagerly shows up here.
+T["startup stays fast"] = function()
+  local log = temp .. "/startuptime.log"
+  local best = math.huge
+  for _ = 1, 3 do
+    vim.fn.delete(log)
+    vim.system({ "nvim", "--headless", "--startuptime", log, "-c", "lua vim.defer_fn(function() vim.cmd('qa!') end, 100)" },
+      { cwd = temp }):wait(10000)
+    for _, entry in ipairs(vim.fn.readfile(log)) do
+      local ms = entry:match("^(%d+%.%d+)%s+%d+%.%d+: %-%-%- NVIM STARTED")
+      if ms then best = math.min(best, tonumber(ms)) end
+    end
+  end
+  assert(best < math.huge, "no startup time recorded")
+  MiniTest.add_note(("startup %.1f ms"):format(best))
+  assert(best < 150, ("startup took %.1f ms (limit 150)"):format(best))
+end
+
+T["markdown renders in normal mode, raw on the cursor line"] = function()
+  local path = temp .. "/notes.md"
+  vim.fn.writefile({ "# Title", "", "- [ ] task", "", "| a | b |", "| - | - |", "| 1 | 2 |" }, path)
+  vim.cmd.edit(path)
+  local ns = vim.api.nvim_get_namespaces()["render-markdown.nvim"]
+  local function marks(row)
+    return vim.api.nvim_buf_get_extmarks(0, ns or -1, { row, 0 }, { row, -1 }, {})
+  end
+  h.wait(function() return ns ~= nil and #marks(4) > 0 end, "table was not rendered", 5000)
+  h.wait(function() return #marks(2) > 0 end, "checkbox was not rendered", 5000)
+  vim.api.nvim_win_set_cursor(0, { 3, 0 })
+  -- API cursor moves fire no CursorMoved headless; render-markdown redraws on it.
+  vim.api.nvim_exec_autocmds("CursorMoved", { buffer = 0 })
+  h.wait(function() return #marks(0) > 0 end, "heading was not rendered", 5000)
+  h.wait(function()
+    for _, mark in ipairs(vim.api.nvim_buf_get_extmarks(0, ns, { 2, 0 }, { 2, -1 }, { details = true })) do
+      if mark[4].virt_text or mark[4].conceal then return false end
+    end
+    return true
+  end, "cursor line is not shown raw", 5000)
+end
+
 return T

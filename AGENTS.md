@@ -43,7 +43,7 @@ when you finish work.
 | `lua/config/context.lua` | `Space y` agent context references |
 | `lua/config/icons.lua` | Devicons colors matching the VS Code Material icon theme |
 | `lua/config/image.lua` | Snacks image terminal detection inside tmux (see SPEC.md) |
-| `lua/plugins/*.lua` | lazy.nvim specs: editor, snacks, buffers, git, languages, navigation, search, session, sidekick, testing |
+| `lua/plugins/*.lua` | lazy.nvim specs: editor, snacks, buffers, git, languages, markdown, navigation, search, session, sidekick, testing |
 | `lua/theme/github.lua`, `theme/` | GitHub Dark Default port; upstream JSON + personal overrides |
 | `snippets/` | Personal VS Code-format snippets (registered in `package.json`) |
 | `tests/` | mini.test suites (`test_*.lua`), runner `run.lua`, shared `helpers.lua` |
@@ -80,7 +80,7 @@ it does not wait for background installs to complete.
 
 | Suite | Covers |
 | --- | --- |
-| smoke | Startup, mappings, indentation, reload/conflict safety, pickers, buffer close |
+| smoke | Startup and its time, mappings, indentation, reload/conflict/swap safety, pickers, resize, Markdown rendering |
 | theme | Palette, overrides, Tree-sitter captures, float/picker borders, reload |
 | workflow | Context references, statusline, icon colors, buffer tabs, safe close, image detection, sessions |
 | notifications | Toast placement, focus, expiry, colors |
