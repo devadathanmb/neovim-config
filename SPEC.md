@@ -32,8 +32,9 @@ Editor and UI
 - dropbar.nvim for clickable winbar breadcrumbs (path → LSP symbols, Tree-sitter
   fallback; Markdown headings). Neovim provides the winbar but not the complete
   breadcrumb UI; barbecue.nvim is archived, and nvim-navic needs separate UI wiring.
-  Dropbar is maintained and needs no extra fuzzy-search dependency. Enabled by
-  default in named normal file windows, not tool buffers, terminals or floats.
+  Dropbar is maintained and needs no extra fuzzy-search dependency. Disabled by
+  default; when enabled, it appears in named normal file windows, not tool buffers,
+  terminals or floats.
   `Space ub` toggles all windows; Zen hides breadcrumbs without changing that
   preference (toggling during Zen applies on exit). Winbar highlights have no opaque
   backgrounds, and menu floats inherit the theme's float colors.
