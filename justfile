@@ -31,6 +31,10 @@ fmt:
 check:
     @"${XDG_DATA_HOME:-$HOME/.local/share}/nvim/mason/bin/stylua" --check lua tests init.lua
 
+# Audit all Lua diagnostics (including hints) with the editor's LuaLS settings.
+check-lua: _check-config
+    nvim --headless "+luafile tests/check_lua.lua"
+
 # Fast feedback while iterating: every suite except the slow language servers.
 test-fast: _check-config
     @failed=0; \

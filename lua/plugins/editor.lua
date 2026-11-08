@@ -6,6 +6,13 @@ return {
     end,
   },
   {
+    "Bekaboo/dropbar.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    config = function()
+      require("config.breadcrumbs").setup()
+    end,
+  },
+  {
     "nvim-lualine/lualine.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {

@@ -151,7 +151,10 @@ T["lua"]["diagnostics and completion without Neovim runtime"] = function()
   write("lua-project/.luarc.json", { "{}" })
   local buf = open("lua-project/sample.lua", { "unknown_lua_global()", "math.ab" })
   local lua = client("lua_ls", buf)
-  assert(not (lua.config.settings.Lua.workspace or {}).library, "Neovim runtime leaked into another Lua project")
+  assert(
+    not vim.tbl_get(lua.config.settings, "Lua", "workspace", "library"),
+    "Neovim runtime leaked into another Lua project"
+  )
   diagnostic(buf, function(d)
     return d.code == "undefined-global"
   end, "Lua undefined global")
@@ -161,11 +164,11 @@ end
 T["lua"]["config workspace gets the Neovim runtime"] = function()
   vim.cmd.edit(vim.fn.fnameescape(vim.fn.stdpath("config") .. "/init.lua"))
   local lua = client("lua_ls", vim.api.nvim_get_current_buf())
-  h.eq(lua.config.settings.Lua.runtime.version, "LuaJIT")
-  assert(
-    vim.tbl_contains(lua.config.settings.Lua.workspace.library, vim.env.VIMRUNTIME),
-    "Neovim runtime library missing"
-  )
+  h.eq(vim.tbl_get(lua.config.settings, "Lua", "runtime", "version"), "LuaJIT")
+  local library = assert(vim.tbl_get(lua.config.settings, "Lua", "workspace", "library"))
+  for _, path in ipairs(require("config.languages.lua").config_settings().workspace.library) do
+    assert(vim.tbl_contains(library, path), "Lua workspace library missing: " .. path)
+  end
 end
 
 T["lua"]["StyLua formats manually with project config"] = function()
@@ -202,7 +205,7 @@ T["python"]["project venv, diagnostics, completion and mappings"] = function()
   local pyright = client("basedpyright", buf)
   local ruff = client("ruff", buf)
   assert(not ruff.server_capabilities.hoverProvider, "Ruff hover must not override basedpyright")
-  h.eq(pyright.settings.python.pythonPath, temp .. "/.venv/bin/python")
+  h.eq(vim.tbl_get(pyright.settings, "python", "pythonPath"), temp .. "/.venv/bin/python")
   diagnostic(buf, function(d)
     return d.source == "basedpyright"
   end, "Python types")

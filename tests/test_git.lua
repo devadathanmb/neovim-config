@@ -70,7 +70,9 @@ local T = MiniTest.new_set({
       vim.ui.select = select
     end,
     post_once = function()
-      pcall(vim.cmd, "DiffviewClose")
+      pcall(function()
+        vim.cmd("DiffviewClose")
+      end)
       pcall(gs.detach_all)
       vim.wait(200)
       vim.cmd("silent! %bwipeout!")
@@ -171,6 +173,7 @@ T["reset"] = MiniTest.new_set({
 })
 
 T["reset"]["cancel keeps changes"] = function()
+  ---@diagnostic disable-next-line: duplicate-set-field
   vim.ui.select = function(_, _, callback)
     callback("Cancel")
   end
@@ -180,6 +183,7 @@ end
 
 T["reset"]["stale prompt refuses to reset"] = function()
   local pending
+  ---@diagnostic disable-next-line: duplicate-set-field
   vim.ui.select = function(_, _, callback)
     pending = callback
   end
@@ -192,6 +196,7 @@ T["reset"]["stale prompt refuses to reset"] = function()
 end
 
 T["reset"]["confirmed hunk reset edits only the buffer and is undoable"] = function()
+  ---@diagnostic disable-next-line: duplicate-set-field
   vim.ui.select = function(_, _, callback)
     callback("Reset")
   end
@@ -209,6 +214,7 @@ T["reset"]["confirmed hunk reset edits only the buffer and is undoable"] = funct
 end
 
 T["reset"]["confirmed file reset leaves the index alone"] = function()
+  ---@diagnostic disable-next-line: duplicate-set-field
   vim.ui.select = function(_, _, callback)
     callback("Reset")
   end

@@ -20,7 +20,8 @@ when you finish work.
   handling, which protects unsaved edits from agent changes on disk.
 - Keep the theme a data-driven port (`theme/*.json` → `lua/theme/github.lua`). UI
   highlight groups must not set opaque backgrounds that floats inherit incorrectly.
-- Run the headless suites (see Tests) after changes. Visual or terminal-key
+- Run the headless suites (see Tests) after changes, plus `just check-lua` for Lua
+  diagnostics. Visual or terminal-key
   behaviour also needs a check in a real terminal (an isolated tmux session works).
 - Keep `README.md` minimal (requirements, install, credits). Put agent-facing detail
   here and decisions/status in `SPEC.md`; keybindings go in `KEYMAPS.md`.
@@ -71,6 +72,7 @@ just health             # open the interactive :checkhealth report
 just test               # all suites; nonzero if any case fails
 just fmt                # format Lua with StyLua (stylua.toml)
 just check              # formatting check; must pass before committing
+just check-lua          # all LuaLS diagnostics, using the editor's workspace settings
 just test-fast          # all suites except languages (quick iteration)
 just startup            # startup time, best of five
 just test-suite theme   # one suite (see table below)

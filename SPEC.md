@@ -29,6 +29,14 @@ Editor and UI
   installs its tmux passthrough wrapper (without it images render blank).
   Recheck after a deliberate snacks update.
 - bufferline.nvim for tabs, lualine for the statusline, which-key for discovery.
+- dropbar.nvim for clickable winbar breadcrumbs (path → LSP symbols, Tree-sitter
+  fallback; Markdown headings). Neovim provides the winbar but not the complete
+  breadcrumb UI; barbecue.nvim is archived, and nvim-navic needs separate UI wiring.
+  Dropbar is maintained and needs no extra fuzzy-search dependency. Enabled by
+  default in named normal file windows, not tool buffers, terminals or floats.
+  `Space ub` toggles all windows; Zen hides breadcrumbs without changing that
+  preference (toggling during Zen applies on exit). Winbar highlights have no opaque
+  backgrounds, and menu floats inherit the theme's float colors.
 - nvim-web-devicons, not mini.icons: its independent colors match Material icons.
 - nvim-surround (classic `ys`/`cs`/`ds`), mini.pairs for auto-pairs.
 - flash.nvim covers both Sneak and EasyMotion; no separate EasyMotion plugin.
@@ -48,8 +56,11 @@ Languages
 - Dockerfiles use Mason-managed dockerls for diagnostics, completion and manual LSP
   formatting; Tree-sitter provides highlighting. No Docker daemon is required.
 - Lua uses Mason-managed lua-language-server and StyLua for manual formatting; the
-  Neovim config workspace gets LuaJIT and Neovim runtime definitions without imposing
-  them on other Lua projects. StyLua respects project configuration.
+  Neovim config workspace gets LuaJIT, Neovim runtime and the installed Snacks/mini.test
+  definitions (including their globals) without imposing them on other Lua projects.
+  Editor settings and `just check-lua` share one settings builder; the audit checks
+  every repository Lua file, including hint-level diagnostics. No global whitelist
+  or project-wide diagnostic disables. StyLua respects project configuration.
 - YAML/JSON use SchemaStore; Kubernetes schemas apply only to `*.k8s.yaml` and
   `k8s/`/`kubernetes/` directories, never all YAML.
 - Blink completion with the Rust fuzzy matcher, friendly-snippets plus `snippets/`.
@@ -91,7 +102,9 @@ Other
 - Tests use mini.test (maintained, no luarocks; busted/nlua would need a system
   Lua toolchain, plenary's harness is barely maintained). Suites run in-process
   in the real config rather than in child Neovims, so plugins and servers are
-  exercised as used; one Neovim per suite keeps suites isolated.
+  exercised as used; one Neovim per suite keeps suites isolated. Intentional test
+  overrides of runtime functions use local LuaLS diagnostic suppressions where needed
+  (for example, the workflow suite's `vim.notify` capture), not project-wide disables.
 - Swap files stay on for crash recovery. Nvim already skips the prompt for swaps
   owned by a running Nvim and deletes unmodified swaps of dead processes; the
   prompt only appears when a dead session left unsaved changes (smoke-tested).
@@ -149,6 +162,12 @@ real-world use and cannot be closed by tests.
 - [x] Migrated the hand-rolled suites to mini.test: named cases, per-case reports,
   failures no longer stop a suite, `just test-suite <suite> <filter>`.
 - [x] Added a justfile for interactive setup and health checks, individual or full headless suites, and the separate upstream shutdown probe.
+- [x] Added dropbar breadcrumbs, the UI toggle and Zen suppression; covered by
+  workflow, smoke and theme tests, plus an isolated tmux terminal check.
+- [ ] Human: try breadcrumb menus and symbol navigation in daily projects.
+- [x] Audited all LuaLS diagnostics: added missing plugin/test definitions, fixed
+  nullable values and callable-table typing, and marked intentional test overrides
+  locally. `just check-lua` guards against recurrence.
 
 ## Known issues
 

@@ -19,9 +19,10 @@ return {
       -- Highlights other references to the symbol under the cursor (VS Code occurrences).
       words = { enabled = true, debounce = 150 },
       notifier = { enabled = true, timeout = 2500, style = "compact", top_down = true },
-      -- Zen hides inline Git blame and restores the previous setting on close.
+      -- Zen hides breadcrumbs and inline Git blame without losing user preferences.
       zen = {
         on_open = function()
+          require("config.breadcrumbs").set_zen(true)
           local ok, config = pcall(require, "gitsigns.config")
           vim.g.zen_blame = ok and config.config.current_line_blame or false
           if vim.g.zen_blame then
@@ -29,6 +30,7 @@ return {
           end
         end,
         on_close = function()
+          require("config.breadcrumbs").set_zen(false)
           if vim.g.zen_blame then
             require("gitsigns").toggle_current_line_blame(true)
           end
@@ -48,6 +50,7 @@ return {
             list = false,
             signcolumn = "no",
             cursorline = false,
+            winbar = "",
             winhighlight = "NormalFloat:Normal",
           },
         },
