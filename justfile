@@ -13,22 +13,19 @@ setup: _check-config
 health: _check-config
     nvim -c checkhealth
 
-# Run all supported headless regression suites, reporting every failure.
+# Run all mini.test suites (tests/test_*.lua), reporting every failure.
 test: _check-config
     @failed=0; \
     for suite in smoke theme workflow notifications git navigation languages; do \
       printf '\n=== %s ===\n' "$suite"; \
-      nvim --headless "+luafile tests/$suite.lua" || failed=1; \
+      TEST_SUITE="$suite" nvim --headless "+luafile tests/run.lua" || failed=1; \
     done; \
     exit "$failed"
 
-# Run one suite: just test-suite theme
-test-suite suite: _check-config
-    @case "$1" in \
-      smoke|theme|workflow|notifications|git|navigation|languages) ;; \
-      *) printf 'Unknown suite: %s\n' "$1" >&2; exit 2 ;; \
-    esac; \
-    nvim --headless "+luafile tests/$1.lua"
+# Run one suite, optionally only cases containing a filter: just test-suite git "reset"
+test-suite suite filter="": _check-config
+    @test -f "tests/test_$1.lua" || { printf 'Unknown suite: %s\n' "$1" >&2; exit 2; }; \
+    TEST_SUITE="$1" TEST_FILTER="$2" nvim --headless "+luafile tests/run.lua"
 
 # Probe the upstream TypeScript shutdown bug (currently expected to fail).
 test-ts-shutdown:
