@@ -19,7 +19,23 @@ return {
       -- Highlights other references to the symbol under the cursor (VS Code occurrences).
       words = { enabled = true, debounce = 150 },
       notifier = { enabled = true, timeout = 2500, style = "compact", top_down = true },
-      styles = { notification = { border = "rounded", focusable = false, wo = { winblend = 0 } } },
+      styles = {
+        notification = { border = "rounded", focusable = false, wo = { winblend = 0 } },
+        zen = {
+          -- The default transparent backdrop blends black over a black background,
+          -- so the editor behind zen stayed visible. Use a solid backdrop instead.
+          backdrop = { transparent = false, blend = 99 },
+          -- Reading view: no line numbers, whitespace dots, signs or cursor line.
+          wo = {
+            number = false,
+            relativenumber = false,
+            list = false,
+            signcolumn = "no",
+            cursorline = false,
+            winhighlight = "NormalFloat:Normal",
+          },
+        },
+      },
       picker = {
         enabled = true,
         layout = {

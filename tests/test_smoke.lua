@@ -280,7 +280,13 @@ T["Space uz toggles zen mode"] = function()
   h.wait(function()
     return Snacks.zen.win and Snacks.zen.win:valid()
   end, "zen window did not open", 3000)
-  h.eq(vim.api.nvim_win_get_config(Snacks.zen.win.win).relative, "editor")
+  local zen = Snacks.zen.win.win
+  h.eq(vim.api.nvim_win_get_config(zen).relative, "editor")
+  h.eq({ vim.wo[zen].number, vim.wo[zen].relativenumber, vim.wo[zen].list }, { false, false, false })
+  -- The backdrop must be opaque, or the editor shows through on a black theme.
+  local backdrop = Snacks.zen.win.backdrop
+  assert(backdrop and backdrop:valid(), "zen backdrop missing")
+  h.eq(vim.wo[backdrop.win].winblend, 0)
   h.keys(" uz")
   h.wait(function()
     return not (Snacks.zen.win and Snacks.zen.win:valid())
