@@ -247,6 +247,12 @@ T["markdown renders in normal mode, raw on the cursor line"] = function()
   h.wait(function()
     return #marks(2) > 0
   end, "checkbox was not rendered", 5000)
+  -- Space um flips the plugin's global switch (marks clear on its next redraw).
+  local state = require("render-markdown.state")
+  h.keys(" um")
+  h.eq(state.enabled, false)
+  h.keys(" um")
+  h.eq(state.enabled, true)
   vim.api.nvim_win_set_cursor(0, { 3, 0 })
   -- API cursor moves fire no CursorMoved headless; render-markdown redraws on it.
   vim.api.nvim_exec_autocmds("CursorMoved", { buffer = 0 })
