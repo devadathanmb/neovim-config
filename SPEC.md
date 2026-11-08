@@ -73,7 +73,8 @@ Other
 - sidekick.nvim provides an optional agent CLI panel; its Copilot NES and file watcher
   are disabled to preserve existing Copilot and external-change handling. Its panel
   inherits editor defaults instead of the float background; ANSI colors remain themed.
-  Agent CLIs are installed separately; sessions do not persist across Neovim exits.
+  Its statusline shows the agent name instead of its executable path. Agent CLIs are
+  installed separately; sessions do not persist across Neovim exits.
 - trouble.nvim tracks `main`: v3.7.1 breaks on Neovim 0.12 and the fix is unreleased.
 - Bookmarks are a local module: tomasky/bookmarks.nvim stores bookmarks globally and
   only navigates within one file. Ours are per cwd, cross-file, and re-anchor by line

@@ -23,6 +23,10 @@ return {
         lualine_b = { { "branch", icon = "\u{f418}" } },
         lualine_c = { { "filename", path = 1, fmt = function(text)
           local name = vim.api.nvim_buf_get_name(0)
+          if vim.bo.filetype == "sidekick_terminal" then
+            local tool = vim.b.sidekick_cli
+            return type(tool) == "table" and tool.name or "Agent"
+          end
           if not name:match("^diffview://") then return text end
           if vim.bo.filetype == "DiffviewFiles" then return "Git changes" end
           if vim.bo.filetype == "DiffviewFileHistory" then return "Git history" end

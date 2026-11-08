@@ -52,6 +52,19 @@ local function run()
   assert(not require("config.context").reference(scratch, 1, 1), "tool buffer accepted as a context file")
   vim.api.nvim_buf_delete(unnamed, { force = true })
 
+  local filename = require("lazy.core.config").plugins["lualine.nvim"].opts.sections.lualine_c[1].fmt
+  vim.api.nvim_set_current_buf(source)
+  assert(filename("source sample.txt") == "source sample.txt", "ordinary statusline filename changed")
+  vim.api.nvim_set_current_buf(scratch)
+  vim.bo.filetype = "sidekick_terminal"
+  vim.b.sidekick_cli = { name = "claude" }
+  assert(filename("/long/path/to/claude [-]") == "claude", "agent statusline should show its name")
+  vim.b.sidekick_cli = { name = "pi" }
+  assert(filename("/another/path/pi") == "pi", "agent statusline should follow the selected tool")
+  vim.b.sidekick_cli = nil
+  assert(filename("/long/path") == "Agent", "agent statusline needs a safe fallback")
+  vim.bo.filetype = ""
+
   local icons = require("nvim-web-devicons")
   local colors = { ts = "#0288d1", tsx = "#0288d1", js = "#ffca28", json = "#f9a825", yaml = "#ff5252", md = "#42a5f5" }
   local function check_icons()
