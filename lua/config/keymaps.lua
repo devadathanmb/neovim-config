@@ -79,6 +79,28 @@ map("n", "<leader>wd", "<cmd>close<cr>", "Close window")
 map("n", "<leader>wW", "<C-w>p", "Previous window")
 map("n", "<leader>wm", "<C-w>_<C-w>|", "Maximize window (w= restores)")
 
+-- Resize mode: keep resizing with h/j/k/l until any other key (Esc) is pressed.
+local function resize_mode()
+  local steps = {
+    h = "vertical resize -2", l = "vertical resize +2", j = "resize -2", k = "resize +2",
+    H = "vertical resize -10", L = "vertical resize +10", J = "resize -10", K = "resize +10",
+    ["="] = "wincmd =",
+  }
+  local hint = { { "Resize: ", "ModeMsg" }, { "h/l narrower/wider  j/k shorter/taller  H/J/K/L big steps  = equal  Esc done" } }
+  local ui = #vim.api.nvim_list_uis() > 0
+  while true do
+    if ui then
+      vim.api.nvim_echo(hint, false, {})
+      vim.cmd.redraw()
+    end
+    local ok, key = pcall(vim.fn.getcharstr)
+    if not ok or not steps[key] then break end
+    vim.cmd(steps[key])
+  end
+  vim.api.nvim_echo({ { "" } }, false, {})
+end
+map("n", "<leader>wr", resize_mode, "Resize mode (h/j/k/l, Esc to finish)")
+
 map("n", "<C-n>", "<cmd>nohlsearch<cr>", "Clear search highlight")
 map("n", "<Esc>", "<cmd>nohlsearch<cr><Esc>", "Clear search highlight")
 -- Native visual P replaces the selection without yanking it (works at line end too).

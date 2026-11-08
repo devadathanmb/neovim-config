@@ -125,6 +125,7 @@ Space y does not change normal Vim y or start an agent/send any content.
 | Space wW | Focus previously used window |
 | Space w= | Equalize window sizes |
 | Space wm | Maximize current window; Space w= restores equal sizes |
+| Space wr | Resize mode: h/l narrower/wider, j/k shorter/taller (H/J/K/L in steps of 10), = equalize; any other key (Esc) finishes |
 | Space wd | Close window, not buffer |
 
 ## Editing and configuration
