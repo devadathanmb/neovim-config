@@ -148,6 +148,28 @@ T["setup"]["baseline parsers are installed"] = function()
   end
 end
 
+T["setup"]["fresh parser directory discovers installs without a restart"] = function()
+  local parser = assert(vim.api.nvim_get_runtime_file("parser/python.so", false)[1])
+  local plugin = require("lazy.core.config").plugins["nvim-treesitter"].dir
+  local script = write("bootstrap/probe.lua", {
+    "assert(not vim.treesitter.language.add('python'))",
+    ("vim.opt.runtimepath:prepend(%q)"):format(vim.fn.stdpath("config")),
+    ("vim.opt.runtimepath:prepend(%q)"):format(plugin),
+    "require('config.treesitter').setup()",
+    "local site = vim.fs.joinpath(vim.fn.stdpath('data'), 'site')",
+    "vim.fn.mkdir(site .. '/parser', 'p')",
+    ("assert(vim.uv.fs_copyfile(%q, site .. '/parser/python.so'))"):format(parser),
+    "assert(vim.treesitter.language.add('python'), 'New parser is not discoverable during first startup')",
+  })
+  local result = vim
+    .system({ "nvim", "--headless", "-u", "NONE", "-i", "NONE", "+luafile " .. script, "+qa!" }, {
+      env = { XDG_DATA_HOME = temp .. "/bootstrap/data" },
+      text = true,
+    })
+    :wait(10000)
+  assert(result.code == 0, result.stderr)
+end
+
 T["lua"] = MiniTest.new_set()
 
 T["lua"]["diagnostics and completion without Neovim runtime"] = function()
@@ -228,6 +250,7 @@ T["python"]["project venv, diagnostics, completion and mappings"] = function()
   assert(vim.uv.fs_symlink(vim.fn.exepath("python3"), temp .. "/.venv/bin/python"))
   h.eq(require("config.languages.python").python_path(temp), temp .. "/.venv/bin/python")
   local buf = open("sample.py", { "import os", 'value: int = "wrong"', "unknown_name", "os.pa" })
+  assert(vim.treesitter.highlighter.active[buf], "Python Tree-sitter highlighting did not attach")
   local pyright = client("basedpyright", buf)
   local ruff = client("ruff", buf)
   assert(not ruff.server_capabilities.hoverProvider, "Ruff hover must not override basedpyright")

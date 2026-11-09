@@ -141,6 +141,36 @@ T["tree-sitter"]["python flow-scope query applies"] = function()
   end
 end
 
+T["tree-sitter"]["Python token captures use the VS Code styles"] = function()
+  local lines = {
+    "import os",
+    "def run(value: int) -> str:",
+    "    if value:",
+    '        logger.debug("ready")',
+    '        return "ok"',
+  }
+  local cases = {
+    { { 0, 0 }, "keyword.import", true },
+    { { 1, 0 }, "keyword.function", true },
+    { { 1, 4 }, "function", false },
+    { { 2, 4 }, "keyword.conditional", true },
+    { { 3, 15 }, "function.method.call", false },
+    { { 4, 8 }, "keyword.return", true },
+  }
+  local found = captures(
+    "python",
+    lines,
+    vim.tbl_map(function(case)
+      return case[1]
+    end, cases)
+  )
+  for i, case in ipairs(cases) do
+    assert(vim.tbl_contains(found[i], case[2]), "missing Python capture: " .. case[2])
+    local style = h.hl("@" .. case[2] .. ".python")
+    h.eq(style.italic == true, case[3])
+  end
+end
+
 T["ui"] = MiniTest.new_set()
 
 T["ui"]["statusline is neutral"] = function()

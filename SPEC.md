@@ -79,6 +79,12 @@ Languages
   Tab: snippet placeholder → menu item → accept Copilot → indent.
 - Tree-sitter parsers install on first use of a filetype; GritQL comes from the
   pinned biomejs/tree-sitter-gritql grammar.
+  Missing parser/build-tool setup must not silently degrade highlighting: warn
+  once if a supported parser is needed but Mason's tree-sitter-cli is absent.
+  Mason's tool installer loads eagerly: its VimEnter hook must be registered
+  before that event, not on VeryLazy. Tool installation then triggers parser setup.
+  Create the parser runtime directory before registering it so Neovim discovers
+  parsers installed during the first session without requiring a restart.
 - Copilot via the official copilot-language-server and Neovim's native inline
   completion (no copilot.lua). It never attaches to text, commit messages, help or
   secret-like files (`.env`, keys).
