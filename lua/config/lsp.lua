@@ -117,8 +117,8 @@ function M.setup()
     vim.diagnostic.jump({ count = -1, float = true, severity = vim.diagnostic.severity.ERROR })
   end, "Previous error")
   require("which-key").add({
-    { "<leader>l", group = "Language" },
-    { "<leader>r", group = "Refactor" },
+    { "<leader>l", group = "Language", icon = require("config.icons").which_key("code"), mode = { "n", "x" } },
+    { "<leader>r", group = "Refactor", icon = require("config.icons").which_key("refactor"), mode = { "n", "x" } },
   })
 end
 

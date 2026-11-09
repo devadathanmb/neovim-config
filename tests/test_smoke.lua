@@ -219,8 +219,8 @@ T["options"]["gutter pads diagnostic signs and preserves relative numbers"] = fu
   local sign = vim.trim(vim.diagnostic.config().signs.text[vim.diagnostic.severity.WARN])
   local selected = gutter(2)
   assert(vim.startswith(selected, " " .. sign .. " "), "diagnostic sign has no padding")
-  assert(vim.endswith(selected, " 2 "), "line number has no padding")
-  assert(vim.endswith(gutter(3), " 1 "), "relative line number was lost")
+  assert(vim.endswith(selected, " 2   "), "line number must have three spaces before buffer text")
+  assert(vim.endswith(gutter(3), " 1   "), "relative line number was lost")
 end
 
 T["options"]["o/O do not continue comments"] = function()

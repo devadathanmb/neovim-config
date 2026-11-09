@@ -82,23 +82,34 @@ return {
   },
   {
     "folke/which-key.nvim",
-    opts = {
-      delay = 300,
-      win = { border = "rounded" },
-      spec = {
-        { "<leader>a", group = "Agents" },
-        { "<leader>B", group = "Buffers" },
-        { "<leader>b", group = "Bookmarks" },
-        { "<leader>x", group = "Problems / lists" },
-        { "<leader>g", group = "Git" },
-        { "<leader>F", group = "Files" },
-        { "<leader>s", group = "Search" },
-        { "<leader>S", group = "Sessions" },
-        { "<leader>w", group = "Windows" },
-        { "<leader>u", group = "UI" },
-        { "<leader>p", group = "Configuration" },
-      },
-    },
+    opts = function()
+      local icon = require("config.icons").which_key
+      return {
+        delay = 300,
+        win = { border = "rounded" },
+        icons = { rules = false },
+        spec = {
+          { "<leader>a", group = "Agents", icon = icon("CopilotChat.nvim") },
+          { "<leader>B", group = "Buffers", icon = icon("buffer") },
+          { "<leader>b", group = "Bookmarks", icon = icon("grapple.nvim") },
+          { "<leader>x", group = "Problems / lists", icon = icon("diagnostic") },
+          { "<leader>g", group = "Git", icon = { cat = "filetype", name = "git" }, mode = { "n", "x" } },
+          { "<leader>F", group = "Files", icon = icon("file") },
+          { "<leader>s", group = "Search", icon = icon("search") },
+          { "<leader>S", group = "Sessions", icon = icon("session") },
+          { "<leader>w", group = "Windows", icon = icon("window") },
+          { "<leader>u", group = "UI", icon = icon("ui") },
+          { "<leader>p", group = "Configuration", icon = { cat = "file", name = "config" } },
+          { "<leader>e", icon = icon("toggle") },
+          { "<leader>f", icon = icon("find") },
+          { "<leader>h", icon = icon("window") },
+          { "<leader>v", icon = icon("window") },
+          { "<leader>;", icon = icon("terminal") },
+          { "<leader>y", icon = icon("yanky.nvim"), mode = { "n", "x" } },
+          { "<leader>.", icon = icon("file") },
+        },
+      }
+    end,
   },
   { "kylechui/nvim-surround", version = "^4.0.0" },
   {

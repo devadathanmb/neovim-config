@@ -29,6 +29,9 @@ Editor and UI
   installs its tmux passthrough wrapper (without it images render blank).
   Recheck after a deliberate snacks update.
 - bufferline.nvim for tabs, lualine for the statusline, which-key for discovery.
+  Which-key uses explicit group icons from Devicons and its bundled UI catalog;
+  automatic icon guessing is off so buffer-local actions inherit their group icon,
+  not the current file's language icon. No local Nerd Font glyph catalog.
   Buffer tab icons have a leading space (in addition to bufferline's trailing gap),
   so long filenames never press the icon against the selected tab's edge.
 - dropbar.nvim for clickable winbar breadcrumbs (path → LSP symbols, Tree-sitter
@@ -46,7 +49,8 @@ Editor and UI
   Visual `S` stays with nvim-surround; f/t stay line-local.
 - Whitespace mirrors VS Code `renderWhitespace: boundary`.
 - Native statuscolumn adds gutter padding around signs and line numbers while
-  retaining relative numbers and fold indicators; no statuscolumn plugin.
+  retaining relative numbers and fold indicators, with three spaces before buffer
+  text; no statuscolumn plugin.
 
 Languages
 - Language-specific server, tool and formatter declarations live in

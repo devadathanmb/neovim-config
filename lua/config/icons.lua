@@ -1,5 +1,15 @@
 local M = {}
 
+-- Reuse which-key's bundled UI catalog instead of maintaining glyph literals.
+function M.which_key(name)
+  for _, icon in ipairs(require("which-key.icons").rules) do
+    if icon.pattern == name or icon.plugin == name then
+      return vim.deepcopy(icon)
+    end
+  end
+  error("Unknown which-key icon: " .. name)
+end
+
 function M.setup()
   local icons = require("nvim-web-devicons")
   -- Single-color terminal equivalents of the installed Material Icon Theme SVGs.
