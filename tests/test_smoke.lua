@@ -202,6 +202,27 @@ end
 
 T["options"] = MiniTest.new_set()
 
+T["options"]["gutter pads diagnostic signs and preserves relative numbers"] = function()
+  vim.cmd.enew()
+  vim.api.nvim_buf_set_lines(0, 0, -1, false, { "one", "two", "three" })
+  vim.api.nvim_win_set_cursor(0, { 2, 0 })
+  local ns = vim.api.nvim_create_namespace("test_gutter_padding")
+  MiniTest.finally(function()
+    vim.diagnostic.reset(ns)
+    vim.bo.modified = false
+  end)
+  vim.diagnostic.set(ns, 0, { { lnum = 1, col = 0, message = "test", severity = vim.diagnostic.severity.WARN } })
+  vim.cmd.redraw()
+  local function gutter(lnum)
+    return vim.api.nvim_eval_statusline(vim.wo.statuscolumn, { use_statuscol_lnum = lnum }).str
+  end
+  local sign = vim.trim(vim.diagnostic.config().signs.text[vim.diagnostic.severity.WARN])
+  local selected = gutter(2)
+  assert(vim.startswith(selected, " " .. sign .. " "), "diagnostic sign has no padding")
+  assert(vim.endswith(selected, " 2 "), "line number has no padding")
+  assert(vim.endswith(gutter(3), " 1 "), "relative line number was lost")
+end
+
 T["options"]["o/O do not continue comments"] = function()
   vim.cmd.enew()
   vim.bo.filetype = "lua"
