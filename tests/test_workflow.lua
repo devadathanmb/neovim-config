@@ -251,6 +251,59 @@ T["file icons match Material colors"] = function()
   assert(not require("lazy.core.config").plugins["mini.icons"], "mock icon provider is still enabled")
 end
 
+T["which-key icons"] = MiniTest.new_set()
+
+T["which-key icons"]["leader menus use explicit library icons"] = function()
+  h.eq(require("which-key.config").icons.rules, false)
+  local tree = assert(require("which-key.buf").get({ mode = "n", update = true })).tree
+  for _, key in ipairs({
+    "a",
+    "B",
+    "b",
+    "x",
+    "g",
+    "F",
+    "s",
+    "S",
+    "w",
+    "u",
+    "p",
+    "l",
+    "r",
+    "e",
+    "f",
+    "h",
+    "v",
+    ";",
+    "y",
+    ".",
+  }) do
+    local node = assert(tree:find("<leader>" .. key), "missing leader menu: " .. key)
+    local icon = require("which-key.view").icon(node)
+    assert(icon and icon ~= "", "missing menu icon: " .. key)
+  end
+end
+
+T["which-key icons"]["buffer-local Git actions inherit Git icons in normal and visual mode"] = function()
+  local previous = vim.api.nvim_get_current_buf()
+  local buf = vim.api.nvim_create_buf(false, true)
+  MiniTest.finally(function()
+    vim.api.nvim_set_current_buf(previous)
+    vim.api.nvim_buf_delete(buf, { force = true })
+  end)
+  vim.api.nvim_set_current_buf(buf)
+  vim.keymap.set({ "n", "x" }, "<leader>gy", function() end, { buffer = buf, desc = "Copy Git permalink" })
+  local expected = { require("nvim-web-devicons").get_icon_by_filetype("git") }
+  for _, ft in ipairs({ "python", "lua", "sh" }) do
+    vim.cmd("noautocmd setlocal filetype=" .. ft)
+    for _, mode in ipairs({ "n", "x" }) do
+      local tree = assert(require("which-key.buf").get({ buf = buf, mode = mode, update = true })).tree
+      local node = assert(tree:find("<leader>gy"))
+      h.eq({ require("which-key.view").icon(node) }, expected)
+    end
+  end
+end
+
 T["filename icons work with full paths and Dockerfile suffixes"] = function()
   local icons = require("nvim-web-devicons")
   for _, name in ipairs({
