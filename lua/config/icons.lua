@@ -24,7 +24,12 @@ function M.setup()
       overrides[extension] = vim.tbl_extend("force", icon, { color = color })
     end
   end
-  icons.setup({ color_icons = true, default = true, strict = true, override_by_extension = overrides })
+  icons.setup({ color_icons = true, default = true, strict = true, prefix = true, override_by_extension = overrides })
+  -- Snacks passes full paths; devicons expects basenames for filename matches.
+  local get_icon = icons.get_icon
+  icons.get_icon = function(name, extension, opts)
+    return get_icon(name and vim.fs.basename(name), extension, opts)
+  end
 end
 
 return M
