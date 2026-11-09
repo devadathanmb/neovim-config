@@ -251,6 +251,26 @@ T["file icons match Material colors"] = function()
   assert(not require("lazy.core.config").plugins["mini.icons"], "mock icon provider is still enabled")
 end
 
+T["filename icons work with full paths and Dockerfile suffixes"] = function()
+  local icons = require("nvim-web-devicons")
+  for _, name in ipairs({
+    "Dockerfile",
+    "Dockerfile.base",
+    "docker-compose.yaml",
+    "docker-compose.yml",
+    "compose.yaml",
+    "compose.yml",
+    ".dockerignore",
+    ".gitignore",
+  }) do
+    local expected = name == ".gitignore" and ".gitignore" or "Dockerfile"
+    local icon, group = icons.get_icon(expected, nil, { default = false })
+    assert(icon, "missing reference icon: " .. expected)
+    h.eq({ icons.get_icon("/project/" .. name, nil, { default = false }) }, { icon, group })
+    h.eq({ Snacks.util.icon("/project/" .. name, "file") }, { icon, group })
+  end
+end
+
 T["buffer tabs"] = MiniTest.new_set()
 local tab_a, tab_b
 
