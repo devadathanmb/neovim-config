@@ -51,6 +51,16 @@ function M.attach(buf)
   map("n", "<leader>gP", function()
     M.pull_request("copy")
   end, "Copy PR link for current line")
+  map({ "n", "x" }, "<leader>gy", function()
+    Snacks.gitbrowse({
+      what = "permalink",
+      notify = false,
+      open = function(url)
+        vim.fn.setreg("+", url)
+        vim.notify("Copied permalink: " .. url)
+      end,
+    })
+  end, "Copy Git permalink")
   map("n", "<leader>gB", gs.toggle_current_line_blame, "Toggle inline blame")
 end
 
