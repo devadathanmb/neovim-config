@@ -202,9 +202,13 @@ Conform handles selection formatting as supported by the formatter/diff behavior
 | Space gR | Reset all unstaged buffer edits; confirmation required |
 | Space gb | Blame line in a focused popup (j/k scroll); inside: o open PR, y copy PR link, c open commit, q/Esc close |
 | Space gp / Space gP | Open / copy the PR that introduced the current line (falls back to the commit page) |
+| Space gy | Copy a commit-pinned permalink for the current line or visual line range |
 | Space gB | Toggle delayed inline blame (enabled initially) |
 
-Hunk/blame/stage/reset mappings are buffer-local to files attached to Gitsigns.
+Hunk/blame/stage/reset/permalink mappings are buffer-local to files attached to Gitsigns.
+Permalinks point to the committed file; local edits are not included, and their
+line numbers may differ from the committed version. The commit must be available
+on the remote for others to open the link.
 Gutter signs show unstaged changes as thick bars and staged changes as thin bars;
 diagnostics may take sign-column priority. Untracked files appear in Diffview but
 do not receive Gitsigns actions until tracked; stage them explicitly from review.

@@ -105,6 +105,7 @@ T["signs"]["git actions are buffer-local"] = function()
     "<Space>gB",
     "<Space>gp",
     "<Space>gP",
+    "<Space>gy",
     "]c",
     "[c",
   }) do
@@ -162,6 +163,49 @@ T["staging"]["visual stage takes only the selected hunk"] = function()
   h.action("<Space>gU")
   h.wait(nothing_staged, "visual stage cleanup failed")
   h.wait(hunks(2), "visual stage cache did not settle")
+end
+
+local permalink_clipboard, permalink_kind
+T["permalinks"] = MiniTest.new_set({
+  hooks = {
+    pre_once = function()
+      git("remote", "add", "origin", "git@github.com:example/editor-fixture.git")
+    end,
+    pre_case = function()
+      permalink_clipboard, permalink_kind = vim.fn.getreg("+"), vim.fn.getregtype("+")
+    end,
+    post_case = function()
+      vim.fn.setreg("+", permalink_clipboard, permalink_kind)
+      h.keys("<Esc>")
+    end,
+    post_once = function()
+      git("remote", "remove", "origin")
+    end,
+  },
+})
+
+local function expect_permalink(start_line, end_line, keys)
+  vim.api.nvim_win_set_cursor(0, { start_line, 0 })
+  h.keys(keys)
+  local first, last = math.min(start_line, end_line), math.max(start_line, end_line)
+  local expected = ("https://github.com/example/editor-fixture/blob/%s/sample file.txt#L%d-L%d"):format(
+    vim.trim(git("rev-parse", "HEAD")),
+    first,
+    last
+  )
+  h.wait(function()
+    return vim.fn.getreg("+") == expected
+  end, "wrong permalink: " .. vim.fn.getreg("+"))
+end
+
+T["permalinks"]["copy a commit-pinned current-line link"] = function()
+  expect_permalink(10, 10, " gy")
+end
+
+T["permalinks"]["copy a visual range in either direction"] = function()
+  expect_permalink(10, 12, "Vjj gy")
+  h.keys("<Esc>")
+  expect_permalink(12, 10, "Vkk gy")
 end
 
 T["reset"] = MiniTest.new_set({

@@ -86,6 +86,8 @@ Git
   and history, with unguarded default shortcuts disabled.
 - Blame → PR: `gh api repos/{owner}/{repo}/commits/<sha>/pulls` (open and merged,
   squash merges included), commit page fallback via Snacks.gitbrowse.
+- `Space gy` copies a commit-pinned file permalink for the current line or visual
+  range through Snacks.gitbrowse, without opening a browser.
 
 Other
 - sidekick.nvim provides an optional agent CLI panel; its Copilot NES and file watcher
