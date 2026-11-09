@@ -27,6 +27,9 @@ T["startup"]["loads theme, options and plugin managers"] = function()
   assert(vim.o.number and vim.o.relativenumber and vim.o.autoread)
   h.eq(vim.fn.exists(":Lazy"), 2)
   h.eq(vim.fn.exists(":Mason"), 2)
+  local installer = require("lazy.core.config").plugins["mason-tool-installer.nvim"]
+  assert(installer._.loaded and not installer.lazy, "Mason tool installer must load before VimEnter")
+  h.eq(vim.fn.exists("#mti_start"), 0)
 end
 
 T["startup"]["defines core mappings"] = function()

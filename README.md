@@ -18,7 +18,8 @@ git clone -b v2 https://github.com/devadathanmb/neovim-config ~/.config/nvim
 nvim
 ```
 
-The first start installs plugins and language tools.
+The first start installs plugins, language tools and syntax parsers. Keep Neovim
+open until the background installations finish.
 
 Keybindings are in [KEYMAPS.md](KEYMAPS.md).
 

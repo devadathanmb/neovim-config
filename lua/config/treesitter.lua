@@ -75,10 +75,17 @@ local function ensure(buf)
     return
   end
   local lang = vim.treesitter.language.get_lang(ft)
-  if not lang or attempted[lang] or vim.fn.executable("tree-sitter") ~= 1 then
+  if not lang or attempted[lang] then
     return
   end
   if not vim.tbl_contains(require("nvim-treesitter").get_available(), lang) then
+    return
+  end
+  if vim.fn.executable("tree-sitter") ~= 1 then
+    vim.notify_once(
+      "Tree-sitter highlighting is waiting for tree-sitter-cli; check :Mason for installation status",
+      vim.log.levels.WARN
+    )
     return
   end
   attempted[lang] = true
@@ -98,7 +105,10 @@ end
 
 function M.setup()
   local treesitter = require("nvim-treesitter")
-  treesitter.setup()
+  local install_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "site")
+  -- Neovim caches nonexistent runtime directories until runtimepath changes.
+  vim.fn.mkdir(install_dir, "p")
+  treesitter.setup({ install_dir = install_dir })
   register_custom()
 
   vim.filetype.add({ extension = { grit = "gritql" } })

@@ -73,7 +73,8 @@ return {
   },
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
-    event = "VeryLazy",
+    -- Its install hook listens for VimEnter, so it must load before that event.
+    lazy = false,
     dependencies = { "mason-org/mason.nvim" },
     opts = {
       ensure_installed = languages.tools,
