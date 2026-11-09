@@ -11,7 +11,7 @@ daily work while keeping VS Code muscle memory where sensible. AI coding agents 
 run outside Neovim in Ghostty/tmux or in a quick Sidekick terminal panel.
 
 Languages: Python, TypeScript/JavaScript, PostgreSQL SQL, YAML/Kubernetes, JSON/JSONC,
-INI, Lua, Markdown, Dockerfile.
+INI, Lua, Markdown, Dockerfile, Bash/POSIX shell.
 
 **Out of scope:** debugger, format-on-save,
 Blink completion ghost text (Copilot ghost text is the only inline suggestion).
@@ -58,6 +58,8 @@ Languages
   (`~/.config/sqlfluff`), project configs override it. No database-backed completion.
 - Dockerfiles use Mason-managed dockerls for diagnostics, completion and manual LSP
   formatting; Tree-sitter provides highlighting. No Docker daemon is required.
+- Shell uses Mason-managed bash-language-server (the VS Code Bash IDE backend),
+  ShellCheck diagnostics and manual shfmt formatting through Conform.
 - Lua uses Mason-managed lua-language-server and StyLua for manual formatting; the
   Neovim config workspace gets LuaJIT, Neovim runtime and the installed Snacks/mini.test
   definitions (including their globals) without imposing them on other Lua projects.

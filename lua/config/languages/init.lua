@@ -3,6 +3,7 @@ local modules = {
   require("config.languages.web"),
   require("config.languages.lua"),
   require("config.languages.docker"),
+  require("config.languages.shell"),
   require("config.languages.sql"),
 }
 

@@ -122,6 +122,9 @@ T["setup"]["tools come from Mason"] = function()
     "vscode-json-language-server",
     "lua-language-server",
     "docker-langserver",
+    "bash-language-server",
+    "shellcheck",
+    "shfmt",
     "black",
     "prettier",
     "sqlfluff",
@@ -192,6 +195,29 @@ T["dockerfile LSP, highlighting and formatting"] = function()
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, { "FROM alpine", "  RUN echo hello" })
   format(buf)
   h.eq(line(buf, 2), "RUN echo hello")
+end
+
+T["shell"] = MiniTest.new_set()
+
+T["shell"]["Bash IDE server attaches and supplies ShellCheck diagnostics"] = function()
+  write("shell/.git/HEAD", { "ref: refs/heads/main" })
+  local buf = open("shell/sample.sh", { "#!/usr/bin/env bash", 'name="hello world"', "echo $name" })
+  client("bashls", buf)
+  diagnostic(buf, function(d)
+    return tostring(d.code):find("2086", 1, true) ~= nil
+  end, "ShellCheck unquoted variable")
+end
+
+T["shell"]["shfmt formats manually, never on save"] = function()
+  local buf = open("shell/format.sh", { "#!/usr/bin/env bash", "if true;then", "echo hello", "fi" })
+  vim.bo[buf].expandtab = true
+  vim.bo[buf].shiftwidth = 2
+  format(buf)
+  h.eq(line(buf, 2), "if true; then")
+  h.eq(line(buf, 3), "  echo hello")
+  vim.api.nvim_buf_set_lines(buf, 2, 3, false, { "echo hello" })
+  vim.cmd("silent write")
+  h.eq(line(buf, 3), "echo hello")
 end
 
 T["python"] = MiniTest.new_set()
