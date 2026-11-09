@@ -45,6 +45,8 @@ Editor and UI
 - flash.nvim covers both Sneak and EasyMotion; no separate EasyMotion plugin.
   Visual `S` stays with nvim-surround; f/t stay line-local.
 - Whitespace mirrors VS Code `renderWhitespace: boundary`.
+- Native statuscolumn adds gutter padding around signs and line numbers while
+  retaining relative numbers and fold indicators; no statuscolumn plugin.
 
 Languages
 - Language-specific server, tool and formatter declarations live in
