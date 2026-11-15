@@ -16,21 +16,6 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Keep Markdown fence/language labels hidden when a native LSP preview gains focus.
--- Retain the fence text in the buffer so Tree-sitter can still inject the language.
-vim.api.nvim_create_autocmd("FileType", {
-  group = group,
-  pattern = "markdown",
-  callback = function(event)
-    for _, win in ipairs(vim.fn.win_findbuf(event.buf)) do
-      if vim.w[win].lsp_floating_bufnr then
-        vim.wo[win].conceallevel = 2
-        vim.wo[win].concealcursor = "nvic"
-      end
-    end
-  end,
-})
-
 -- checktime respects modified buffers; never force-reload unsaved edits.
 vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold" }, {
   group = group,

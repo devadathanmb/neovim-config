@@ -243,16 +243,14 @@ end
 
 T["floats"] = MiniTest.new_set()
 
-T["floats"]["hover keeps code, conceals language label"] = function()
+T["floats"]["hover is rounded and retains code injection"] = function()
   local preview_lines = { "```typescript", "const answer: number = 42;", "```", "", "Some documentation." }
   local buf, win = vim.lsp.util.open_floating_preview(preview_lines, "markdown", {})
   MiniTest.finally(function()
     pcall(vim.api.nvim_win_close, win, true)
   end)
   h.assert_rounded(win, "native LSP preview")
-  h.eq({ vim.wo[win].conceallevel, vim.wo[win].concealcursor }, { 2, "nvic" })
-  vim.api.nvim_set_current_win(win)
-  h.eq(vim.wo.concealcursor, "nvic")
+  h.eq(vim.wo[win].conceallevel, 2)
   h.eq(vim.api.nvim_buf_get_lines(buf, 0, -1, false), preview_lines)
   local parser = assert(vim.treesitter.get_parser(buf), "hover parser missing")
   parser:parse()
@@ -262,7 +260,7 @@ T["floats"]["hover keeps code, conceals language label"] = function()
       injected = true
     end
   end)
-  assert(injected, "concealed hover lost TypeScript syntax injection")
+  assert(injected, "hover lost TypeScript syntax injection")
 end
 
 T["floats"]["diagnostic float is rounded"] = function()
