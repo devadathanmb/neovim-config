@@ -6,7 +6,7 @@ return {
     opts = {
       bigfile = { enabled = true },
       quickfile = { enabled = true },
-      explorer = { enabled = true },
+      explorer = { enabled = true, replace_netrw = false },
       indent = {
         enabled = true,
         indent = { char = "│" },

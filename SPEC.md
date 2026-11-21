@@ -114,6 +114,11 @@ Other
 - auto-session for per-directory sessions (chosen over persistence.nvim, which had
   no commits for a year). Saves on exit, restores on argument-less start, closes
   tool windows first, never runs headless. `sessionoptions` follows its README.
+  On startup, directory browsing and the buffer tabline wait for `UIEnter`,
+  after auto-session's `VimEnter` restore. Opening a directory shows Explorer
+  if it is still the active buffer and no session was restored.
+  Breadcrumbs avoid forced redraws during session loading, and the statusline
+  refreshes at `UIEnter` so it appears with the restored layout.
 - trouble.nvim tracks `main`: v3.7.1 breaks on Neovim 0.12 and the fix is unreleased.
 - Bookmarks are a local module: tomasky/bookmarks.nvim stores bookmarks globally and
   only navigates within one file. Ours are per cwd, cross-file, and re-anchor by line

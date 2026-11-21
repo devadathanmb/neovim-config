@@ -79,6 +79,16 @@ return {
         lualine_z = { "location" },
       },
     },
+    config = function(_, opts)
+      local lualine = require("lualine")
+      lualine.setup(opts)
+      vim.api.nvim_create_autocmd("UIEnter", {
+        once = true,
+        callback = function()
+          lualine.refresh({ place = { "statusline" }, force = true })
+        end,
+      })
+    end,
   },
   {
     "folke/which-key.nvim",

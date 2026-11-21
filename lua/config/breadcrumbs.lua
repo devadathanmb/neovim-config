@@ -24,7 +24,9 @@ function M.refresh()
       vim.wo[win].winbar = ""
     end
   end
-  vim.cmd.redrawstatus()
+  if not vim.g.SessionLoad then
+    vim.cmd.redrawstatus()
+  end
 end
 
 function M.toggle()

@@ -2,6 +2,7 @@ return {
   {
     "akinsho/bufferline.nvim",
     version = "^4",
+    event = not vim.tbl_contains(vim.v.argv, "--headless") and "UIEnter" or nil,
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = function()
       local function close(buf)
